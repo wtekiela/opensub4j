@@ -1,0 +1,44 @@
+buildscript {
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.10.0'
+    }
+
+}
+
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'license'
+
+    license {
+        header rootProject.file('LICENSE')
+        ext.year = Calendar.getInstance().get(Calendar.YEAR)
+        ext.name = 'Wojciech Tekiela'
+
+        include "**/*.java"
+        exclude "**/*Test.java"
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    test {
+        useTestNG()
+
+        beforeTest { descriptor ->
+            logger.lifecycle("Running test: " + descriptor)
+        }
+
+        // listen to standard out and standard error of the test JVM(s)
+        onOutput { descriptor, event ->
+            logger.lifecycle(event.message)
+        }
+    }
+
+}

@@ -1,0 +1,23 @@
+version = '0.1'
+
+archivesBaseName = 'opensub4j'
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.7'
+    compile 'org.apache.xmlrpc:xmlrpc-client:3.1.3'
+    testCompile 'org.slf4j:slf4j-simple:1.7.7'
+    testCompile 'org.testng:testng:6.8.8'
+}
+
+jar {
+    manifest {
+        attributes(
+                "Specification-Title": "OpenSubtitles API for Java",
+                "Specification-Version": version,
+                "Specification-Vendor": "Wojciech Tekiela",
+                "Implementation-Title": "OpenSub4J",
+                "Implementation-Version": version,
+                "Implementation-Vendor": "Wojciech Tekiela"
+        )
+    }
+}

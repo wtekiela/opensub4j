@@ -22,10 +22,7 @@ import org.opensub4j.file.FileHashCalculator;
 import org.opensub4j.parser.ResponseObjectBuilderFactory;
 import org.opensub4j.parser.ResponseParser;
 import org.opensub4j.parser.ResponseParserImpl;
-import org.opensub4j.response.LoginToken;
-import org.opensub4j.response.ServerInfo;
-import org.opensub4j.response.SubtitleFile;
-import org.opensub4j.response.SubtitleInfo;
+import org.opensub4j.response.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -119,6 +116,21 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
         return parser.parse(builderFactory.subtitleInfoListBuilder(parser), response);
     }
 
+    @Override
+    public List<SubtitleInfo> searchSubtitles(String lang, String imdbId) throws XmlRpcException {
+        ensureLoggedIn();
+
+        Map<String, String> videoProperties = new HashMap<>();
+        videoProperties.put("sublanguageid", lang);
+        videoProperties.put("imdbid", imdbId);
+
+        Object[] videoParams = {videoProperties};
+        Object[] params = {loginToken.getToken(), videoParams};
+        Object response = client.execute("SearchSubtitles", params);
+
+        return parser.parse(builderFactory.subtitleInfoListBuilder(parser), response);
+    }
+
 
     @Override
     public List<SubtitleFile> downloadSubtitles(int subtitleFileID) throws XmlRpcException {
@@ -129,6 +141,16 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
         Object response = client.execute("DownloadSubtitles", params);
 
         return parser.parse(builderFactory.subtitleFileListBuilder(parser), response);
+    }
+
+    @Override
+    public List<MovieInfo> searchMoviesOnImdb(String query) throws XmlRpcException {
+        ensureLoggedIn();
+
+        Object[] params = {loginToken.getToken(), query};
+        Object response = client.execute("SearchMoviesOnIMDB", params);
+
+        return parser.parse(builderFactory.movieInfoListBuilder(parser), response);
     }
 
     private void ensureLoggedIn() {

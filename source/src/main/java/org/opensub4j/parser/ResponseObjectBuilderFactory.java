@@ -40,4 +40,8 @@ public class ResponseObjectBuilderFactory {
     public ResponseObjectBuilder<List<SubtitleFile>> subtitleFileListBuilder(ResponseParser parser) {
         return new ResponseObjectListBuilder<>(parser, SubtitleFileBuilder.class);
     }
+
+    public ResponseObjectBuilder<List<MovieInfo>> movieInfoListBuilder(ResponseParser parser) {
+        return new ResponseObjectListBuilder<>(parser, MovieInfoBuilder.class);
+    }
 }

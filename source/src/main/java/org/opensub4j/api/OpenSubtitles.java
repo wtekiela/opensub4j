@@ -16,6 +16,7 @@
 package org.opensub4j.api;
 
 import org.apache.xmlrpc.XmlRpcException;
+import org.opensub4j.response.MovieInfo;
 import org.opensub4j.response.ServerInfo;
 import org.opensub4j.response.SubtitleFile;
 import org.opensub4j.response.SubtitleInfo;
@@ -40,7 +41,7 @@ public interface OpenSubtitles {
     public ServerInfo serverInfo() throws XmlRpcException;
 
     /**
-     * Login as anonymous user. Logging in is required before talking to the server.
+     * Login as anonymous user. Logging in is required before talking to the OSDb server.
      *
      * @param lang      ISO639 2 letter language code
      * @param useragent UserAgent registered with OpenSubtitles
@@ -50,8 +51,14 @@ public interface OpenSubtitles {
     public void login(String lang, String useragent) throws XmlRpcException;
 
     /**
-     * Login given user, set interface language and initiate session. Logging in is required before talking to the
+     * Login given user, set interface language and initiate session. Logging in is required before talking to the OSDb
      * server.
+     *
+     * Login user {user} identified by password {pass} communicating in language {lang} and working in client
+     * application {useragent}. This function should be always called when starting communication with OSDb server to
+     * identify user, specify application and start a new session (either registered user or anonymous).
+     *
+     * If user has no account, blank username and password should be used.
      *
      * @param user      username
      * @param pass      password
@@ -92,6 +99,40 @@ public interface OpenSubtitles {
      */
     public List<SubtitleInfo> searchSubtitles(String lang, File file) throws IOException, XmlRpcException;
 
+    /**
+     * Search for subtitle files matching your videos using IMDB ids. If {lang} is empty or contains the string 'all' -
+     * search is performed for all languages. Please note that some fields (IDSubMovieFile, MovieHash, MovieByteSize,
+     * MovieTimeMS) are missing in output when using this method.
+     *
+     * @param lang   ISO639-3 language code
+     * @param imdbId IMDB movie ID
+     *
+     * @return Information about found subtitles
+     *
+     * @throws IOException
+     * @throws XmlRpcException
+     */
+    public List<SubtitleInfo> searchSubtitles(String lang, String imdbId) throws XmlRpcException;
+
+    /**
+     * Download given subtitle file
+     *
+     * @param subtitleFileID ID of the subtitle file to download
+     *
+     * @return Subtitle files
+     *
+     * @throws XmlRpcException
+     */
     public List<SubtitleFile> downloadSubtitles(int subtitleFileID) throws XmlRpcException;
+
+    /**
+     * Searches for movies matching given movie title {query}. Returns list of movies data found on IMDb.com and in
+     * internal server movie database. Manually added movies can be identified by ID starting at 10000000.
+     *
+     * @param query Query string
+     *
+     * @throws XmlRpcException
+     */
+    public List<MovieInfo> searchMoviesOnImdb(String query) throws XmlRpcException;
 
 }

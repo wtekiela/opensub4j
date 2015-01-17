@@ -109,7 +109,6 @@ public interface OpenSubtitles {
      *
      * @return Information about found subtitles
      *
-     * @throws IOException
      * @throws XmlRpcException
      */
     public List<SubtitleInfo> searchSubtitles(String lang, String imdbId) throws XmlRpcException;
@@ -130,6 +129,8 @@ public interface OpenSubtitles {
      * internal server movie database. Manually added movies can be identified by ID starting at 10000000.
      *
      * @param query Query string
+     *
+     * @return Information about found movies
      *
      * @throws XmlRpcException
      */

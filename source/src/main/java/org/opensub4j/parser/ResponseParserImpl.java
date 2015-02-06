@@ -27,6 +27,7 @@ public class ResponseParserImpl implements ResponseParser {
 
     private static final Logger log = LoggerFactory.getLogger(ResponseParserImpl.class);
 
+    @SuppressWarnings("unchecked") 
     public <T, S extends ResponseObjectBuilder<T>> T parse(S builder, Object response) {
         if (!(response instanceof Map)) {
             return builder.build();

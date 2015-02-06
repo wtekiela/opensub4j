@@ -1,7 +1,22 @@
-Java library for opensubtitles.org
-==================================
+# Java library for opensubtitles.org
 
-[![Build Status](https://travis-ci.org/wtekiela/opensub4j.svg?branch=master)](https://travis-ci.org/wtekiela/opensub4j)
+[![Build Status](https://drone.io/github.com/wtekiela/opensub4j/status.png)](https://drone.io/github.com/wtekiela/opensub4j/latest)
 
-Opensub4j is an open java library for communicating with opensubtitles.org XML-RPC API.
+OpenSub4j is an open source Java library for opensubtites. It provides an object-oriented abstraction over XML-RPC opensubtitles.org API.
 
+## Installation
+
+To use the library simply include the JAR file in your project. You can download the latest build from: https://drone.io/github.com/wtekiela/opensub4j/files
+
+## Documentation
+
+JavaDoc documentation is available here: http://wtekiela.github.io/opensub4j/
+
+## Building from sources
+
+To build the library from sources, you just need to invoke:
+```
+./gradlew assemble
+```
+
+Note: Java JDK 8 is required.

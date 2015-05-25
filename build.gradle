@@ -18,6 +18,8 @@ subprojects {
 
     apply plugin: 'java'
     apply plugin: 'license'
+    apply plugin: 'maven'
+    apply plugin: 'signing'
 
     license {
         header rootProject.file('LICENSE')
@@ -43,6 +45,24 @@ subprojects {
         onOutput { descriptor, event ->
             logger.lifecycle(event.message)
         }
+    }
+
+    task javadocJar(type: Jar) {
+        classifier = 'javadoc'
+        from javadoc
+    }
+
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives javadocJar, sourcesJar
+    }
+
+    signing {
+        sign configurations.archives
     }
 
 }

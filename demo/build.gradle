@@ -1,5 +1,5 @@
-version = '0.1'
-
+group = "com.github.wtekiela.opensub4j"
+version = '0.1.1'
 archivesBaseName = 'opensub4j-demo'
 
 dependencies {

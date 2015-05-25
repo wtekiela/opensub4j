@@ -68,7 +68,7 @@ class RetriableXmlRpcClient extends XmlRpcClient {
             this.maxAttempts = maxAttempts;
             this.interval = interval;
             this.task = () -> {
-                logger.debug("Calling method: {}, with params: {}", method, Arrays.toString(params));
+                logger.debug("Calling method: {}, with params: {}", method, Arrays.deepToString(params));
                 Object response = RetriableXmlRpcClient.super.execute(method, params);
                 logger.debug("Response: {}", response);
                 return response;

@@ -85,7 +85,8 @@ public interface OpenSubtitles {
     public void noop() throws XmlRpcException;
 
     /**
-     * Search for subtitle files matching your videos using a movie file.
+     * Search for subtitle files matching your videos using a movie file. If {lang} is empty or contains the string
+     * 'all' - search is performed for all languages.
      *
      * @param lang ISO639-3 language code
      * @param file Movie file
@@ -97,6 +98,20 @@ public interface OpenSubtitles {
      *                                           or other I/O error occurs
      */
     public List<SubtitleInfo> searchSubtitles(String lang, File file) throws IOException, XmlRpcException;
+
+    /**
+     * Search for subtitle files by computed file hash and size of a video file. If {lang} is empty or contains the
+     * string 'all' - search is performed for all languages.
+     *
+     * @param lang ISO639-3 language code
+     * @param hash Calculated video file hash
+     * @param size Size of a video file in bytes
+     *
+     * @return Information about found subtitles
+     *
+     * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
+     */
+    public List<SubtitleInfo> searchSubtitles(String lang, String hash, String size) throws XmlRpcException;
 
     /**
      * Search for subtitle files matching your videos using IMDB ids. If {lang} is empty or contains the string 'all' -
@@ -111,6 +126,41 @@ public interface OpenSubtitles {
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
     public List<SubtitleInfo> searchSubtitles(String lang, String imdbId) throws XmlRpcException;
+
+    /**
+     * @param lang    ISO639-3 language code
+     * @param query
+     * @param season
+     * @param episode
+     *
+     * @return Information about found subtitles
+     *
+     * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
+     */
+    public List<SubtitleInfo> searchSubtitles(String lang, String query, String season, String episode)
+            throws XmlRpcException;
+
+    /**
+     * Search for subtitle files. If you define movie hash and size, then the rest of the parameters are ignored. If you
+     * define tag - query, season and episode are ignored. Full text search can be performed by using query, season and
+     * episode parameters.
+     *
+     * @param lang    ISO639-3 language code
+     * @param hash    Calculated video file hash
+     * @param size    Size of a video file in bytes
+     * @param imdbid  IMDB movie ID
+     * @param query
+     * @param season
+     * @param episode
+     * @param tag
+     *
+     * @return Information about found subtitles
+     *
+     * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
+     */
+    public List<SubtitleInfo> searchSubtitles(String lang, String hash, String size, String imdbid,
+                                              String query, String season, String episode, String tag)
+            throws XmlRpcException;
 
     /**
      * Download given subtitle file

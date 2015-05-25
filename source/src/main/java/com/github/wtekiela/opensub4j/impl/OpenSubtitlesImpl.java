@@ -1,27 +1,16 @@
 /**
- *    Copyright (c) 2015 Wojciech Tekiela
+ * Copyright (c) 2015 Wojciech Tekiela
  *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *        http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package com.github.wtekiela.opensub4j.impl;
-
-import org.apache.xmlrpc.XmlRpcException;
-import org.apache.xmlrpc.client.XmlRpcClient;
-import com.github.wtekiela.opensub4j.api.OpenSubtitles;
-import com.github.wtekiela.opensub4j.file.FileHashCalculator;
-import com.github.wtekiela.opensub4j.parser.ResponseObjectBuilderFactory;
-import com.github.wtekiela.opensub4j.parser.ResponseParser;
-import com.github.wtekiela.opensub4j.parser.ResponseParserImpl;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +19,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.xmlrpc.XmlRpcException;
+import org.apache.xmlrpc.client.XmlRpcClient;
+
+import com.github.wtekiela.opensub4j.api.OpenSubtitles;
+import com.github.wtekiela.opensub4j.file.FileHashCalculator;
+import com.github.wtekiela.opensub4j.parser.ResponseObjectBuilderFactory;
+import com.github.wtekiela.opensub4j.parser.ResponseParser;
+import com.github.wtekiela.opensub4j.parser.ResponseParserImpl;
 import com.github.wtekiela.opensub4j.response.LoginToken;
 import com.github.wtekiela.opensub4j.response.MovieInfo;
 import com.github.wtekiela.opensub4j.response.ServerInfo;
@@ -94,6 +91,12 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
         loginToken = null;
     }
 
+    private void ensureLoggedIn() {
+        if (loginToken == null) {
+            throw new IllegalStateException("Not logged in!");
+        }
+    }
+
     @Override
     public void noop() throws XmlRpcException {
         ensureLoggedIn();
@@ -106,13 +109,49 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
     public List<SubtitleInfo> searchSubtitles(String lang, File file) throws IOException, XmlRpcException {
         ensureLoggedIn();
 
+        if (file == null) {
+            throw new IllegalArgumentException("File cannot be null!");
+        }
+
         String hash = FileHashCalculator.calculateHash(file);
         long size = file.length();
 
+        return searchSubtitles(lang, hash, String.valueOf(size));
+    }
+
+    @Override
+    public List<SubtitleInfo> searchSubtitles(String lang, String hash, String movieByteSize)
+            throws XmlRpcException {
+        return searchSubtitles(lang, hash, movieByteSize, null, null, null, null, null);
+    }
+
+    @Override
+    public List<SubtitleInfo> searchSubtitles(String lang, String movieHash, String movieByteSize, String imdbid,
+                                              String query, String season, String episode, String tag)
+            throws XmlRpcException {
+        ensureLoggedIn();
+
         Map<String, String> videoProperties = new HashMap<>();
         videoProperties.put("sublanguageid", lang);
-        videoProperties.put("moviehash", hash);
-        videoProperties.put("moviebytesize", String.valueOf(size));
+
+        if (movieHash != null && !movieHash.isEmpty() && movieByteSize != null && !movieByteSize.isEmpty()) {
+            videoProperties.put("moviehash", movieHash);
+            videoProperties.put("moviebytesize", movieByteSize);
+        } else if (tag != null && !imdbid.isEmpty()) {
+            // Tag is index of movie filename or subtitle file name, or release name -
+            // currently we index more than 40.000.000 of tags.
+            videoProperties.put("tag", null);
+        } else if (imdbid != null && !imdbid.isEmpty()) {
+            videoProperties.put("imdbid", null);
+        } else if (query != null && !query.isEmpty()) {
+            videoProperties.put("query", query);
+            if (season != null && !season.isEmpty()) {
+                videoProperties.put("season", null);
+            }
+            if (episode != null && !episode.isEmpty()) {
+                videoProperties.put("episode", null);
+            }
+        }
 
         Object[] videoParams = {videoProperties};
         Object[] params = {loginToken.getToken(), videoParams};
@@ -123,19 +162,14 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
 
     @Override
     public List<SubtitleInfo> searchSubtitles(String lang, String imdbId) throws XmlRpcException {
-        ensureLoggedIn();
-
-        Map<String, String> videoProperties = new HashMap<>();
-        videoProperties.put("sublanguageid", lang);
-        videoProperties.put("imdbid", imdbId);
-
-        Object[] videoParams = {videoProperties};
-        Object[] params = {loginToken.getToken(), videoParams};
-        Object response = client.execute("SearchSubtitles", params);
-
-        return parser.parse(builderFactory.subtitleInfoListBuilder(parser), response);
+        return searchSubtitles(lang, null, null, imdbId, null, null, null, null);
     }
 
+    @Override
+    public List<SubtitleInfo> searchSubtitles(String lang, String query, String season, String episode)
+            throws XmlRpcException {
+        return searchSubtitles(lang, null, null, null, query, season, episode, null);
+    }
 
     @Override
     public List<SubtitleFile> downloadSubtitles(int subtitleFileID) throws XmlRpcException {
@@ -156,12 +190,6 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
         Object response = client.execute("SearchMoviesOnIMDB", params);
 
         return parser.parse(builderFactory.movieInfoListBuilder(parser), response);
-    }
-
-    private void ensureLoggedIn() {
-        if (loginToken == null) {
-            throw new IllegalStateException("Not logged in!");
-        }
     }
 
 }

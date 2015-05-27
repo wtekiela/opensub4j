@@ -1,27 +1,24 @@
 /**
- *    Copyright (c) 2015 Wojciech Tekiela
+ * Copyright (c) 2015 Wojciech Tekiela
  *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *        http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package com.github.wtekiela.opensub4j.parser;
-
-import com.github.wtekiela.opensub4j.response.SubtitleFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.zip.GZIPInputStream;
+
+import com.github.wtekiela.opensub4j.response.SubtitleFile;
 
 class SubtitleFileBuilder implements ResponseObjectBuilder<SubtitleFile> {
 
@@ -56,10 +53,6 @@ class SubtitleFileBuilder implements ResponseObjectBuilder<SubtitleFile> {
         return content == null ? data : content;
     }
 
-    private static byte[] decode(String s) {
-        return Base64.getDecoder().decode(s);
-    }
-
     private static String decompress(byte[] bytes, int bufferSize) throws IOException {
         try (GZIPInputStream is = new GZIPInputStream(new ByteArrayInputStream(bytes));
              ByteArrayOutputStream os = new ByteArrayOutputStream()) {
@@ -70,5 +63,9 @@ class SubtitleFileBuilder implements ResponseObjectBuilder<SubtitleFile> {
             }
             return os.toString();
         }
+    }
+
+    private static byte[] decode(String s) {
+        return Base64.getDecoder().decode(s);
     }
 }

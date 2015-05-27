@@ -24,6 +24,7 @@ import org.apache.xmlrpc.client.XmlRpcClient;
 
 import com.github.wtekiela.opensub4j.api.OpenSubtitles;
 import com.github.wtekiela.opensub4j.file.FileHashCalculator;
+import com.github.wtekiela.opensub4j.file.OpenSubtitlesFileHashCalculator;
 import com.github.wtekiela.opensub4j.parser.ResponseObjectBuilderFactory;
 import com.github.wtekiela.opensub4j.parser.ResponseParser;
 import com.github.wtekiela.opensub4j.parser.ResponseParserImpl;
@@ -40,6 +41,7 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
     private final XmlRpcClient client;
     private final ResponseParser parser;
     private final ResponseObjectBuilderFactory builderFactory;
+    private final FileHashCalculator hashCalculator;
 
     private LoginToken loginToken;
 
@@ -47,6 +49,7 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
         this.client = new RetriableXmlRpcClient(serverUrl);
         this.parser = new ResponseParserImpl();
         this.builderFactory = new ResponseObjectBuilderFactory();
+        this.hashCalculator = new OpenSubtitlesFileHashCalculator();
     }
 
     @Override
@@ -113,7 +116,7 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
             throw new IllegalArgumentException("File cannot be null!");
         }
 
-        String hash = FileHashCalculator.calculateHash(file);
+        String hash = hashCalculator.calculateHash(file);
         long size = file.length();
 
         return searchSubtitles(lang, hash, String.valueOf(size));

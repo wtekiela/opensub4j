@@ -14,6 +14,6 @@ package com.github.wtekiela.opensub4j.parser;
 
 public interface ResponseParser {
 
-    public <T, S extends ResponseObjectBuilder<T>> T parse(S builder, Object response);
+    <T, S extends ResponseObjectBuilder<T>> T parse(S builder, Object response);
 
 }

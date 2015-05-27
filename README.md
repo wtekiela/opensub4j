@@ -6,7 +6,13 @@ OpenSub4j is an open source Java library for opensubtites. It provides an object
 
 ## Installation
 
-To use the library simply include the JAR file in your project. You can download the latest build and JavaDocs from: https://drone.io/github.com/wtekiela/opensub4j/files
+Simply add the dependency to gradle/maven:
+
+```
+dependencies {
+    compile 'com.github.wtekiela:opensub4j:0.1.1'
+}
+```
 
 ## Building from sources
 

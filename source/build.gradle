@@ -1,5 +1,3 @@
-group = "com.github.wtekiela"
-version = '0.1.1'
 archivesBaseName = 'opensub4j'
 
 dependencies {

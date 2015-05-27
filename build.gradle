@@ -16,6 +16,9 @@ task wrapper(type: Wrapper) {
 
 subprojects {
 
+    group = 'com.github.wtekiela'
+    version = '0.1.2-SNAPSHOT'
+
     apply plugin: 'java'
     apply plugin: 'license'
     apply plugin: 'maven'

@@ -19,20 +19,20 @@ public class ServerInfo {
     private final int onlineTotalUsersNo;
     private final String application;
     private final String contact;
-    private final int moviesAKANo;
-    private final int moviesTotalNo;
-    private final int subsDownloadsNo;
-    private final int subsFileNo;
-    private final int subsLangsNo;
-    private final int usersMaxAllTime;
-    private final int usersRegistered;
+    private final long moviesAKANo;
+    private final long moviesTotalNo;
+    private final long subsDownloadsNo;
+    private final long subsFileNo;
+    private final long subsLangsNo;
+    private final long usersMaxAllTime;
+    private final long usersRegistered;
     private final String websiteURL;
     private final String xmlRpcURL;
     private final double xmlRpcVersion;
 
     public ServerInfo(int loggedInUsersNo, int onlineProgramUsersNo, int onlineTotalUsersNo, String application,
-                      String contact, int moviesAKANo, int moviesTotalNo, int subsDownloadsNo, int subsFileNo,
-                      int subsLangsNo, int usersMaxAllTime, int usersRegistered, String websiteURL, String xmlRpcURL,
+                      String contact, long moviesAKANo, long moviesTotalNo, long subsDownloadsNo, long subsFileNo,
+                      long subsLangsNo, long usersMaxAllTime, long usersRegistered, String websiteURL, String xmlRpcURL,
                       double xmlRpcVersion) {
         this.loggedInUsersNo = loggedInUsersNo;
         this.onlineProgramUsersNo = onlineProgramUsersNo;
@@ -71,31 +71,31 @@ public class ServerInfo {
         return contact;
     }
 
-    public int getMoviesAKANo() {
+    public long getMoviesAKANo() {
         return moviesAKANo;
     }
 
-    public int getMoviesTotalNo() {
+    public long getMoviesTotalNo() {
         return moviesTotalNo;
     }
 
-    public int getSubsDownloadsNo() {
+    public long getSubsDownloadsNo() {
         return subsDownloadsNo;
     }
 
-    public int getSubsFileNo() {
+    public long getSubsFileNo() {
         return subsFileNo;
     }
 
-    public int getSubsLangsNo() {
+    public long getSubsLangsNo() {
         return subsLangsNo;
     }
 
-    public int getUsersMaxAllTime() {
+    public long getUsersMaxAllTime() {
         return usersMaxAllTime;
     }
 
-    public int getUsersRegistered() {
+    public long getUsersRegistered() {
         return usersRegistered;
     }
 

@@ -106,9 +106,9 @@ class ServerInfoBuilder implements ResponseObjectBuilder<ServerInfo> {
 
     public ServerInfo build() {
         return new ServerInfo(users_loggedin, users_online_program, users_online_total, application, contact,
-                Integer.valueOf(movies_aka), Integer.valueOf(movies_total), Integer.valueOf(subs_downloads),
-                Integer.valueOf(subs_subtitle_files), Integer.valueOf(total_subtitles_languages),
-                Integer.valueOf(users_max_alltime), Integer.valueOf(users_registered),
+                Long.valueOf(movies_aka), Long.valueOf(movies_total), Long.valueOf(subs_downloads),
+                Long.valueOf(subs_subtitle_files), Long.valueOf(total_subtitles_languages),
+                Long.valueOf(users_max_alltime), Long.valueOf(users_registered),
                 website_url, xmlrpc_url, Double.valueOf(xmlrpc_version));
     }
 

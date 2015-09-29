@@ -15,7 +15,7 @@ package com.github.wtekiela.opensub4j.parser;
 import com.github.wtekiela.opensub4j.response.Reply;
 import com.github.wtekiela.opensub4j.response.ReplyStatus;
 
-class ReplyBuilder implements ResponseObjectBuilder<Reply> {
+class ReplyBuilder extends AbstractResponseObjectBuilder<Reply> {
 
     private String status;
     private Double seconds;

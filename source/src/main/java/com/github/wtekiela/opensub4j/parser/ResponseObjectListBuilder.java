@@ -15,7 +15,7 @@ package com.github.wtekiela.opensub4j.parser;
 import java.util.LinkedList;
 import java.util.List;
 
-class ResponseObjectListBuilder<T, S extends ResponseObjectBuilder<T>> implements ResponseObjectBuilder<List<T>> {
+class ResponseObjectListBuilder<T, S extends ResponseObjectBuilder<T>> extends AbstractResponseObjectBuilder<List<T>> {
 
     private final ResponseParser parser;
     private final Class<S> clazz;

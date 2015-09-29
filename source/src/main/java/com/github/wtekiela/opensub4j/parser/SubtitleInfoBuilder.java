@@ -16,7 +16,7 @@ import java.util.Map;
 
 import com.github.wtekiela.opensub4j.response.SubtitleInfo;
 
-class SubtitleInfoBuilder implements ResponseObjectBuilder<SubtitleInfo> {
+class SubtitleInfoBuilder extends AbstractResponseObjectBuilder<SubtitleInfo> {
 
     private Map queryParameters;
     private String IDMovie;

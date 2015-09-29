@@ -14,6 +14,8 @@ package com.github.wtekiela.opensub4j.parser;
 
 public interface ResponseObjectBuilder<T> {
 
-    public T build();
+    T build();
+
+    void set(String method, Object value, Class valueType);
 
 }

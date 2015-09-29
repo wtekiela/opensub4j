@@ -12,42 +12,27 @@
  */
 package com.github.wtekiela.opensub4j.parser;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.github.wtekiela.opensub4j.response.Reply;
 
 public class ResponseParserImpl implements ResponseParser {
 
-    private static final Logger log = LoggerFactory.getLogger(ResponseParserImpl.class);
-
-    @SuppressWarnings("unchecked")
     public <T, S extends ResponseObjectBuilder<T>> T parse(S builder, Object response) {
-        if (!(response instanceof Map)) {
-            return builder.build();
-        }
+        return response instanceof Map ? parseMap(builder, (Map<String, Reply>) response) : builder.build();
+    }
 
-        Map<String, Reply> responseMap = (Map) response;
-        for (Map.Entry<String, Reply> entry : responseMap.entrySet()) {
-            String key = entry.getKey();
-            String setterName = "set" + key.substring(0, 1).toUpperCase() + key.substring(1);
-            Class clazz = null;
-            try {
-                clazz = getObjectClass(entry.getValue());
-                Method setter = builder.getClass().getMethod(setterName, clazz);
-                setter.invoke(builder, entry.getValue());
-            } catch (InvocationTargetException | IllegalAccessException e) {
-                log.debug("Unable to set value:" + entry.getValue() + " for method:" + setterName);
-            } catch (NoSuchMethodException ignore) {
-                log.trace("No such method for builder: " + builder.getClass().getName() + ", setter:" + setterName + ", class:" + clazz);
-            }
+    private <T, S extends ResponseObjectBuilder<T>> T parseMap(S builder, Map<String, Reply> response) {
+        for (Map.Entry<String, Reply> entry : response.entrySet()) {
+            String method = buildSetterName(entry.getKey());
+            Class valueType = getObjectClass(entry.getValue());
+            builder.set(method, entry.getValue(), valueType);
         }
-
         return builder.build();
+    }
+
+    private String buildSetterName(String key) {
+        return "set" + key.substring(0, 1).toUpperCase() + key.substring(1);
     }
 
     private Class getObjectClass(Object o) {

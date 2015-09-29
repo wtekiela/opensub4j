@@ -14,7 +14,7 @@ package com.github.wtekiela.opensub4j.parser;
 
 import com.github.wtekiela.opensub4j.response.MovieInfo;
 
-class MovieInfoBuilder implements ResponseObjectBuilder<MovieInfo> {
+class MovieInfoBuilder extends AbstractResponseObjectBuilder<MovieInfo> {
 
     String id;
     String title;

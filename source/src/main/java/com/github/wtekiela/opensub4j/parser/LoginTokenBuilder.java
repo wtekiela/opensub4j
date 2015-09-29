@@ -14,7 +14,7 @@ package com.github.wtekiela.opensub4j.parser;
 
 import com.github.wtekiela.opensub4j.response.LoginToken;
 
-class LoginTokenBuilder implements ResponseObjectBuilder<LoginToken> {
+class LoginTokenBuilder extends AbstractResponseObjectBuilder<LoginToken> {
 
     private String token;
 

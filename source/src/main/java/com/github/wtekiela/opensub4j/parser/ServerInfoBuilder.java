@@ -16,7 +16,7 @@ import java.util.Map;
 
 import com.github.wtekiela.opensub4j.response.ServerInfo;
 
-class ServerInfoBuilder implements ResponseObjectBuilder<ServerInfo> {
+class ServerInfoBuilder extends AbstractResponseObjectBuilder<ServerInfo> {
 
     private Integer users_loggedin;
     private Integer users_online_program;

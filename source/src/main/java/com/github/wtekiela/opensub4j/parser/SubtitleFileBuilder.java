@@ -20,7 +20,7 @@ import java.util.zip.GZIPInputStream;
 
 import com.github.wtekiela.opensub4j.response.SubtitleFile;
 
-class SubtitleFileBuilder implements ResponseObjectBuilder<SubtitleFile> {
+class SubtitleFileBuilder extends AbstractResponseObjectBuilder<SubtitleFile> {
 
     private String data;
     private String idsubtitlefile;

@@ -128,10 +128,12 @@ public interface OpenSubtitles {
     public List<SubtitleInfo> searchSubtitles(String lang, String imdbId) throws XmlRpcException;
 
     /**
+     * Search for subtitle files using full text search.
+     *
      * @param lang    ISO639-3 language code
-     * @param query
-     * @param season
-     * @param episode
+     * @param query   Query for the full text search engine
+     * @param season  Season number
+     * @param episode Episode number
      *
      * @return Information about found subtitles
      *
@@ -149,10 +151,10 @@ public interface OpenSubtitles {
      * @param hash    Calculated video file hash
      * @param size    Size of a video file in bytes
      * @param imdbid  IMDB movie ID
-     * @param query
-     * @param season
-     * @param episode
-     * @param tag
+     * @param query   Query for the full text search engine
+     * @param season  Season number
+     * @param episode Episode number
+     * @param tag     Index of movie filename, subtitle filename or release name
      *
      * @return Information about found subtitles
      *

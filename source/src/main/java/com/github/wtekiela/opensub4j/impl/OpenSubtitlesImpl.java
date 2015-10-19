@@ -145,14 +145,14 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
             // currently we index more than 40.000.000 of tags.
             videoProperties.put("tag", null);
         } else if (imdbid != null && !imdbid.isEmpty()) {
-            videoProperties.put("imdbid", null);
+            videoProperties.put("imdbid", imdbid);
         } else if (query != null && !query.isEmpty()) {
             videoProperties.put("query", query);
             if (season != null && !season.isEmpty()) {
-                videoProperties.put("season", null);
+                videoProperties.put("season", season);
             }
             if (episode != null && !episode.isEmpty()) {
-                videoProperties.put("episode", null);
+                videoProperties.put("episode", episode);
             }
         }
 

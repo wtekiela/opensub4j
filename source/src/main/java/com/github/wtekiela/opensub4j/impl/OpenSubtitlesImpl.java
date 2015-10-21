@@ -143,7 +143,7 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
         } else if (tag != null && !imdbid.isEmpty()) {
             // Tag is index of movie filename or subtitle file name, or release name -
             // currently we index more than 40.000.000 of tags.
-            videoProperties.put("tag", null);
+            videoProperties.put("tag", tag);
         } else if (imdbid != null && !imdbid.isEmpty()) {
             videoProperties.put("imdbid", imdbid);
         } else if (query != null && !query.isEmpty()) {

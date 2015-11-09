@@ -35,37 +35,7 @@ class SubtitleFileBuilder extends AbstractResponseObjectBuilder<SubtitleFile> {
 
     @Override
     public SubtitleFile build() {
-        String content = getContent();
-
         Integer id = Integer.valueOf(this.idsubtitlefile);
-
-        return new SubtitleFile(id, content);
-    }
-
-    private String getContent() {
-        String content = null;
-        try {
-            content = decompress(decode(data), 10240);
-        } catch (IOException e) {
-            // @todo add logging
-            e.printStackTrace();
-        }
-        return content == null ? data : content;
-    }
-
-    private static String decompress(byte[] bytes, int bufferSize) throws IOException {
-        try (GZIPInputStream is = new GZIPInputStream(new ByteArrayInputStream(bytes));
-             ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            int bytesRead;
-            byte[] buffer = new byte[bufferSize];
-            while ((bytesRead = is.read(buffer)) > 0) {
-                os.write(buffer, 0, bytesRead);
-            }
-            return os.toString();
-        }
-    }
-
-    private static byte[] decode(String s) {
-        return Base64.getDecoder().decode(s);
+        return new SubtitleFile(id, data);
     }
 }

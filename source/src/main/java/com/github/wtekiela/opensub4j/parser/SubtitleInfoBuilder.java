@@ -63,6 +63,7 @@ class SubtitleInfoBuilder extends AbstractResponseObjectBuilder<SubtitleInfo> {
     private String userNickName;
     private String userRank;
     private String zipDownloadLink;
+    private String subEncoding;
 
     public void setQueryParameters(Map queryParameters) {
         this.queryParameters = queryParameters;
@@ -243,11 +244,15 @@ class SubtitleInfoBuilder extends AbstractResponseObjectBuilder<SubtitleInfo> {
     public void setZipDownloadLink(String zipDownloadLink) {
         this.zipDownloadLink = zipDownloadLink;
     }
+    
+    public void setSubEncoding(String subEncoding) {
+        this.subEncoding = subEncoding;
+    }
 
     public SubtitleInfo build() {
         int id = Integer.valueOf(IDSubtitle);
         int fileId = Integer.valueOf(IDSubtitleFile);
         int downloadsCount = Integer.valueOf(subDownloadsCnt);
-        return new SubtitleInfo(id, fileId, languageName, subFileName, subFormat, downloadsCount, subtitlesLink, subDownloadLink, zipDownloadLink);
+        return new SubtitleInfo(id, fileId, languageName, subFileName, subFormat, downloadsCount, subtitlesLink, subDownloadLink, zipDownloadLink, subEncoding);
     }
 }

@@ -23,9 +23,10 @@ public class SubtitleInfo {
     private final String osLink;
     private final String downloadLink;
     private final String zipDownloadLink;
+    private final String subEncoding;
 
     public SubtitleInfo(int id, int subtitleFileId, String language, String fileName, String format, int downloadsNo,
-                        String osLink, String downloadLink, String zipDownloadLink) {
+                        String osLink, String downloadLink, String zipDownloadLink, String subEncoding) {
         this.id = id;
         this.subtitleFileId = subtitleFileId;
         this.language = language;
@@ -35,6 +36,7 @@ public class SubtitleInfo {
         this.osLink = osLink;
         this.downloadLink = downloadLink;
         this.zipDownloadLink = zipDownloadLink;
+        this.subEncoding = subEncoding;
     }
 
     public int getId() {
@@ -71,6 +73,10 @@ public class SubtitleInfo {
 
     public String getZipDownloadLink() {
         return zipDownloadLink;
+    }
+    
+    public String getSubEncoding() {
+        return subEncoding;
     }
 
     @Override

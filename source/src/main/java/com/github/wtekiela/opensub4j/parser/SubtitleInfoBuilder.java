@@ -48,6 +48,7 @@ class SubtitleInfoBuilder extends AbstractResponseObjectBuilder<SubtitleInfo> {
     private String subComments;
     private String subDownloadLink;
     private String subDownloadsCnt;
+    private String subEncoding;
     private String subFeatured;
     private String subFileName;
     private String subFormat;
@@ -63,7 +64,6 @@ class SubtitleInfoBuilder extends AbstractResponseObjectBuilder<SubtitleInfo> {
     private String userNickName;
     private String userRank;
     private String zipDownloadLink;
-    private String subEncoding;
 
     public void setQueryParameters(Map queryParameters) {
         this.queryParameters = queryParameters;
@@ -185,6 +185,10 @@ class SubtitleInfoBuilder extends AbstractResponseObjectBuilder<SubtitleInfo> {
         this.subDownloadsCnt = subDownloadsCnt;
     }
 
+    public void setSubEncoding(String subEncoding) {
+        this.subEncoding = subEncoding;
+    }
+
     public void setSubFeatured(String subFeatured) {
         this.subFeatured = subFeatured;
     }
@@ -243,10 +247,6 @@ class SubtitleInfoBuilder extends AbstractResponseObjectBuilder<SubtitleInfo> {
 
     public void setZipDownloadLink(String zipDownloadLink) {
         this.zipDownloadLink = zipDownloadLink;
-    }
-    
-    public void setSubEncoding(String subEncoding) {
-        this.subEncoding = subEncoding;
     }
 
     public SubtitleInfo build() {

@@ -74,7 +74,7 @@ public class SubtitleInfo {
     public String getZipDownloadLink() {
         return zipDownloadLink;
     }
-    
+
     public String getEncoding() {
         return encoding;
     }

@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-abstract class AbstractResponseObjectBuilder<T> implements ResponseObjectBuilder {
+abstract class AbstractResponseObjectBuilder<T> implements ResponseObjectBuilder<T> {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractResponseObjectBuilder.class);
 

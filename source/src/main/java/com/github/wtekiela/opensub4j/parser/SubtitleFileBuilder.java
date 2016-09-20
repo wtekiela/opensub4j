@@ -12,12 +12,6 @@
  */
 package com.github.wtekiela.opensub4j.parser;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Base64;
-import java.util.zip.GZIPInputStream;
-
 import com.github.wtekiela.opensub4j.response.SubtitleFile;
 
 class SubtitleFileBuilder extends AbstractResponseObjectBuilder<SubtitleFile> {

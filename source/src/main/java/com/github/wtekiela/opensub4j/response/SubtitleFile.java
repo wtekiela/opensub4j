@@ -44,8 +44,7 @@ public class SubtitleFile {
     }
 
     public Content getContent(String charsetName) {
-        Content content = getSubtitleFileContent(charsetName);
-        return content;
+        return getSubtitleFileContent(charsetName);
     }
 
     private Content getSubtitleFileContent(String charsetName) {

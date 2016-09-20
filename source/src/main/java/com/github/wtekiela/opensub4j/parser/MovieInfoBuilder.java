@@ -16,9 +16,9 @@ import com.github.wtekiela.opensub4j.response.MovieInfo;
 
 class MovieInfoBuilder extends AbstractResponseObjectBuilder<MovieInfo> {
 
-    String id;
-    String title;
-    String from_redis;
+    private String id;
+    private String title;
+    private String from_redis;
 
     public void setId(String id) {
         this.id = id;

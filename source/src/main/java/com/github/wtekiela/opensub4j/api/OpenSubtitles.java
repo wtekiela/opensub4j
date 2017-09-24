@@ -154,7 +154,7 @@ public interface OpenSubtitles {
      * @param query   Query for the full text search engine
      * @param season  Season number
      * @param episode Episode number
-     * @param tag     Index of movie filename, subtitle filename or release name
+     * @param tag     Index of movie filename, subtitle filename or release fieldName
      *
      * @return Information about found subtitles
      *

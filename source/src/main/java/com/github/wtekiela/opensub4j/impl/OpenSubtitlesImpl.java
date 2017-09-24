@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2016 Wojciech Tekiela
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -19,20 +19,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.github.wtekiela.opensub4j.response.*;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 
 import com.github.wtekiela.opensub4j.api.OpenSubtitles;
 import com.github.wtekiela.opensub4j.file.FileHashCalculator;
 import com.github.wtekiela.opensub4j.file.OpenSubtitlesFileHashCalculator;
-import com.github.wtekiela.opensub4j.parser.ResponseObjectBuilderFactory;
-import com.github.wtekiela.opensub4j.parser.ResponseParser;
-import com.github.wtekiela.opensub4j.parser.ResponseParserImpl;
-import com.github.wtekiela.opensub4j.response.LoginToken;
-import com.github.wtekiela.opensub4j.response.MovieInfo;
-import com.github.wtekiela.opensub4j.response.ServerInfo;
-import com.github.wtekiela.opensub4j.response.SubtitleFile;
-import com.github.wtekiela.opensub4j.response.SubtitleInfo;
 
 public class OpenSubtitlesImpl implements OpenSubtitles {
 
@@ -40,15 +33,13 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
 
     private final XmlRpcClient client;
     private final ResponseParser parser;
-    private final ResponseObjectBuilderFactory builderFactory;
     private final FileHashCalculator hashCalculator;
 
     private LoginToken loginToken;
 
     public OpenSubtitlesImpl(URL serverUrl) {
         this.client = new RetriableXmlRpcClient(serverUrl);
-        this.parser = new ResponseParserImpl();
-        this.builderFactory = new ResponseObjectBuilderFactory();
+        this.parser = new ResponseParser();
         this.hashCalculator = new OpenSubtitlesFileHashCalculator();
     }
 
@@ -59,12 +50,16 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
 
         // note: no response status in server info
 
-        if (!(response instanceof Map)) {
+        if ((response instanceof Map)) {
+            try {
+                return parser.bind(new ServerInfo(), (Map) response);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
             //throw new Exception("Unable to get server info, malformed response");
             return null;
         }
-
-        return parser.parse(builderFactory.serverInfoBuilder(), response);
     }
 
     @Override
@@ -81,7 +76,11 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
         Object[] params = {user, pass, lang, useragent};
         Object response = client.execute("LogIn", params);
 
-        loginToken = parser.parse(builderFactory.loginTokenBuilder(), response);
+        try {
+            loginToken = parser.bind(new LoginToken(), (Map) response);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -141,7 +140,7 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
             videoProperties.put("moviehash", movieHash);
             videoProperties.put("moviebytesize", movieByteSize);
         } else if (tag != null && !imdbid.isEmpty()) {
-            // Tag is index of movie filename or subtitle file name, or release name -
+            // Tag is index of movie filename or subtitle file fieldName, or release fieldName -
             // currently we index more than 40.000.000 of tags.
             videoProperties.put("tag", tag);
         } else if (imdbid != null && !imdbid.isEmpty()) {
@@ -160,7 +159,11 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
         Object[] params = {loginToken.getToken(), videoParams};
         Object response = client.execute("SearchSubtitles", params);
 
-        return parser.parse(builderFactory.subtitleInfoListBuilder(parser), response);
+        try {
+            return parser.bindList(SubtitleInfo.class, (Map) response);
+        } catch (IllegalAccessException | InstantiationException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -182,7 +185,11 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
         Object[] params = {loginToken.getToken(), subtitleFileIDs};
         Object response = client.execute("DownloadSubtitles", params);
 
-        return parser.parse(builderFactory.subtitleFileListBuilder(parser), response);
+        try {
+            return parser.bindList(SubtitleFile.class, (Map) response);
+        } catch (IllegalAccessException | InstantiationException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -192,7 +199,11 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
         Object[] params = {loginToken.getToken(), query};
         Object response = client.execute("SearchMoviesOnIMDB", params);
 
-        return parser.parse(builderFactory.movieInfoListBuilder(parser), response);
+        try {
+            return parser.bindList(MovieInfo.class, (Map) response);
+        } catch (IllegalAccessException | InstantiationException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

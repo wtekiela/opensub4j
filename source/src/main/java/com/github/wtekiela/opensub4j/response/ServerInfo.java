@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2016 Wojciech Tekiela
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -14,42 +14,50 @@ package com.github.wtekiela.opensub4j.response;
 
 public class ServerInfo {
 
-    private final int loggedInUsersNo;
-    private final int onlineProgramUsersNo;
-    private final int onlineTotalUsersNo;
-    private final String application;
-    private final String contact;
-    private final long moviesAKANo;
-    private final long moviesTotalNo;
-    private final long subsDownloadsNo;
-    private final long subsFileNo;
-    private final long subsLangsNo;
-    private final long usersMaxAllTime;
-    private final long usersRegistered;
-    private final String websiteURL;
-    private final String xmlRpcURL;
-    private final double xmlRpcVersion;
+    @OpenSubtitlesApi(fieldName = "users_loggedin")
+    private int loggedInUsersNo;
 
-    public ServerInfo(int loggedInUsersNo, int onlineProgramUsersNo, int onlineTotalUsersNo, String application,
-                      String contact, long moviesAKANo, long moviesTotalNo, long subsDownloadsNo, long subsFileNo,
-                      long subsLangsNo, long usersMaxAllTime, long usersRegistered, String websiteURL, String xmlRpcURL,
-                      double xmlRpcVersion) {
-        this.loggedInUsersNo = loggedInUsersNo;
-        this.onlineProgramUsersNo = onlineProgramUsersNo;
-        this.onlineTotalUsersNo = onlineTotalUsersNo;
-        this.application = application;
-        this.contact = contact;
-        this.moviesAKANo = moviesAKANo;
-        this.moviesTotalNo = moviesTotalNo;
-        this.subsDownloadsNo = subsDownloadsNo;
-        this.subsFileNo = subsFileNo;
-        this.subsLangsNo = subsLangsNo;
-        this.usersMaxAllTime = usersMaxAllTime;
-        this.usersRegistered = usersRegistered;
-        this.websiteURL = websiteURL;
-        this.xmlRpcURL = xmlRpcURL;
-        this.xmlRpcVersion = xmlRpcVersion;
-    }
+    @OpenSubtitlesApi(fieldName = "users_online_program")
+    private int onlineProgramUsersNo;
+
+    @OpenSubtitlesApi(fieldName = "users_online_total")
+    private int onlineTotalUsersNo;
+
+    @OpenSubtitlesApi(fieldName = "application")
+    private String application;
+
+    @OpenSubtitlesApi(fieldName = "contact")
+    private String contact;
+
+    @OpenSubtitlesApi(fieldName = "movies_aka")
+    private long moviesAKANo;
+
+    @OpenSubtitlesApi(fieldName = "movies_total")
+    private long moviesTotalNo;
+
+    @OpenSubtitlesApi(fieldName = "subs_downloads")
+    private long subsDownloadsNo;
+
+    @OpenSubtitlesApi(fieldName = "subs_subtitle_files")
+    private long subsFileNo;
+
+    @OpenSubtitlesApi(fieldName = "total_subtitles_languages")
+    private long subsLangsNo;
+
+    @OpenSubtitlesApi(fieldName = "users_max_alltime")
+    private long usersMaxAllTime;
+
+    @OpenSubtitlesApi(fieldName = "users_registered")
+    private long usersRegistered;
+
+    @OpenSubtitlesApi(fieldName = "website_url")
+    private String websiteURL;
+
+    @OpenSubtitlesApi(fieldName = "xmlrpc_url")
+    private String xmlRpcURL;
+
+    @OpenSubtitlesApi(fieldName = "xmlrpc_version")
+    private String xmlRpcVersion;
 
     public int getLoggedInUsersNo() {
         return loggedInUsersNo;
@@ -107,7 +115,7 @@ public class ServerInfo {
         return xmlRpcURL;
     }
 
-    public double getXmlRpcVersion() {
+    public String getXmlRpcVersion() {
         return xmlRpcVersion;
     }
 

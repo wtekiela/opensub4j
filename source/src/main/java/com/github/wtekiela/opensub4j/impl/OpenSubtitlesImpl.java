@@ -15,10 +15,9 @@ package com.github.wtekiela.opensub4j.impl;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import com.github.wtekiela.opensub4j.operation.*;
 import com.github.wtekiela.opensub4j.response.*;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
@@ -29,8 +28,6 @@ import com.github.wtekiela.opensub4j.file.OpenSubtitlesFileHashCalculator;
 
 public class OpenSubtitlesImpl implements OpenSubtitles {
 
-    private static final String ANONYMOUS = "";
-
     private final XmlRpcClient client;
     private final ResponseParser parser;
     private final FileHashCalculator hashCalculator;
@@ -38,59 +35,43 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
     private LoginToken loginToken;
 
     public OpenSubtitlesImpl(URL serverUrl) {
-        this.client = new RetriableXmlRpcClient(serverUrl);
-        this.parser = new ResponseParser();
-        this.hashCalculator = new OpenSubtitlesFileHashCalculator();
+        this(new RetriableXmlRpcClient(serverUrl), new ResponseParser(), new OpenSubtitlesFileHashCalculator());
+    }
+
+    OpenSubtitlesImpl(XmlRpcClient client, ResponseParser parser, FileHashCalculator hashCalculator) {
+        this.client = client;
+        this.parser = parser;
+        this.hashCalculator = hashCalculator;
     }
 
     @Override
     public ServerInfo serverInfo() throws XmlRpcException {
-        Object[] params = {};
-        Object response = client.execute("ServerInfo", params);
-
         // note: no response status in server info
-
-        if ((response instanceof Map)) {
-            try {
-                return parser.bind(new ServerInfo(), (Map) response);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            //throw new Exception("Unable to get server info, malformed response");
-            return null;
-        }
+        Operation<ServerInfo> operation = new ServerInfoOperation();
+        return operation.execute(client, parser);
     }
 
     @Override
     public void login(String lang, String useragent) throws XmlRpcException {
-        login(ANONYMOUS, ANONYMOUS, lang, useragent);
+        login("", "", lang, useragent);
     }
 
     @Override
     public void login(String user, String pass, String lang, String useragent) throws XmlRpcException {
+        ensureNotLoggedIn();
+        loginToken = new LogInOperation(user, pass, lang, useragent).execute(client, parser);
+    }
+
+    private void ensureNotLoggedIn() {
         if (loginToken != null) {
             throw new IllegalStateException("Already logged in! Please log out first.");
-        }
-
-        Object[] params = {user, pass, lang, useragent};
-        Object response = client.execute("LogIn", params);
-
-        try {
-            loginToken = parser.bind(new LoginToken(), (Map) response);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
         }
     }
 
     @Override
     public void logout() throws XmlRpcException {
         ensureLoggedIn();
-
-        Object[] params = {loginToken.getToken()};
-        Object response = client.execute("LogOut", params);
-
-        loginToken = null;
+        new LogOutOperation(loginToken.getToken()).execute(client, parser);
     }
 
     private void ensureLoggedIn() {
@@ -102,22 +83,14 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
     @Override
     public void noop() throws XmlRpcException {
         ensureLoggedIn();
-
-        Object[] params = {loginToken.getToken()};
-        Object response = client.execute("NoOperation", params);
+        new NoopOperation().execute(client, parser);
     }
 
     @Override
     public List<SubtitleInfo> searchSubtitles(String lang, File file) throws IOException, XmlRpcException {
         ensureLoggedIn();
-
-        if (file == null) {
-            throw new IllegalArgumentException("File cannot be null!");
-        }
-
         String hash = hashCalculator.calculateHash(file);
         long size = file.length();
-
         return searchSubtitles(lang, hash, String.valueOf(size));
     }
 
@@ -125,45 +98,6 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
     public List<SubtitleInfo> searchSubtitles(String lang, String hash, String movieByteSize)
             throws XmlRpcException {
         return searchSubtitles(lang, hash, movieByteSize, null, null, null, null, null);
-    }
-
-    @Override
-    public List<SubtitleInfo> searchSubtitles(String lang, String movieHash, String movieByteSize, String imdbid,
-                                              String query, String season, String episode, String tag)
-            throws XmlRpcException {
-        ensureLoggedIn();
-
-        Map<String, String> videoProperties = new HashMap<>();
-        videoProperties.put("sublanguageid", lang);
-
-        if (movieHash != null && !movieHash.isEmpty() && movieByteSize != null && !movieByteSize.isEmpty()) {
-            videoProperties.put("moviehash", movieHash);
-            videoProperties.put("moviebytesize", movieByteSize);
-        } else if (tag != null && !imdbid.isEmpty()) {
-            // Tag is index of movie filename or subtitle file fieldName, or release fieldName -
-            // currently we index more than 40.000.000 of tags.
-            videoProperties.put("tag", tag);
-        } else if (imdbid != null && !imdbid.isEmpty()) {
-            videoProperties.put("imdbid", imdbid);
-        } else if (query != null && !query.isEmpty()) {
-            videoProperties.put("query", query);
-            if (season != null && !season.isEmpty()) {
-                videoProperties.put("season", season);
-            }
-            if (episode != null && !episode.isEmpty()) {
-                videoProperties.put("episode", episode);
-            }
-        }
-
-        Object[] videoParams = {videoProperties};
-        Object[] params = {loginToken.getToken(), videoParams};
-        Object response = client.execute("SearchSubtitles", params);
-
-        try {
-            return parser.bindList(SubtitleInfo.class, (Map) response);
-        } catch (IllegalAccessException | InstantiationException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -178,32 +112,25 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
     }
 
     @Override
+    public List<SubtitleInfo> searchSubtitles(String lang, String movieHash, String movieByteSize, String imdbid,
+                                              String query, String season, String episode, String tag) throws XmlRpcException {
+        ensureLoggedIn();
+        return new SearchOperation(loginToken.getToken(), lang, movieHash, movieByteSize, tag, imdbid, query, season, episode)
+                .execute(client, parser);
+    }
+
+    @Override
     public List<SubtitleFile> downloadSubtitles(int subtitleFileID) throws XmlRpcException {
         ensureLoggedIn();
-
-        Object[] subtitleFileIDs = {subtitleFileID};
-        Object[] params = {loginToken.getToken(), subtitleFileIDs};
-        Object response = client.execute("DownloadSubtitles", params);
-
-        try {
-            return parser.bindList(SubtitleFile.class, (Map) response);
-        } catch (IllegalAccessException | InstantiationException e) {
-            throw new RuntimeException(e);
-        }
+        return new DownloadSubtitlesOperation(loginToken.getToken(), subtitleFileID)
+                .execute(client, parser);
     }
 
     @Override
     public List<MovieInfo> searchMoviesOnImdb(String query) throws XmlRpcException {
         ensureLoggedIn();
-
-        Object[] params = {loginToken.getToken(), query};
-        Object response = client.execute("SearchMoviesOnIMDB", params);
-
-        try {
-            return parser.bindList(MovieInfo.class, (Map) response);
-        } catch (IllegalAccessException | InstantiationException e) {
-            throw new RuntimeException(e);
-        }
+        return new ImdbSearchOperation(loginToken.getToken(), query)
+                .execute(client, parser);
     }
 
 }

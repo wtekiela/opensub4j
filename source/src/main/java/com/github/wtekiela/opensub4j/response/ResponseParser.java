@@ -10,7 +10,7 @@ public class ResponseParser {
 
     public static final String LIST_DATA_KEY = "data";
 
-    public <T> List<T> bindList(Class<T> clazz, Map<String, Object[]> response) throws IllegalAccessException, InstantiationException {
+    public <T> List<T> bindList(Class<T> clazz, Map<String, Object[]> response) throws InstantiationException, IllegalAccessException {
         Object[] rawData = response.get(LIST_DATA_KEY);
         List<T> list = new ArrayList<>(rawData.length);
         for (Object obj : rawData) {
@@ -19,7 +19,10 @@ public class ResponseParser {
         return list;
     }
 
-    public <T> T bind(T instance, Map response) throws IllegalAccessException {
+    public <T> T bind(T instance, Map response) {
+        if (instance == null) {
+            return null;
+        }
         Field[] declaredFields = instance.getClass().getDeclaredFields();
         for (Field field : declaredFields) {
             handleField(instance, response, field);
@@ -27,7 +30,7 @@ public class ResponseParser {
         return instance;
     }
 
-    private <T> void handleField(T instance, Map response, Field field) throws IllegalAccessException {
+    private <T> void handleField(T instance, Map response, Field field) {
         ensureFieldIsAccessible(field);
         OpenSubtitlesApi annotation = field.getAnnotation(OpenSubtitlesApi.class);
         if (annotation != null) {
@@ -35,7 +38,7 @@ public class ResponseParser {
         }
     }
 
-    private <T> void handleAnnotatedField(T instance, Map response, Field field, OpenSubtitlesApi annotation) throws IllegalAccessException {
+    private <T> void handleAnnotatedField(T instance, Map response, Field field, OpenSubtitlesApi annotation) {
         String name = annotation.fieldName();
         Class<?> target = field.getType();
         Object value = response.get(name);
@@ -43,7 +46,11 @@ public class ResponseParser {
         if (needsStringConversion(target, source)) {
             value = parse(target, (String) value);
         }
-        set(target, value, instance, field);
+        try {
+            set(target, value, instance, field);
+        } catch (IllegalAccessException e) {
+            // @todo log warning
+        }
     }
 
     private boolean needsStringConversion(Class<?> target, Class<?> source) {

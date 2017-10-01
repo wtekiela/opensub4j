@@ -10,14 +10,25 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package com.github.wtekiela.opensub4j.operation;
+package com.github.wtekiela.opensub4j.impl;
 
-import com.github.wtekiela.opensub4j.response.ResponseParser;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 
-public interface Operation<T> {
+import java.util.Map;
 
-    T execute(XmlRpcClient client, ResponseParser parser) throws XmlRpcException;
+abstract class AbstractOperation<T> implements Operation<T> {
+
+    @Override
+    public T execute(XmlRpcClient client, ResponseParser parser) throws XmlRpcException {
+        Object response = client.execute(getMethodName(), getParams());
+        return parser.bind(getResponseObject(), (Map) response);
+    }
+
+    abstract String getMethodName();
+
+    abstract Object[] getParams();
+
+    abstract T getResponseObject();
 
 }

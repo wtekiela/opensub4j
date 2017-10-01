@@ -10,29 +10,13 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package com.github.wtekiela.opensub4j.operation;
+package com.github.wtekiela.opensub4j.impl;
 
-public class LogOutOperation extends AbstractOperation {
+import org.apache.xmlrpc.XmlRpcException;
+import org.apache.xmlrpc.client.XmlRpcClient;
 
-    private final String loginToken;
+public interface Operation<T> {
 
-    public LogOutOperation(String loginToken) {
-        this.loginToken = loginToken;
-    }
-
-    @Override
-    String getMethodName() {
-        return "LogOut";
-    }
-
-    @Override
-    Object[] getParams() {
-        return new Object[]{loginToken};
-    }
-
-    @Override
-    Object getResponseObject() {
-        return null;
-    }
+    T execute(XmlRpcClient client, ResponseParser parser) throws XmlRpcException;
 
 }

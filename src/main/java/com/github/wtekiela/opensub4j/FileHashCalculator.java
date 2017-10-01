@@ -10,25 +10,13 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package com.github.wtekiela.opensub4j.operation;
+package com.github.wtekiela.opensub4j;
 
-import com.github.wtekiela.opensub4j.response.ServerInfo;
+import java.io.File;
+import java.io.IOException;
 
-public class ServerInfoOperation extends AbstractOperation<ServerInfo> {
+public interface FileHashCalculator {
 
-    @Override
-    String getMethodName() {
-        return "ServerInfo";
-    }
-
-    @Override
-    Object[] getParams() {
-        return new Object[0];
-    }
-
-    @Override
-    ServerInfo getResponseObject() {
-        return new ServerInfo();
-    }
+    String calculateHash(File file) throws IOException;
 
 }

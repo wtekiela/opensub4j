@@ -4,6 +4,8 @@ import static org.testng.Assert.*;
 
 import java.io.File;
 
+import com.github.wtekiela.opensub4j.FileHashCalculator;
+import com.github.wtekiela.opensub4j.impl.OpenSubtitlesFileHashCalculator;
 import org.testng.annotations.Test;
 
 public class OpenSubtitlesFileHashCalculatorTest {

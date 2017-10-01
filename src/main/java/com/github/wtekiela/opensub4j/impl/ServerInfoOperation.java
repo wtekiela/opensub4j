@@ -10,37 +10,25 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package com.github.wtekiela.opensub4j.operation;
+package com.github.wtekiela.opensub4j.impl;
 
-import com.github.wtekiela.opensub4j.response.LoginToken;
+import com.github.wtekiela.opensub4j.response.ServerInfo;
 
-public class LogInOperation extends AbstractOperation<LoginToken> {
-
-    private final String user;
-    private final String pass;
-    private final String lang;
-    private final String useragent;
-
-    public LogInOperation(String user, String pass, String lang, String useragent) {
-        this.user = user;
-        this.pass = pass;
-        this.lang = lang;
-        this.useragent = useragent;
-    }
+class ServerInfoOperation extends AbstractOperation<ServerInfo> {
 
     @Override
     String getMethodName() {
-        return "LogIn";
+        return "ServerInfo";
     }
 
     @Override
     Object[] getParams() {
-        return new Object[]{user, pass, lang, useragent};
+        return new Object[0];
     }
 
     @Override
-    LoginToken getResponseObject() {
-        return new LoginToken();
+    ServerInfo getResponseObject() {
+        return new ServerInfo();
     }
 
 }

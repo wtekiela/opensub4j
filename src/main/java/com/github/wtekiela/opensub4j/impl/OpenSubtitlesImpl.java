@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2017 Wojciech Tekiela
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -17,14 +17,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import com.github.wtekiela.opensub4j.operation.*;
 import com.github.wtekiela.opensub4j.response.*;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 
-import com.github.wtekiela.opensub4j.api.OpenSubtitles;
-import com.github.wtekiela.opensub4j.file.FileHashCalculator;
-import com.github.wtekiela.opensub4j.file.OpenSubtitlesFileHashCalculator;
+import com.github.wtekiela.opensub4j.OpenSubtitles;
+import com.github.wtekiela.opensub4j.FileHashCalculator;
 
 public class OpenSubtitlesImpl implements OpenSubtitles {
 
@@ -34,8 +32,22 @@ public class OpenSubtitlesImpl implements OpenSubtitles {
 
     private LoginToken loginToken;
 
+    /**
+     * TODO docs
+     * @param serverUrl
+     */
     public OpenSubtitlesImpl(URL serverUrl) {
         this(new RetriableXmlRpcClient(serverUrl), new ResponseParser(), new OpenSubtitlesFileHashCalculator());
+    }
+
+    /**
+     * TODO docs
+     * @param serverUrl
+     * @param maxAttempts
+     * @param interval
+     */
+    public OpenSubtitlesImpl(URL serverUrl, int maxAttempts, int interval) {
+        this(new RetriableXmlRpcClient(serverUrl, maxAttempts, interval), new ResponseParser(), new OpenSubtitlesFileHashCalculator());
     }
 
     OpenSubtitlesImpl(XmlRpcClient client, ResponseParser parser, FileHashCalculator hashCalculator) {

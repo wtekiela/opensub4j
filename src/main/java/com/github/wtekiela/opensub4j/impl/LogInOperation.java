@@ -10,33 +10,37 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package com.github.wtekiela.opensub4j.operation;
+package com.github.wtekiela.opensub4j.impl;
 
-import com.github.wtekiela.opensub4j.response.MovieInfo;
+import com.github.wtekiela.opensub4j.response.LoginToken;
 
-public class ImdbSearchOperation extends ListOperation<MovieInfo> {
+class LogInOperation extends AbstractOperation<LoginToken> {
 
-    private final String loginToken;
-    private final String query;
+    private final String user;
+    private final String pass;
+    private final String lang;
+    private final String useragent;
 
-    public ImdbSearchOperation(String loginToken, String query) {
-        this.loginToken = loginToken;
-        this.query = query;
+    public LogInOperation(String user, String pass, String lang, String useragent) {
+        this.user = user;
+        this.pass = pass;
+        this.lang = lang;
+        this.useragent = useragent;
     }
 
     @Override
     String getMethodName() {
-        return "SearchMoviesOnIMDB";
+        return "LogIn";
     }
 
     @Override
     Object[] getParams() {
-        return new Object[]{loginToken, query};
+        return new Object[]{user, pass, lang, useragent};
     }
 
     @Override
-    Class<MovieInfo> getResponseClass() {
-        return MovieInfo.class;
+    LoginToken getResponseObject() {
+        return new LoginToken();
     }
 
 }

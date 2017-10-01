@@ -10,35 +10,29 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package com.github.wtekiela.opensub4j.operation;
+package com.github.wtekiela.opensub4j.impl;
 
-import com.github.wtekiela.opensub4j.response.SubtitleFile;
-
-public class DownloadSubtitlesOperation extends ListOperation<SubtitleFile> {
+class LogOutOperation extends AbstractOperation {
 
     private final String loginToken;
-    private final int subtitleFileID;
 
-    public DownloadSubtitlesOperation(String loginToken, int subtitleFileID) {
+    public LogOutOperation(String loginToken) {
         this.loginToken = loginToken;
-        this.subtitleFileID = subtitleFileID;
     }
 
     @Override
     String getMethodName() {
-        return "DownloadSubtitles";
+        return "LogOut";
     }
 
     @Override
     Object[] getParams() {
-        Object[] subtitleFileIDs = {subtitleFileID};
-        Object[] params = {loginToken, subtitleFileIDs};
-        return params;
+        return new Object[]{loginToken};
     }
 
     @Override
-    Class<SubtitleFile> getResponseClass() {
-        return SubtitleFile.class;
+    Object getResponseObject() {
+        return null;
     }
 
 }

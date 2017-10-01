@@ -15,60 +15,122 @@ task wrapper(type: Wrapper) {
     distributionType = Wrapper.DistributionType.ALL
 }
 
-allprojects {
+group = 'com.github.wtekiela'
+version = '0.2.0-SNAPSHOT'
 
-    group = 'com.github.wtekiela'
-    version = '0.2.0-SNAPSHOT'
+apply plugin: 'java'
+apply plugin: 'license'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
-    apply plugin: 'java'
-    apply plugin: 'license'
-    apply plugin: 'maven'
-    apply plugin: 'signing'
+sourceCompatibility = 1.8
 
-    sourceCompatibility = 1.8
+license {
+    header rootProject.file('LICENSE')
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.name = 'Wojciech Tekiela'
 
-    license {
-        header rootProject.file('LICENSE')
-        ext.year = Calendar.getInstance().get(Calendar.YEAR)
-        ext.name = 'Wojciech Tekiela'
+    include "**/*.java"
+    exclude "**/*Test.java"
+}
 
-        include "**/*.java"
-        exclude "**/*Test.java"
+repositories {
+    mavenCentral()
+}
+
+test {
+    useTestNG()
+
+    beforeTest { descriptor ->
+        logger.lifecycle("Running test: " + descriptor)
     }
 
+    // listen to standard out and standard error of the test JVM(s)
+    onOutput { descriptor, event ->
+        logger.lifecycle(event.message)
+    }
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+archivesBaseName = 'opensub4j'
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.+'
+    compile 'org.apache.xmlrpc:xmlrpc-client:3.1.+'
+    testCompile 'org.slf4j:slf4j-simple:1.7.+'
+    testCompile 'org.testng:testng:6.9.+'
+}
+
+jar {
+    manifest {
+        attributes(
+                "Specification-Title": "OpenSubtitles API for Java",
+                "Specification-Version": version,
+                "Specification-Vendor": "Wojciech Tekiela",
+                "Implementation-Title": "OpenSub4J",
+                "Implementation-Version": version,
+                "Implementation-Vendor": "Wojciech Tekiela"
+        )
+    }
+}
+
+uploadArchives {
     repositories {
-        mavenCentral()
-    }
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-    test {
-        useTestNG()
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
 
-        beforeTest { descriptor ->
-            logger.lifecycle("Running test: " + descriptor)
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'OpenSub4J'
+                packaging 'jar'
+                description 'Java library providing an object-oriented abstraction ' +
+                        'over XML-RPC opensubtitles.org API.'
+                url 'https://github.com/wtekiela/opensub4j'
+
+                scm {
+                    connection 'scm:git:git@github.com/wtekiela/opensub4j.git'
+                    developerConnection 'scm:git:git@github.com/wtekiela/opensub4j.git'
+                    url 'git@github.com/wtekiela/opensub4j.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        name 'Wojciech Tekiela'
+                        email 'wojciech@tekiela.pl'
+                    }
+                }
+            }
         }
-
-        // listen to standard out and standard error of the test JVM(s)
-        onOutput { descriptor, event ->
-            logger.lifecycle(event.message)
-        }
     }
-
-    task javadocJar(type: Jar) {
-        classifier = 'javadoc'
-        from javadoc
-    }
-
-    task sourcesJar(type: Jar) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
-
-    artifacts {
-        archives javadocJar, sourcesJar
-    }
-
-    signing {
-        sign configurations.archives
-    }
-
 }

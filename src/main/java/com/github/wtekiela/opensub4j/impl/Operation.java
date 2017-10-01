@@ -15,7 +15,7 @@ package com.github.wtekiela.opensub4j.impl;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 
-public interface Operation<T> {
+interface Operation<T> {
 
     T execute(XmlRpcClient client, ResponseParser parser) throws XmlRpcException;
 

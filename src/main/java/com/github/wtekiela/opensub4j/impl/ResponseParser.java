@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ResponseParser {
+class ResponseParser {
 
     public static final String LIST_DATA_KEY = "data";
 

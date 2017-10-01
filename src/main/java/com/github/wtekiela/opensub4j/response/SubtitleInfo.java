@@ -14,34 +14,34 @@ package com.github.wtekiela.opensub4j.response;
 
 public class SubtitleInfo {
 
-    @OpenSubtitlesApi(fieldName = "IDSubtitle")
+    @OpenSubtitlesApiSpec(fieldName = "IDSubtitle")
     private int id;
 
-    @OpenSubtitlesApi(fieldName = "IDSubtitleFile")
+    @OpenSubtitlesApiSpec(fieldName = "IDSubtitleFile")
     private int subtitleFileId;
 
-    @OpenSubtitlesApi(fieldName = "subDownloadsCnt")
+    @OpenSubtitlesApiSpec(fieldName = "subDownloadsCnt")
     private int downloadsNo;
 
-    @OpenSubtitlesApi(fieldName = "languageName")
+    @OpenSubtitlesApiSpec(fieldName = "languageName")
     private String language;
 
-    @OpenSubtitlesApi(fieldName = "subFileName")
+    @OpenSubtitlesApiSpec(fieldName = "subFileName")
     private String fileName;
 
-    @OpenSubtitlesApi(fieldName = "subFormat")
+    @OpenSubtitlesApiSpec(fieldName = "subFormat")
     private String format;
 
-    @OpenSubtitlesApi(fieldName = "subtitlesLink")
+    @OpenSubtitlesApiSpec(fieldName = "subtitlesLink")
     private String osLink;
 
-    @OpenSubtitlesApi(fieldName = "subDownloadLink")
+    @OpenSubtitlesApiSpec(fieldName = "subDownloadLink")
     private String downloadLink;
 
-    @OpenSubtitlesApi(fieldName = "zipDownloadLink")
+    @OpenSubtitlesApiSpec(fieldName = "zipDownloadLink")
     private String zipDownloadLink;
 
-    @OpenSubtitlesApi(fieldName = "subEncoding")
+    @OpenSubtitlesApiSpec(fieldName = "subEncoding")
     private String encoding;
 
     public SubtitleInfo() {

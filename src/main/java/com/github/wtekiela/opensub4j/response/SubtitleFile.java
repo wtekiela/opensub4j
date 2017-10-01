@@ -27,10 +27,10 @@ public class SubtitleFile {
 
     public static final String DEFAULT_CHARSET = Charset.defaultCharset().name();
 
-    @OpenSubtitlesApi(fieldName = "idsubtitlefile")
+    @OpenSubtitlesApiSpec(fieldName = "idsubtitlefile")
     private int id;
 
-    @OpenSubtitlesApi(fieldName = "data")
+    @OpenSubtitlesApiSpec(fieldName = "data")
     private String encodedContent;
 
     private Map<String, Content> contentCache = new HashMap<>();

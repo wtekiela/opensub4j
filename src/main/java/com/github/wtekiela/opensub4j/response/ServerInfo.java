@@ -14,49 +14,49 @@ package com.github.wtekiela.opensub4j.response;
 
 public class ServerInfo {
 
-    @OpenSubtitlesApi(fieldName = "users_loggedin")
+    @OpenSubtitlesApiSpec(fieldName = "users_loggedin")
     private int loggedInUsersNo;
 
-    @OpenSubtitlesApi(fieldName = "users_online_program")
+    @OpenSubtitlesApiSpec(fieldName = "users_online_program")
     private int onlineProgramUsersNo;
 
-    @OpenSubtitlesApi(fieldName = "users_online_total")
+    @OpenSubtitlesApiSpec(fieldName = "users_online_total")
     private int onlineTotalUsersNo;
 
-    @OpenSubtitlesApi(fieldName = "application")
+    @OpenSubtitlesApiSpec(fieldName = "application")
     private String application;
 
-    @OpenSubtitlesApi(fieldName = "contact")
+    @OpenSubtitlesApiSpec(fieldName = "contact")
     private String contact;
 
-    @OpenSubtitlesApi(fieldName = "movies_aka")
+    @OpenSubtitlesApiSpec(fieldName = "movies_aka")
     private long moviesAKANo;
 
-    @OpenSubtitlesApi(fieldName = "movies_total")
+    @OpenSubtitlesApiSpec(fieldName = "movies_total")
     private long moviesTotalNo;
 
-    @OpenSubtitlesApi(fieldName = "subs_downloads")
+    @OpenSubtitlesApiSpec(fieldName = "subs_downloads")
     private long subsDownloadsNo;
 
-    @OpenSubtitlesApi(fieldName = "subs_subtitle_files")
+    @OpenSubtitlesApiSpec(fieldName = "subs_subtitle_files")
     private long subsFileNo;
 
-    @OpenSubtitlesApi(fieldName = "total_subtitles_languages")
+    @OpenSubtitlesApiSpec(fieldName = "total_subtitles_languages")
     private long subsLangsNo;
 
-    @OpenSubtitlesApi(fieldName = "users_max_alltime")
+    @OpenSubtitlesApiSpec(fieldName = "users_max_alltime")
     private long usersMaxAllTime;
 
-    @OpenSubtitlesApi(fieldName = "users_registered")
+    @OpenSubtitlesApiSpec(fieldName = "users_registered")
     private long usersRegistered;
 
-    @OpenSubtitlesApi(fieldName = "website_url")
+    @OpenSubtitlesApiSpec(fieldName = "website_url")
     private String websiteURL;
 
-    @OpenSubtitlesApi(fieldName = "xmlrpc_url")
+    @OpenSubtitlesApiSpec(fieldName = "xmlrpc_url")
     private String xmlRpcURL;
 
-    @OpenSubtitlesApi(fieldName = "xmlrpc_version")
+    @OpenSubtitlesApiSpec(fieldName = "xmlrpc_version")
     private String xmlRpcVersion;
 
     public int getLoggedInUsersNo() {

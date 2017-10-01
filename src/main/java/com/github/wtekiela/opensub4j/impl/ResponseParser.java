@@ -12,7 +12,7 @@
  */
 package com.github.wtekiela.opensub4j.impl;
 
-import com.github.wtekiela.opensub4j.response.OpenSubtitlesApi;
+import com.github.wtekiela.opensub4j.response.OpenSubtitlesApiSpec;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -46,13 +46,13 @@ public class ResponseParser {
 
     private <T> void handleField(T instance, Map response, Field field) {
         ensureFieldIsAccessible(field);
-        OpenSubtitlesApi annotation = field.getAnnotation(OpenSubtitlesApi.class);
+        OpenSubtitlesApiSpec annotation = field.getAnnotation(OpenSubtitlesApiSpec.class);
         if (annotation != null) {
             handleAnnotatedField(instance, response, field, annotation);
         }
     }
 
-    private <T> void handleAnnotatedField(T instance, Map response, Field field, OpenSubtitlesApi annotation) {
+    private <T> void handleAnnotatedField(T instance, Map response, Field field, OpenSubtitlesApiSpec annotation) {
         String name = annotation.fieldName();
         Class<?> target = field.getType();
         Object value = response.get(name);

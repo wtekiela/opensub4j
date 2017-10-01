@@ -14,10 +14,10 @@ package com.github.wtekiela.opensub4j.response;
 
 public class MovieInfo {
 
-    @OpenSubtitlesApi(fieldName = "id")
+    @OpenSubtitlesApiSpec(fieldName = "id")
     private int id;
 
-    @OpenSubtitlesApi(fieldName = "title")
+    @OpenSubtitlesApiSpec(fieldName = "title")
     private String title;
 
     public int getId() {

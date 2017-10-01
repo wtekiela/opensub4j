@@ -38,6 +38,18 @@ repositories {
     mavenCentral()
 }
 
+archivesBaseName = 'opensub4j'
+
+dependencies {
+
+    compile 'org.slf4j:slf4j-api:1.7.+'
+    compile 'org.apache.xmlrpc:xmlrpc-client:3.1.+'
+
+    testCompile 'org.slf4j:slf4j-simple:1.7.+'
+    testCompile 'org.testng:testng:6.9.+'
+
+}
+
 test {
     useTestNG()
 
@@ -48,6 +60,19 @@ test {
     // listen to standard out and standard error of the test JVM(s)
     onOutput { descriptor, event ->
         logger.lifecycle(event.message)
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+                "Specification-Title": "OpenSubtitles API for Java",
+                "Specification-Version": version,
+                "Specification-Vendor": "Wojciech Tekiela",
+                "Implementation-Title": "OpenSub4J",
+                "Implementation-Version": version,
+                "Implementation-Vendor": "Wojciech Tekiela"
+        )
     }
 }
 
@@ -67,28 +92,6 @@ artifacts {
 
 signing {
     sign configurations.archives
-}
-
-archivesBaseName = 'opensub4j'
-
-dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.+'
-    compile 'org.apache.xmlrpc:xmlrpc-client:3.1.+'
-    testCompile 'org.slf4j:slf4j-simple:1.7.+'
-    testCompile 'org.testng:testng:6.9.+'
-}
-
-jar {
-    manifest {
-        attributes(
-                "Specification-Title": "OpenSubtitles API for Java",
-                "Specification-Version": version,
-                "Specification-Vendor": "Wojciech Tekiela",
-                "Implementation-Title": "OpenSub4J",
-                "Implementation-Version": version,
-                "Implementation-Vendor": "Wojciech Tekiela"
-        )
-    }
 }
 
 uploadArchives {

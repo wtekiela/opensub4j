@@ -1,4 +1,4 @@
-package com.github.wtekiela.opensub4j.file;
+package com.github.wtekiela.opensub4j.impl;
 
 import static org.testng.Assert.*;
 

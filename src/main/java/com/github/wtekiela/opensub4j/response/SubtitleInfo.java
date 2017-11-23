@@ -20,28 +20,28 @@ public class SubtitleInfo {
     @OpenSubtitlesApiSpec(fieldName = "IDSubtitleFile")
     private int subtitleFileId;
 
-    @OpenSubtitlesApiSpec(fieldName = "subDownloadsCnt")
+    @OpenSubtitlesApiSpec(fieldName = "SubDownloadsCnt")
     private int downloadsNo;
 
-    @OpenSubtitlesApiSpec(fieldName = "languageName")
+    @OpenSubtitlesApiSpec(fieldName = "LanguageName")
     private String language;
 
-    @OpenSubtitlesApiSpec(fieldName = "subFileName")
+    @OpenSubtitlesApiSpec(fieldName = "SubFileName")
     private String fileName;
 
-    @OpenSubtitlesApiSpec(fieldName = "subFormat")
+    @OpenSubtitlesApiSpec(fieldName = "SubFormat")
     private String format;
 
-    @OpenSubtitlesApiSpec(fieldName = "subtitlesLink")
+    @OpenSubtitlesApiSpec(fieldName = "SubtitlesLink")
     private String osLink;
 
-    @OpenSubtitlesApiSpec(fieldName = "subDownloadLink")
+    @OpenSubtitlesApiSpec(fieldName = "SubDownloadLink")
     private String downloadLink;
 
-    @OpenSubtitlesApiSpec(fieldName = "zipDownloadLink")
+    @OpenSubtitlesApiSpec(fieldName = "ZipDownloadLink")
     private String zipDownloadLink;
 
-    @OpenSubtitlesApiSpec(fieldName = "subEncoding")
+    @OpenSubtitlesApiSpec(fieldName = "SubEncoding")
     private String encoding;
 
     public SubtitleInfo() {
@@ -99,5 +99,21 @@ public class SubtitleInfo {
 
     public String getEncoding() {
         return encoding;
+    }
+
+    @Override
+    public String toString() {
+        return "SubtitleInfo{" +
+                "id=" + id +
+                ", subtitleFileId=" + subtitleFileId +
+                ", downloadsNo=" + downloadsNo +
+                ", language='" + language + '\'' +
+                ", fileName='" + fileName + '\'' +
+                ", format='" + format + '\'' +
+                ", osLink='" + osLink + '\'' +
+                ", downloadLink='" + downloadLink + '\'' +
+                ", zipDownloadLink='" + zipDownloadLink + '\'' +
+                ", encoding='" + encoding + '\'' +
+                '}';
     }
 }

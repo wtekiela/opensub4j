@@ -53,10 +53,14 @@ class ResponseParser {
     }
 
     private <T> void handleAnnotatedField(T instance, Map response, Field field, OpenSubtitlesApiSpec annotation) {
-        String name = annotation.fieldName();
-        Class<?> target = field.getType();
-        Object value = response.get(name);
+        Object value = response.get(annotation.fieldName());
+        if (value == null) {
+            return;
+        }
+
         Class<?> source = value.getClass();
+        Class<?> target = field.getType();
+
         if (needsStringConversion(target, source)) {
             value = parse(target, (String) value);
         }

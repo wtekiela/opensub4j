@@ -34,20 +34,20 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     private LoginToken loginToken;
 
     /**
-     * TODO docs
+     * Client for opensubtitles.org xml-rpc API
      *
-     * @param serverUrl
+     * @param serverUrl API URL
      */
     public OpenSubtitlesClientImpl(URL serverUrl) {
         this(new RetriableXmlRpcClient(serverUrl), new ResponseParser(), new OpenSubtitlesFileHashCalculator());
     }
 
     /**
-     * TODO docs
+     * Client for opensubtitles.org xml-rpc API
      *
-     * @param serverUrl
-     * @param maxAttempts
-     * @param interval
+     * @param serverUrl API URL
+     * @param maxAttempts maximum number of retries for each request before throwing an exception
+     * @param interval interval between retries
      */
     public OpenSubtitlesClientImpl(URL serverUrl, int maxAttempts, int interval) {
         this(new RetriableXmlRpcClient(serverUrl, maxAttempts, interval), new ResponseParser(), new OpenSubtitlesFileHashCalculator());

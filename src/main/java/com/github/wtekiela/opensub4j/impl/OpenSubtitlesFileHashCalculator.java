@@ -12,7 +12,7 @@
  */
 package com.github.wtekiela.opensub4j.impl;
 
-import com.github.wtekiela.opensub4j.FileHashCalculator;
+import com.github.wtekiela.opensub4j.api.FileHashCalculator;
 
 import java.io.File;
 import java.io.FileInputStream;

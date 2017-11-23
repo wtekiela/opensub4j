@@ -10,7 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package com.github.wtekiela.opensub4j.impl;
+package com.github.wtekiela.opensub4j.xmlrpc.client;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class RetriableXmlRpcClient extends XmlRpcClient {
+public class RetriableXmlRpcClient extends XmlRpcClient {
 
     private final Logger logger = LoggerFactory.getLogger(RetriableXmlRpcClient.class);
 

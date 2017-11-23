@@ -17,12 +17,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import com.github.wtekiela.opensub4j.OpenSubtitlesClient;
+import com.github.wtekiela.opensub4j.api.OpenSubtitlesClient;
 import com.github.wtekiela.opensub4j.response.*;
+import com.github.wtekiela.opensub4j.xmlrpc.client.RetriableXmlRpcClient;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 
-import com.github.wtekiela.opensub4j.FileHashCalculator;
+import com.github.wtekiela.opensub4j.api.FileHashCalculator;
 
 public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
 

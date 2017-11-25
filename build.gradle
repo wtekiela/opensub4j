@@ -40,13 +40,27 @@ repositories {
 
 archivesBaseName = 'opensub4j'
 
+sourceSets {
+    integTest {
+        compileClasspath += main.output
+        runtimeClasspath += main.output
+    }
+}
+
+configurations {
+    integTestCompile.extendsFrom testCompile
+    integTestImplementation.extendsFrom testImplementation
+    integTestRuntime.extendsFrom testRuntime
+}
+
 dependencies {
 
     compile 'org.slf4j:slf4j-api:1.7.+'
     compile 'org.apache.xmlrpc:xmlrpc-client:3.1.+'
 
-    testCompile 'org.slf4j:slf4j-simple:1.7.+'
     testCompile 'org.testng:testng:6.9.+'
+
+    testRuntime 'org.slf4j:slf4j-simple:1.7.+'
 
 }
 
@@ -54,7 +68,7 @@ test {
     useTestNG()
 
     beforeTest { descriptor ->
-        logger.lifecycle("Running test: " + descriptor)
+        logger.lifecycle("Running unit test: " + descriptor)
     }
 
     // listen to standard out and standard error of the test JVM(s)
@@ -62,6 +76,27 @@ test {
         logger.lifecycle(event.message)
     }
 }
+
+task integTest(type: Test, dependsOn: jar) {
+    group 'verification'
+    description 'Runs integration tests.'
+    testClassesDirs = sourceSets.integTest.output.classesDirs
+    classpath = sourceSets.integTest.runtimeClasspath
+    systemProperties['jar.path'] = jar.archivePath
+
+    useTestNG()
+
+    beforeTest { descriptor ->
+        logger.lifecycle("Running integration test: " + descriptor)
+    }
+
+    // listen to standard out and standard error of the test JVM(s)
+    onOutput { descriptor, event ->
+        logger.lifecycle(event.message)
+    }
+}
+
+check.dependsOn integTest
 
 jar {
     manifest {
@@ -77,11 +112,13 @@ jar {
 }
 
 task javadocJar(type: Jar) {
+    group 'build'
     classifier = 'javadoc'
     from javadoc
 }
 
 task sourcesJar(type: Jar) {
+    group 'build'
     classifier = 'sources'
     from sourceSets.main.allSource
 }

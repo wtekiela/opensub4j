@@ -39,20 +39,20 @@ class ResponseParser {
         }
         Field[] declaredFields = instance.getClass().getDeclaredFields();
         for (Field field : declaredFields) {
-            handleField(instance, response, field);
+            bindField(instance, response, field);
         }
         return instance;
     }
 
-    private <T> void handleField(T instance, Map response, Field field) {
+    private <T> void bindField(T instance, Map response, Field field) {
         ensureFieldIsAccessible(field);
         OpenSubtitlesApiSpec annotation = field.getAnnotation(OpenSubtitlesApiSpec.class);
         if (annotation != null) {
-            handleAnnotatedField(instance, response, field, annotation);
+            executeFieldBinding(instance, response, field, annotation);
         }
     }
 
-    private <T> void handleAnnotatedField(T instance, Map response, Field field, OpenSubtitlesApiSpec annotation) {
+    private <T> void executeFieldBinding(T instance, Map response, Field field, OpenSubtitlesApiSpec annotation) {
         Object value = response.get(annotation.fieldName());
         if (value == null) {
             return;

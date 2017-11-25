@@ -12,15 +12,15 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
-public class Reply {
+public class Response {
 
     @OpenSubtitlesApiSpec(fieldName = "status")
-    private ReplyStatus status;
+    private ResponseStatus status;
 
     @OpenSubtitlesApiSpec(fieldName = "seconds")
     private double seconds;
 
-    public ReplyStatus getStatus() {
+    public ResponseStatus getStatus() {
         return status;
     }
 

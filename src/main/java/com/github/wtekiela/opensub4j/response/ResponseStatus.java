@@ -12,14 +12,14 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
-public class ReplyStatus {
+public class ResponseStatus {
 
-    public static final ReplyStatus OK = new ReplyStatus("200 OK");
+    public static final ResponseStatus OK = new ResponseStatus("200 OK");
 
     private final int code;
     private final String message;
 
-    public ReplyStatus(String value) {
+    public ResponseStatus(String value) {
         String[] parts = value.split(" ", 2);
         code = Integer.valueOf(parts[0]);
         message = parts[1];
@@ -38,7 +38,7 @@ public class ReplyStatus {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ReplyStatus that = (ReplyStatus) o;
+        ResponseStatus that = (ResponseStatus) o;
 
         return code == that.code;
     }

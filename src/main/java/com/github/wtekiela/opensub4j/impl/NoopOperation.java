@@ -14,6 +14,12 @@ package com.github.wtekiela.opensub4j.impl;
 
 class NoopOperation extends AbstractOperation {
 
+    private String loginToken;
+
+    public NoopOperation(String loginToken) {
+        this.loginToken = loginToken;
+    }
+
     @Override
     String getMethodName() {
         return "NoOperation";
@@ -21,11 +27,13 @@ class NoopOperation extends AbstractOperation {
 
     @Override
     Object[] getParams() {
-        return new Object[0];
+        Object[] params = {loginToken};
+        return params;
     }
 
     @Override
     Object getResponseObject() {
         return null;
     }
+
 }

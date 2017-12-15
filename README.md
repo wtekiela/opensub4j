@@ -15,6 +15,13 @@ dependencies {
 or to the latest build:
 
 ```
+repositories {
+	maven {
+		url 'https://oss.sonatype.org/content/repositories/snapshots/'
+	}
+	mavenCentral()
+}
+
 dependencies {
     compile 'com.github.wtekiela:opensub4j:0.2.0-SNAPSHOT'
 }

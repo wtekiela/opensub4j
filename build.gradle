@@ -1,18 +1,15 @@
 buildscript {
-
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:+'
-    }
-
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:+'
+	}
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.3.1'
-    distributionType = Wrapper.DistributionType.ALL
+	gradleVersion = '4.7'
+	distributionType = Wrapper.DistributionType.ALL
 }
 
 group = 'com.github.wtekiela'
@@ -26,151 +23,151 @@ apply plugin: 'signing'
 sourceCompatibility = 1.8
 
 license {
-    header rootProject.file('LICENSE')
-    ext.year = Calendar.getInstance().get(Calendar.YEAR)
-    ext.name = 'Wojciech Tekiela'
+	header rootProject.file('LICENSE')
+	ext.year = Calendar.getInstance().get(Calendar.YEAR)
+	ext.name = 'Wojciech Tekiela'
 
-    include "**/*.java"
-    exclude "**/*Test.java"
+	include "**/*.java"
+	exclude "**/*Test.java"
 }
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 archivesBaseName = 'opensub4j'
 
 sourceSets {
-    integTest {
-        compileClasspath += main.output
-        runtimeClasspath += main.output
-    }
+	integTest {
+		compileClasspath += main.output
+		runtimeClasspath += main.output
+	}
 }
 
 configurations {
-    integTestCompile.extendsFrom testCompile
-    integTestImplementation.extendsFrom testImplementation
-    integTestRuntime.extendsFrom testRuntime
+	integTestCompile.extendsFrom testCompile
+	integTestImplementation.extendsFrom testImplementation
+	integTestRuntime.extendsFrom testRuntime
 }
 
 dependencies {
 
-    compile 'org.slf4j:slf4j-api:1.7.+'
-    compile 'org.apache.xmlrpc:xmlrpc-client:3.1.+'
+	compile 'org.slf4j:slf4j-api:1.7.+'
+	compile 'org.apache.xmlrpc:xmlrpc-client:3.1.+'
 
-    testCompile 'org.testng:testng:6.9.+'
+	testCompile 'org.testng:testng:6.9.+'
 
-    testRuntime 'org.slf4j:slf4j-simple:1.7.+'
+	testRuntime 'org.slf4j:slf4j-simple:1.7.+'
 
 }
 
 test {
-    useTestNG()
+	useTestNG()
 
-    beforeTest { descriptor ->
-        logger.lifecycle("Running unit test: " + descriptor)
-    }
+	beforeTest { descriptor ->
+		logger.lifecycle("Running unit test: " + descriptor)
+	}
 
-    // listen to standard out and standard error of the test JVM(s)
-    onOutput { descriptor, event ->
-        logger.lifecycle(event.message)
-    }
+	// listen to standard out and standard error of the test JVM(s)
+	onOutput { descriptor, event ->
+		logger.lifecycle(event.message)
+	}
 }
 
 task integTest(type: Test, dependsOn: jar) {
-    group 'verification'
-    description 'Runs integration tests.'
-    testClassesDirs = sourceSets.integTest.output.classesDirs
-    classpath = sourceSets.integTest.runtimeClasspath
-    systemProperties['jar.path'] = jar.archivePath
+	group 'verification'
+	description 'Runs integration tests.'
+	testClassesDirs = sourceSets.integTest.output.classesDirs
+	classpath = sourceSets.integTest.runtimeClasspath
+	systemProperties['jar.path'] = jar.archivePath
 
-    useTestNG()
+	useTestNG()
 
-    beforeTest { descriptor ->
-        logger.lifecycle("Running integration test: " + descriptor)
-    }
+	beforeTest { descriptor ->
+		logger.lifecycle("Running integration test: " + descriptor)
+	}
 
-    // listen to standard out and standard error of the test JVM(s)
-    onOutput { descriptor, event ->
-        logger.lifecycle(event.message)
-    }
+	// listen to standard out and standard error of the test JVM(s)
+	onOutput { descriptor, event ->
+		logger.lifecycle(event.message)
+	}
 }
 
 check.dependsOn integTest
 
 jar {
-    manifest {
-        attributes(
-                "Specification-Title": "OpenSubtitles API for Java",
-                "Specification-Version": version,
-                "Specification-Vendor": "Wojciech Tekiela",
-                "Implementation-Title": "OpenSub4J",
-                "Implementation-Version": version,
-                "Implementation-Vendor": "Wojciech Tekiela"
-        )
-    }
+	manifest {
+		attributes(
+				"Specification-Title": "OpenSubtitles API for Java",
+				"Specification-Version": version,
+				"Specification-Vendor": "Wojciech Tekiela",
+				"Implementation-Title": "OpenSub4J",
+				"Implementation-Version": version,
+				"Implementation-Vendor": "Wojciech Tekiela"
+		)
+	}
 }
 
 task javadocJar(type: Jar) {
-    group 'build'
-    classifier = 'javadoc'
-    from javadoc
+	group 'build'
+	classifier = 'javadoc'
+	from javadoc
 }
 
 task sourcesJar(type: Jar) {
-    group 'build'
-    classifier = 'sources'
-    from sourceSets.main.allSource
+	group 'build'
+	classifier = 'sources'
+	from sourceSets.main.allSource
 }
 
 artifacts {
-    archives javadocJar, sourcesJar
+	archives javadocJar, sourcesJar
 }
 
 signing {
-    sign configurations.archives
+	sign configurations.archives
 }
 
 uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+	repositories {
+		mavenDeployer {
+			beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
+			repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+				authentication(userName: ossrhUsername, password: ossrhPassword)
+			}
 
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
+			snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+				authentication(userName: ossrhUsername, password: ossrhPassword)
+			}
 
-            pom.project {
-                name 'OpenSub4J'
-                packaging 'jar'
-                description 'Java library providing an object-oriented abstraction ' +
-                        'over XML-RPC opensubtitles.org API.'
-                url 'https://github.com/wtekiela/opensub4j'
+			pom.project {
+				name 'OpenSub4J'
+				packaging 'jar'
+				description 'Java library providing an object-oriented abstraction ' +
+						'over XML-RPC opensubtitles.org API.'
+				url 'https://github.com/wtekiela/opensub4j'
 
-                scm {
-                    connection 'scm:git:git@github.com/wtekiela/opensub4j.git'
-                    developerConnection 'scm:git:git@github.com/wtekiela/opensub4j.git'
-                    url 'git@github.com/wtekiela/opensub4j.git'
-                }
+				scm {
+					connection 'scm:git:git@github.com/wtekiela/opensub4j.git'
+					developerConnection 'scm:git:git@github.com/wtekiela/opensub4j.git'
+					url 'git@github.com/wtekiela/opensub4j.git'
+				}
 
-                licenses {
-                    license {
-                        name 'The Apache License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
+				licenses {
+					license {
+						name 'The Apache License, Version 2.0'
+						url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					}
+				}
 
-                developers {
-                    developer {
-                        name 'Wojciech Tekiela'
-                        email 'wojciech@tekiela.pl'
-                    }
-                }
-            }
-        }
-    }
+				developers {
+					developer {
+						name 'Wojciech Tekiela'
+						email 'wojciech@tekiela.pl'
+					}
+				}
+			}
+		}
+	}
 }

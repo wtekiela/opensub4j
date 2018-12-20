@@ -4,15 +4,7 @@ OpenSub4j is an open source Java library for opensubtites. It provides an object
 
 ## Installation
 
-Simply add the dependency to gradle/maven, either to the latest release:
-
-```
-dependencies {
-    compile 'com.github.wtekiela:opensub4j:0.1.2'
-}
-```
-
-or to the latest build:
+Simply add the dependency to gradle/maven:
 
 ```
 repositories {
@@ -27,7 +19,7 @@ dependencies {
 }
 ```
 
-## Usage
+## Usage (version 0.2.X)
 
 ### Creating the client
 

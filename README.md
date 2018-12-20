@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.wtekiela:opensub4j:0.2.0-SNAPSHOT'
+    compile 'com.github.wtekiela:opensub4j:0.2.1-SNAPSHOT'
 }
 ```
 

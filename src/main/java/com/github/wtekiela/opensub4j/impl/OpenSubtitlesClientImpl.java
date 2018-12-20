@@ -87,12 +87,18 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     public void logout() throws XmlRpcException {
         ensureLoggedIn();
         new LogOutOperation(loginToken.getToken()).execute(xmlRpcClient, responseParser);
+        loginToken = null;
     }
 
     private void ensureLoggedIn() {
         if (loginToken == null) {
             throw new IllegalStateException("Not logged in!");
         }
+    }
+
+    @Override
+    public boolean isLoggedIn() {
+        return loginToken != null;
     }
 
     @Override

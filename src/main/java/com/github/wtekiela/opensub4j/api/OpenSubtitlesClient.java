@@ -75,6 +75,13 @@ public interface OpenSubtitlesClient {
     void logout() throws XmlRpcException;
 
     /**
+     * Returns information about current login status.
+     *
+     * @return True, if client is logged in, false otherwise.
+     */
+    boolean isLoggedIn();
+
+    /**
      * This method is used to keep the session alive while client application is idling. Should be called every 15
      * minutes between XML-RPC requests (in case user is idle or client application is not currently communicating with
      * OSDb server) to keep the connection alive while client application is still running. It can be also used to check

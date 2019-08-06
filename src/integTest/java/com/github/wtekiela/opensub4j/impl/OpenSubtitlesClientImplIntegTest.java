@@ -1,10 +1,7 @@
 package com.github.wtekiela.opensub4j.impl;
 
 import com.github.wtekiela.opensub4j.api.OpenSubtitlesClient;
-import com.github.wtekiela.opensub4j.response.MovieInfo;
-import com.github.wtekiela.opensub4j.response.ServerInfo;
-import com.github.wtekiela.opensub4j.response.SubtitleFile;
-import com.github.wtekiela.opensub4j.response.SubtitleInfo;
+import com.github.wtekiela.opensub4j.response.*;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.testng.annotations.AfterMethod;
@@ -30,7 +27,7 @@ public class OpenSubtitlesClientImplIntegTest {
     // http://www.opensubtitles.org/en/subtitles/3429018/sid-hjd1kIEN-LzDwLbgka2ZkDKFscf/forrest-gump-en
     private static final int TEST_SUBTITLE_FILE_ID = 1952039423;
 
-    private URL testServerUrl = new URL("https", "api.opensubtitles.org", 443, "/xml-rpc");;
+    private URL testServerUrl = new URL("https", "api.opensubtitles.org", 443, "/xml-rpc");
 
     private OpenSubtitlesClientImpl objectUnderTest;
     private boolean loggedIn;
@@ -39,7 +36,7 @@ public class OpenSubtitlesClientImplIntegTest {
     }
 
     @BeforeMethod
-    private void setup() throws MalformedURLException {
+    private void setup() {
         objectUnderTest = new OpenSubtitlesClientImpl(testServerUrl);
     }
 
@@ -61,7 +58,7 @@ public class OpenSubtitlesClientImplIntegTest {
         OpenSubtitlesClient client = new OpenSubtitlesClientImpl(config, 1, 2);
 
         // when
-        ServerInfo serverInfo = client.serverInfo();
+        client.serverInfo();
 
         // then
         // expects exception
@@ -75,6 +72,7 @@ public class OpenSubtitlesClientImplIntegTest {
         ServerInfo serverInfo = objectUnderTest.serverInfo();
         // then
         assertNotNull(serverInfo);
+        assertTrue(serverInfo.getSeconds() > 0);
         assertEquals(serverInfo.getWebsiteURL(), "http://www.opensubtitles.org");
         assertEquals(serverInfo.getXmlRpcURL(), "http://api.opensubtitles.org/xml-rpc");
         assertEquals(serverInfo.getXmlRpcVersion(), "0.1");
@@ -86,15 +84,17 @@ public class OpenSubtitlesClientImplIntegTest {
         // given
 
         // when
-        login();
+        Response response = login();
 
         // then
         assertTrue(objectUnderTest.isLoggedIn());
+        assertEquals(response.getStatus(), ResponseStatus.OK);
     }
 
-    private void login() throws XmlRpcException {
-        objectUnderTest.login(TEST_LANG_2, TEST_USER_AGENT);
+    private Response login() throws XmlRpcException {
+        Response response = objectUnderTest.login(TEST_LANG_2, TEST_USER_AGENT);
         loggedIn = true;
+        return response;
     }
 
     @Test

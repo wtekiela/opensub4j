@@ -12,7 +12,7 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
-public class LoginToken {
+public class LoginToken extends Response {
 
     @OpenSubtitlesApiSpec(fieldName = "token")
     private String token;

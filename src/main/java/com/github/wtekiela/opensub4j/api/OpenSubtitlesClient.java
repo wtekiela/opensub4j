@@ -16,12 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import com.github.wtekiela.opensub4j.response.*;
 import org.apache.xmlrpc.XmlRpcException;
-
-import com.github.wtekiela.opensub4j.response.MovieInfo;
-import com.github.wtekiela.opensub4j.response.ServerInfo;
-import com.github.wtekiela.opensub4j.response.SubtitleFile;
-import com.github.wtekiela.opensub4j.response.SubtitleInfo;
 
 /**
  * opensubtitles.org XML-RPC API client
@@ -46,7 +42,7 @@ public interface OpenSubtitlesClient {
      *
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
-    void login(String lang, String useragent) throws XmlRpcException;
+    Response login(String lang, String useragent) throws XmlRpcException;
 
     /**
      * Login given user, set interface language and initiate session. Logging in is required before talking to the OSDb
@@ -64,8 +60,9 @@ public interface OpenSubtitlesClient {
      * @param useragent UserAgent registered with OpenSubtitlesClient
      *
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
+     * @return
      */
-    void login(String user, String pass, String lang, String useragent) throws XmlRpcException;
+    Response login(String user, String pass, String lang, String useragent) throws XmlRpcException;
 
     /**
      * Logout the user and end the session. This method should always be called just before exiting the application.

@@ -12,7 +12,7 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
-public class ServerInfo {
+public class ServerInfo extends Response {
 
     @OpenSubtitlesApiSpec(fieldName = "users_loggedin")
     private int loggedInUsersNo;

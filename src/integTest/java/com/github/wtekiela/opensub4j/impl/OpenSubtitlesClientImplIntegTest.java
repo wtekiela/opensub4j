@@ -1,17 +1,18 @@
 package com.github.wtekiela.opensub4j.impl;
 
+import com.github.wtekiela.opensub4j.api.OpenSubtitlesClient;
 import com.github.wtekiela.opensub4j.response.MovieInfo;
 import com.github.wtekiela.opensub4j.response.ServerInfo;
 import com.github.wtekiela.opensub4j.response.SubtitleFile;
 import com.github.wtekiela.opensub4j.response.SubtitleInfo;
 import org.apache.xmlrpc.XmlRpcException;
+import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.testng.Assert.*;
@@ -29,13 +30,17 @@ public class OpenSubtitlesClientImplIntegTest {
     // http://www.opensubtitles.org/en/subtitles/3429018/sid-hjd1kIEN-LzDwLbgka2ZkDKFscf/forrest-gump-en
     private static final int TEST_SUBTITLE_FILE_ID = 1952039423;
 
+    private URL testServerUrl = new URL("https", "api.opensubtitles.org", 443, "/xml-rpc");;
+
     private OpenSubtitlesClientImpl objectUnderTest;
     private boolean loggedIn;
 
+    public OpenSubtitlesClientImplIntegTest() throws MalformedURLException {
+    }
+
     @BeforeMethod
     private void setup() throws MalformedURLException {
-        URL serverUrl = new URL("https", "api.opensubtitles.org", 443, "/xml-rpc");
-        objectUnderTest = new OpenSubtitlesClientImpl(serverUrl);
+        objectUnderTest = new OpenSubtitlesClientImpl(testServerUrl);
     }
 
     @AfterMethod
@@ -44,6 +49,22 @@ public class OpenSubtitlesClientImplIntegTest {
             loggedIn = false;
             objectUnderTest.logout();
         }
+    }
+
+    @Test(expectedExceptions = XmlRpcException.class)
+    void testCustomXmlRpcClient() throws XmlRpcException {
+        // given
+        XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+        config.setServerURL(testServerUrl);
+        config.setConnectionTimeout(1);
+
+        OpenSubtitlesClient client = new OpenSubtitlesClientImpl(config, 1, 2);
+
+        // when
+        ServerInfo serverInfo = client.serverInfo();
+
+        // then
+        // expects exception
     }
 
     @Test

@@ -12,36 +12,36 @@
  */
 package com.github.wtekiela.opensub4j.xmlrpc.client;
 
-import java.net.URL;
-import java.util.Arrays;
-import java.util.concurrent.Callable;
-
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
-import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
+import org.apache.xmlrpc.client.XmlRpcClientConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.concurrent.Callable;
+
 public class RetriableXmlRpcClient extends XmlRpcClient {
 
-    private final Logger logger = LoggerFactory.getLogger(RetriableXmlRpcClient.class);
+    public static final int DEFAULT_MAX_ATTEMPTS = 5;
+    public static final int DEFAULT_INTERVAL = 1000;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RetriableXmlRpcClient.class);
 
     private final int maxAttempts;
     private final long interval;
 
-    public RetriableXmlRpcClient(URL serverUrl) {
-        this(serverUrl, 5, 1000);
+    public RetriableXmlRpcClient(XmlRpcClientConfig xmlRpcClientConfig) {
+        this(xmlRpcClientConfig, DEFAULT_MAX_ATTEMPTS, DEFAULT_INTERVAL);
     }
 
-    public RetriableXmlRpcClient(URL serverUrl, int maxAttempts, long interval) {
+    public RetriableXmlRpcClient(XmlRpcClientConfig xmlRpcClientConfig, int maxAttempts, int interval) {
         super();
 
         this.maxAttempts = maxAttempts;
         this.interval = interval;
 
-        XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-        config.setServerURL(serverUrl);
-        setConfig(config);
+        setConfig(xmlRpcClientConfig);
     }
 
     @Override
@@ -65,9 +65,9 @@ public class RetriableXmlRpcClient extends XmlRpcClient {
             this.maxAttempts = maxAttempts;
             this.interval = interval;
             this.task = () -> {
-                logger.debug("Calling method: {}, with params: {}", method, Arrays.deepToString(params));
+                LOGGER.debug("Calling method: {}, with params: {}", method, Arrays.deepToString(params));
                 Object response = RetriableXmlRpcClient.super.execute(method, params);
-                logger.debug("Response: {}", response);
+                LOGGER.debug("Response: {}", response);
                 return response;
             };
         }

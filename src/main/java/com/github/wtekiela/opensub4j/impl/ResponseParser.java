@@ -16,9 +16,7 @@ import com.github.wtekiela.opensub4j.response.OpenSubtitlesApiSpec;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class ResponseParser {
 
@@ -37,11 +35,23 @@ class ResponseParser {
         if (instance == null) {
             return null;
         }
-        Field[] declaredFields = instance.getClass().getDeclaredFields();
+        Set<Field> declaredFields = getAllClassFields(instance.getClass());
         for (Field field : declaredFields) {
             bindField(instance, response, field);
         }
         return instance;
+    }
+
+    private static Set<Field> getAllClassFields(Class type) {
+        Set<Field> fields = new HashSet<>();
+        Class currentType = type;
+
+        do {
+            fields.addAll(Arrays.asList(currentType.getDeclaredFields()));
+            currentType = currentType.getSuperclass();
+        } while (currentType != null);
+
+        return fields;
     }
 
     private <T> void bindField(T instance, Map response, Field field) {

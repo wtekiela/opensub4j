@@ -115,8 +115,8 @@ class ResponseParser {
 
     private Object customObjectFromString(Class target, String value) {
         try {
-            return target.getConstructor(String.class).newInstance(value);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
+            return target.getMethod("fromString", String.class).invoke(null, value);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             return value;
         }
     }

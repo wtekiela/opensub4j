@@ -12,17 +12,37 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
+/**
+ * Class representing HTTP response status
+ * 
+ * IMPORTANT: only http code is taken into account for equals!
+ */
 public class ResponseStatus {
 
-    public static final ResponseStatus OK = new ResponseStatus("200 OK");
+    public static final ResponseStatus OK = new ResponseStatus(200, "OK");
+    public static final ResponseStatus UNKNOWN_USER_AGENT = new ResponseStatus(414, "Unknown User Agent");
 
     private final int code;
     private final String message;
 
-    public ResponseStatus(String value) {
+    /**
+     * Needed for {@link com.github.wtekiela.opensub4j.impl.ResponseParser}
+     *
+     * @param value concatenated value of http code and message separated by space
+     */
+    public static ResponseStatus fromString(String value) {
         String[] parts = value.split(" ", 2);
-        code = Integer.valueOf(parts[0]);
-        message = parts[1];
+        if (parts.length != 2) {
+            throw new IllegalArgumentException("Value must contain code and message separated by space!");
+        }
+        int code = Integer.valueOf(parts[0]);
+        String message = parts[1];
+        return new ResponseStatus(code, message);
+    }
+
+    public ResponseStatus(int code, String message) {
+        this.code = code;
+        this.message = message;
     }
 
     public int getCode() {

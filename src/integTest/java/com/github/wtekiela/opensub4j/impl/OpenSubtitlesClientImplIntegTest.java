@@ -106,8 +106,19 @@ public class OpenSubtitlesClientImplIntegTest {
 
         // then
         assertFalse(objectUnderTest.isLoggedIn());
-        ResponseStatus expectedResponseStatus = new ResponseStatus("414 Unknown User Agent");
-        assertEquals(response.getStatus(), expectedResponseStatus);
+        assertEquals(response.getStatus(), ResponseStatus.UNKNOWN_USER_AGENT);
+    }
+
+    @Test(expectedExceptions = IllegalStateException.class)
+    void testLogInTwice() throws XmlRpcException {
+        // given
+        login();
+
+        // when
+        objectUnderTest.login(TEST_LANG_2, TEST_USER_AGENT);
+
+        // then
+        // IllegalStateException
     }
 
     @Test

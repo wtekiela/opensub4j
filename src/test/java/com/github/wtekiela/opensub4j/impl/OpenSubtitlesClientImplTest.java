@@ -13,12 +13,12 @@ public class OpenSubtitlesClientImplTest {
         objectUnderTest = new OpenSubtitlesClientImpl(null, null, null);
     }
 
-    @Test(expectedExceptions = {IllegalStateException.class})
+    @Test(expectedExceptions = IllegalStateException.class)
     void testLogoutFailsIfNotLoggedIn() throws XmlRpcException {
         objectUnderTest.logout();
     }
 
-    @Test(expectedExceptions = {IllegalStateException.class})
+    @Test(expectedExceptions = IllegalStateException.class)
     void testNoopFailsIfNotLoggedIn() throws XmlRpcException {
         objectUnderTest.noop();
     }

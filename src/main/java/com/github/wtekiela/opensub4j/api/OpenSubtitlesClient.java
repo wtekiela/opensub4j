@@ -41,6 +41,7 @@ public interface OpenSubtitlesClient {
      * @param useragent UserAgent registered with OpenSubtitlesClient
      *
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
+     * @return response information with status and time
      */
     Response login(String lang, String useragent) throws XmlRpcException;
 
@@ -60,7 +61,7 @@ public interface OpenSubtitlesClient {
      * @param useragent UserAgent registered with OpenSubtitlesClient
      *
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
-     * @return
+     * @return response information with status and time
      */
     Response login(String user, String pass, String lang, String useragent) throws XmlRpcException;
 

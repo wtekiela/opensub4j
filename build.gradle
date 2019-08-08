@@ -8,7 +8,7 @@ buildscript {
 }
 
 group = 'com.github.wtekiela'
-version = '0.2.2-SNAPSHOT'
+version = '0.2.3-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'license'

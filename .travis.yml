@@ -1,2 +1,2 @@
 language: java
-install: ./gradlew assemble -x signArchives
+install: travis_retry ./gradlew assemble -x signArchives

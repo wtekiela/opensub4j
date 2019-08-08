@@ -54,7 +54,7 @@ class SearchOperation extends ListOperation<SubtitleInfo> {
         if (movieHash != null && !movieHash.isEmpty() && movieByteSize != null && !movieByteSize.isEmpty()) {
             videoProperties.put("moviehash", movieHash);
             videoProperties.put("moviebytesize", movieByteSize);
-        } else if (tag != null && !imdbid.isEmpty()) {
+        } else if (tag != null && !tag.isEmpty()) {
             // Tag is index of movie filename or subtitle file fieldName, or release fieldName -
             // currently we index more than 40.000.000 of tags.
             videoProperties.put("tag", tag);

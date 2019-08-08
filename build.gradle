@@ -19,7 +19,7 @@ apply plugin: 'idea'
 subprojects {
 
     group = 'com.github.wtekiela'
-    version = '0.1.3'
+    version = '0.1.4-SNAPSHOT'
 
     apply plugin: 'java'
     apply plugin: 'license'

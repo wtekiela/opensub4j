@@ -14,7 +14,7 @@ package com.github.wtekiela.opensub4j.response;
 
 /**
  * Class representing HTTP response status
- * 
+ *
  * IMPORTANT: only http code is taken into account for equals!
  */
 public class ResponseStatus {
@@ -26,9 +26,10 @@ public class ResponseStatus {
     private final String message;
 
     /**
-     * Needed for {@link com.github.wtekiela.opensub4j.impl.ResponseParser}
+     * Needed for ResponseParser
      *
      * @param value concatenated value of http code and message separated by space
+     * @return ResponseStatus created instance
      */
     public static ResponseStatus fromString(String value) {
         String[] parts = value.split(" ", 2);

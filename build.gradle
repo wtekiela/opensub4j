@@ -8,7 +8,7 @@ buildscript {
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '4.7'
+	gradleVersion = '5.5.1'
 	distributionType = Wrapper.DistributionType.ALL
 }
 

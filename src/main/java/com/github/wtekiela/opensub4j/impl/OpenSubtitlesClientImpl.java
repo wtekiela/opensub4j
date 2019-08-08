@@ -19,7 +19,7 @@ import java.util.List;
 
 import com.github.wtekiela.opensub4j.api.OpenSubtitlesClient;
 import com.github.wtekiela.opensub4j.response.*;
-import com.github.wtekiela.opensub4j.xmlrpc.client.RetriableXmlRpcClient;
+import com.github.wtekiela.opensub4j.xmlrpc.client.RetryableXmlRpcClient;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 
@@ -44,7 +44,7 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
         XmlRpcClientConfigImpl xmlRpcClientConfig = new XmlRpcClientConfigImpl();
         xmlRpcClientConfig.setServerURL(serverUrl);
 
-        this.xmlRpcClient = new RetriableXmlRpcClient(xmlRpcClientConfig);
+        this.xmlRpcClient = new RetryableXmlRpcClient(xmlRpcClientConfig);
         this.responseParser = new ResponseParser();
         this.fileHashCalculator = new OpenSubtitlesFileHashCalculator();
     }
@@ -60,7 +60,7 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
         XmlRpcClientConfigImpl xmlRpcClientConfig = new XmlRpcClientConfigImpl();
         xmlRpcClientConfig.setServerURL(serverUrl);
 
-        this.xmlRpcClient = new RetriableXmlRpcClient(xmlRpcClientConfig, maxAttempts, interval);
+        this.xmlRpcClient = new RetryableXmlRpcClient(xmlRpcClientConfig, maxAttempts, interval);
         this.responseParser = new ResponseParser();
         this.fileHashCalculator = new OpenSubtitlesFileHashCalculator();
     }
@@ -71,7 +71,7 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
      * @param xmlRpcClientConfig configuration for {@link XmlRpcClient}
      */
     public OpenSubtitlesClientImpl(XmlRpcClientConfig xmlRpcClientConfig) {
-        this(new RetriableXmlRpcClient(xmlRpcClientConfig), new ResponseParser(), new OpenSubtitlesFileHashCalculator());
+        this(new RetryableXmlRpcClient(xmlRpcClientConfig), new ResponseParser(), new OpenSubtitlesFileHashCalculator());
     }
 
     /**
@@ -82,7 +82,7 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
      * @param interval interval between retries
      */
     public OpenSubtitlesClientImpl(XmlRpcClientConfig xmlRpcClientConfig, int maxAttempts, int interval) {
-        this(new RetriableXmlRpcClient(xmlRpcClientConfig, maxAttempts, interval), new ResponseParser(), new OpenSubtitlesFileHashCalculator());
+        this(new RetryableXmlRpcClient(xmlRpcClientConfig, maxAttempts, interval), new ResponseParser(), new OpenSubtitlesFileHashCalculator());
     }
 
     OpenSubtitlesClientImpl(XmlRpcClient xmlRpcClient, ResponseParser responseParser, FileHashCalculator fileHashCalculator) {

@@ -98,6 +98,19 @@ public class OpenSubtitlesClientImplIntegTest {
     }
 
     @Test
+    void testLogInWithImproperUserAgent() throws XmlRpcException {
+        // given
+
+        // when
+        Response response = objectUnderTest.login("myID", "andPassword", "en", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0");
+
+        // then
+        assertFalse(objectUnderTest.isLoggedIn());
+        ResponseStatus expectedResponseStatus = new ResponseStatus("414 Unknown User Agent");
+        assertEquals(response.getStatus(), expectedResponseStatus);
+    }
+
+    @Test
     void testLogout() throws XmlRpcException {
         // given
         objectUnderTest.login(TEST_LANG_2, TEST_USER_AGENT);

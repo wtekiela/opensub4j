@@ -16,9 +16,23 @@ dependencies {
 
 ### Creating the client
 
+Client can be created either by passing the URL object:
 ```
 URL serverUrl = new URL("https", "api.opensubtitles.org", 443, "/xml-rpc");
 OpenSubtitlesClient osClient = new OpenSubtitlesClientImpl(serverUrl);
+```
+
+or, for more granular control over the xml-rpc connection, by passing the XmlRpcClientConfig object:
+```
+URL serverUrl = new URL("https", "api.opensubtitles.org", 443, "/xml-rpc");
+
+XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+config.setServerURL(serverUrl);
+config.setConnectionTimeout(100);
+config.setReplyTimeout(100);
+config.setGzipCompressing(true);
+
+OpenSubtitlesClient client = new OpenSubtitlesClientImpl(config);
 ```
 
 ### Getting server info
@@ -30,9 +44,15 @@ ServerInfo serverInfo = osClient.serverInfo();
 ### Authentication
 
 ```
-osClient.login("username", "password", "en", "TemporaryUserAgent");
-(...)
-osClient.logout()
+// logging in
+Response response = osClient.login("username", "password", "en", "TemporaryUserAgent");
+
+// checking login status
+response.getStatus();
+osClient.isLoggedIn();
+
+// logging out
+osClient.logout();
 ```
 
 ### Search

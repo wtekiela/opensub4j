@@ -13,12 +13,14 @@
 package com.github.wtekiela.opensub4j.xmlrpc.client;
 
 import org.apache.xmlrpc.XmlRpcException;
+import org.apache.xmlrpc.client.AsyncCallback;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class RetryableXmlRpcClient extends XmlRpcClient {
 
@@ -97,5 +99,4 @@ public class RetryableXmlRpcClient extends XmlRpcClient {
             throw new XmlRpcException("Exception occurred during XML-RPC call", e);
         }
     }
-
 }

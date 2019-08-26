@@ -49,7 +49,7 @@ public class SearchOperationTest {
     public void testEmptyIfOnlyMovieHashPassed() {
 
         // given
-        String movieHash = "hash";
+        String movieHash = HASH;
         String movieByteSize = "";
         String tag = "";
         String imdbid = "";

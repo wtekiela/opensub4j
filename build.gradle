@@ -11,7 +11,7 @@ buildscript {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.8'
+    gradleVersion = '5.5.1'
 }
 
 apply plugin: 'idea'

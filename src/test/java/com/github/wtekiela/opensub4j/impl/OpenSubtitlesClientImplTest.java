@@ -1,26 +1,26 @@
 package com.github.wtekiela.opensub4j.impl;
 
-import org.apache.xmlrpc.XmlRpcException;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class OpenSubtitlesClientImplTest {
 
     private OpenSubtitlesClientImpl objectUnderTest;
 
-    @BeforeMethod
+    @BeforeEach
     private void setup() {
         objectUnderTest = new OpenSubtitlesClientImpl(null, null, null);
     }
 
-    @Test(expectedExceptions = IllegalStateException.class)
-    void testLogoutFailsIfNotLoggedIn() throws XmlRpcException {
-        objectUnderTest.logout();
+    @Test
+    void testLogoutFailsIfNotLoggedIn() {
+        Assertions.assertThrows(IllegalStateException.class, () -> objectUnderTest.logout());
     }
 
-    @Test(expectedExceptions = IllegalStateException.class)
-    void testNoopFailsIfNotLoggedIn() throws XmlRpcException {
-        objectUnderTest.noop();
+    @Test
+    void testNoopFailsIfNotLoggedIn() {
+        Assertions.assertThrows(IllegalStateException.class, () -> objectUnderTest.noop());
     }
 
 }

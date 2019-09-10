@@ -4,15 +4,15 @@ import com.github.wtekiela.opensub4j.api.OpenSubtitlesClient;
 import com.github.wtekiela.opensub4j.response.*;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import static org.testng.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class OpenSubtitlesClientImplIntegTest {
 
@@ -27,20 +27,21 @@ public class OpenSubtitlesClientImplIntegTest {
     // http://www.opensubtitles.org/en/subtitles/3429018/sid-hjd1kIEN-LzDwLbgka2ZkDKFscf/forrest-gump-en
     private static final int TEST_SUBTITLE_FILE_ID = 1952039423;
 
-    private URL testServerUrl = new URL("https", "api.opensubtitles.org", 443, "/xml-rpc");
+    private URL testServerUrl;
 
     private OpenSubtitlesClientImpl objectUnderTest;
     private boolean loggedIn;
 
     public OpenSubtitlesClientImplIntegTest() throws MalformedURLException {
+        testServerUrl = new URL("https", "api.opensubtitles.org", 443, "/xml-rpc");
     }
 
-    @BeforeMethod
+    @BeforeEach
     private void setup() {
         objectUnderTest = new OpenSubtitlesClientImpl(testServerUrl);
     }
 
-    @AfterMethod
+    @AfterEach
     private void teardown() throws XmlRpcException {
         if (loggedIn) {
             loggedIn = false;
@@ -48,17 +49,18 @@ public class OpenSubtitlesClientImplIntegTest {
         }
     }
 
-    @Test(expectedExceptions = XmlRpcException.class)
-    void testCustomXmlRpcClient() throws XmlRpcException {
+    @Test
+    void testCustomXmlRpcClientConfig() {
         // given
         XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
         config.setServerURL(testServerUrl);
         config.setConnectionTimeout(1);
+        config.setReplyTimeout(1    );
 
         OpenSubtitlesClient client = new OpenSubtitlesClientImpl(config, 1, 2);
 
         // when
-        client.serverInfo();
+        assertThrows(XmlRpcException.class, () -> client.serverInfo());
 
         // then
         // expects exception
@@ -73,9 +75,9 @@ public class OpenSubtitlesClientImplIntegTest {
         // then
         assertNotNull(serverInfo);
         assertTrue(serverInfo.getSeconds() > 0);
-        assertEquals(serverInfo.getWebsiteURL(), "http://www.opensubtitles.org");
-        assertEquals(serverInfo.getXmlRpcURL(), "http://api.opensubtitles.org/xml-rpc");
-        assertEquals(serverInfo.getXmlRpcVersion(), "0.1");
+        assertEquals("http://www.opensubtitles.org", serverInfo.getWebsiteURL());
+        assertEquals("http://api.opensubtitles.org/xml-rpc", serverInfo.getXmlRpcURL());
+        assertEquals("0.1", serverInfo.getXmlRpcVersion());
         assertTrue(serverInfo.getLoggedInUsersNo() > 0);
     }
 
@@ -88,7 +90,7 @@ public class OpenSubtitlesClientImplIntegTest {
 
         // then
         assertTrue(objectUnderTest.isLoggedIn());
-        assertEquals(response.getStatus(), ResponseStatus.OK);
+        assertEquals(ResponseStatus.OK, response.getStatus());
     }
 
     private Response login() throws XmlRpcException {
@@ -106,16 +108,16 @@ public class OpenSubtitlesClientImplIntegTest {
 
         // then
         assertFalse(objectUnderTest.isLoggedIn());
-        assertEquals(response.getStatus(), ResponseStatus.UNKNOWN_USER_AGENT);
+        assertEquals(ResponseStatus.UNKNOWN_USER_AGENT, response.getStatus());
     }
 
-    @Test(expectedExceptions = IllegalStateException.class)
+    @Test
     void testLogInTwice() throws XmlRpcException {
         // given
         login();
 
         // when
-        objectUnderTest.login(TEST_LANG_2, TEST_USER_AGENT);
+        assertThrows(IllegalStateException.class, () -> objectUnderTest.login(TEST_LANG_2, TEST_USER_AGENT));
 
         // then
         // IllegalStateException
@@ -155,7 +157,7 @@ public class OpenSubtitlesClientImplIntegTest {
 
         // then
         assertFalse(subtitleInfos.isEmpty());
-        subtitleInfos.forEach(subtitle -> assertEquals(subtitle.getLanguage(), "English"));
+        subtitleInfos.forEach(subtitle -> assertEquals("English", subtitle.getLanguage()));
     }
 
     @Test
@@ -167,9 +169,9 @@ public class OpenSubtitlesClientImplIntegTest {
         List<SubtitleFile> subtitleFiles = objectUnderTest.downloadSubtitles(TEST_SUBTITLE_FILE_ID);
 
         // then
-        assertEquals(subtitleFiles.size(), 1);
+        assertEquals(1, subtitleFiles.size());
         SubtitleFile file = subtitleFiles.get(0);
-        assertEquals(file.getId(), TEST_SUBTITLE_FILE_ID);
+        assertEquals(TEST_SUBTITLE_FILE_ID, file.getId());
     }
 
     @Test

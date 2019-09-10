@@ -41,14 +41,14 @@ dependencies {
 	compile 'org.slf4j:slf4j-api:1.7.+'
 	compile 'org.apache.xmlrpc:xmlrpc-client:3.1.+'
 
-	testCompile 'org.testng:testng:6.9.+'
+	testCompile 'org.junit.jupiter:junit-jupiter:5.5.+'
 
 	testRuntime 'org.slf4j:slf4j-simple:1.7.+'
 
 }
 
 test {
-	useTestNG()
+	useJUnitPlatform()
 
 	beforeTest { descriptor ->
 		logger.lifecycle("Running unit test: " + descriptor)
@@ -67,7 +67,7 @@ task integTest(type: Test, dependsOn: classes) {
 	classpath = sourceSets.integTest.runtimeClasspath
 	systemProperties['jar.path'] = jar.archivePath
 
-	useTestNG()
+	useJUnitPlatform()
 
 	beforeTest { descriptor ->
 		logger.lifecycle("Running integration test: " + descriptor)

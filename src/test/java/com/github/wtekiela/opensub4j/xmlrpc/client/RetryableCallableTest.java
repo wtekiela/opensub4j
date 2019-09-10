@@ -1,10 +1,11 @@
 package com.github.wtekiela.opensub4j.xmlrpc.client;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Callable;
 
-import static org.testng.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class RetryableCallableTest {
 
@@ -21,18 +22,18 @@ public class RetryableCallableTest {
         Object result = objectUnderTest.call();
 
         // then
-        assertEquals(result, TestCallable.SUCCESS);
+        assertEquals(TestCallable.SUCCESS, result);
     }
 
-    @Test(expectedExceptions = Exception.class)
-    void testCallFailsIfExceptionsEqualMaxAttempts() throws Exception {
+    @Test
+    void testCallFailsIfExceptionsEqualMaxAttempts() {
         // given
         int attempts = 3;
         Callable<Object> testTask = new TestCallable(attempts);
         RetryableCallable objectUnderTest = new RetryableCallable(attempts, TEST_INTERVAL_MILLIS, testTask);
 
         // when
-        objectUnderTest.call();
+        assertThrows(Exception.class, () -> objectUnderTest.call());
 
         // then
         // exception should be thrown

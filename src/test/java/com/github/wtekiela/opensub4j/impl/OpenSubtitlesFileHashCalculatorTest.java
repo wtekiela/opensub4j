@@ -1,11 +1,11 @@
 package com.github.wtekiela.opensub4j.impl;
 
-import static org.testng.Assert.*;
-
 import java.io.File;
 
 import com.github.wtekiela.opensub4j.api.FileHashCalculator;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OpenSubtitlesFileHashCalculatorTest {
 
@@ -16,7 +16,7 @@ public class OpenSubtitlesFileHashCalculatorTest {
         // when:
         String hash = calc.calculateHash(new File(this.getClass().getResource("/breakdance.avi").toURI()));
         // then:
-        assertEquals(hash, "8e245d9679d31e12");
+        assertEquals("8e245d9679d31e12", hash);
     }
 
 }

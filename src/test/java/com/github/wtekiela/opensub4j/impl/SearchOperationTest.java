@@ -1,19 +1,19 @@
 package com.github.wtekiela.opensub4j.impl;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.testng.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SearchOperationTest {
 
     private static final String TOKEN = "token";
     private static final String LANG = "en";
-    public static final String HASH = "hash";
-    public static final String BYTESIZE = "bytesize";
-    public static final String TAG = "tag";
-    public static final String IMDBID = "imdbid";
+    private static final String HASH = "hash";
+    private static final String BYTESIZE = "bytesize";
+    private static final String TAG = "tag";
+    private static final String IMDBID = "imdbid";
     private static final String QUERY = "query";
     private static final String SEASON = "season";
     private static final String EPISODE = "episode";
@@ -38,11 +38,11 @@ public class SearchOperationTest {
         Object[] params = objectUnderTest.getParams();
 
         // then
-        assertEquals(params[0], TOKEN);
+        assertEquals(TOKEN, params[0]);
         Object[] videoProperties = (Object[]) params[1];
         Map<String, String> videoParams = (Map<String, String>) videoProperties[0];
-        assertEquals(videoParams.get("sublanguageid"), LANG);
-        assertEquals(videoParams.size(), 1);
+        assertEquals(LANG, videoParams.get("sublanguageid"));
+        assertEquals(1, videoParams.size());
     }
 
     @Test
@@ -65,11 +65,11 @@ public class SearchOperationTest {
         Object[] params = objectUnderTest.getParams();
 
         // then
-        assertEquals(params[0], TOKEN);
+        assertEquals(TOKEN, params[0]);
         Object[] videoProperties = (Object[]) params[1];
         Map<String, String> videoParams = (Map<String, String>) videoProperties[0];
-        assertEquals(videoParams.get("sublanguageid"), LANG);
-        assertEquals(videoParams.size(), 1);
+        assertEquals(LANG, videoParams.get("sublanguageid"));
+        assertEquals(1, videoParams.size());
     }
 
     @Test
@@ -92,13 +92,13 @@ public class SearchOperationTest {
         Object[] params = objectUnderTest.getParams();
 
         // then
-        assertEquals(params[0], TOKEN);
+        assertEquals(TOKEN, params[0]);
         Object[] videoProperties = (Object[]) params[1];
         Map<String, String> videoParams = (Map<String, String>) videoProperties[0];
-        assertEquals(videoParams.get("sublanguageid"), LANG);
-        assertEquals(videoParams.get("moviehash"), HASH);
-        assertEquals(videoParams.get("moviebytesize"), BYTESIZE);
-        assertEquals(videoParams.size(), 3);
+        assertEquals(LANG, videoParams.get("sublanguageid"));
+        assertEquals(HASH, videoParams.get("moviehash"));
+        assertEquals(BYTESIZE, videoParams.get("moviebytesize"));
+        assertEquals(3, videoParams.size());
     }
 
     @Test
@@ -121,12 +121,12 @@ public class SearchOperationTest {
         Object[] params = objectUnderTest.getParams();
 
         // then
-        assertEquals(params[0], TOKEN);
+        assertEquals(TOKEN, params[0]);
         Object[] videoProperties = (Object[]) params[1];
         Map<String, String> videoParams = (Map<String, String>) videoProperties[0];
-        assertEquals(videoParams.get("sublanguageid"), LANG);
-        assertEquals(videoParams.get("tag"), TAG);
-        assertEquals(videoParams.size(), 2);
+        assertEquals(LANG, videoParams.get("sublanguageid"));
+        assertEquals(TAG, videoParams.get("tag"));
+        assertEquals(2, videoParams.size());
     }
 
     @Test
@@ -149,12 +149,12 @@ public class SearchOperationTest {
         Object[] params = objectUnderTest.getParams();
 
         // then
-        assertEquals(params[0], TOKEN);
+        assertEquals(TOKEN, params[0]);
         Object[] videoProperties = (Object[]) params[1];
         Map<String, String> videoParams = (Map<String, String>) videoProperties[0];
-        assertEquals(videoParams.get("sublanguageid"), LANG);
-        assertEquals(videoParams.get("imdbid"), IMDBID);
-        assertEquals(videoParams.size(), 2);
+        assertEquals(LANG, videoParams.get("sublanguageid"));
+        assertEquals(IMDBID, videoParams.get("imdbid"));
+        assertEquals(2, videoParams.size());
     }
 
     @Test
@@ -177,12 +177,12 @@ public class SearchOperationTest {
         Object[] params = objectUnderTest.getParams();
 
         // then
-        assertEquals(params[0], TOKEN);
+        assertEquals(TOKEN, params[0]);
         Object[] videoProperties = (Object[]) params[1];
         Map<String, String> videoParams = (Map<String, String>) videoProperties[0];
-        assertEquals(videoParams.get("sublanguageid"), LANG);
-        assertEquals(videoParams.get("query"), QUERY);
-        assertEquals(videoParams.size(), 2);
+        assertEquals(LANG, videoParams.get("sublanguageid"));
+        assertEquals(QUERY, videoParams.get("query"));
+        assertEquals(2, videoParams.size());
     }
 
     @Test
@@ -205,13 +205,13 @@ public class SearchOperationTest {
         Object[] params = objectUnderTest.getParams();
 
         // then
-        assertEquals(params[0], TOKEN);
+        assertEquals(TOKEN, params[0]);
         Object[] videoProperties = (Object[]) params[1];
         Map<String, String> videoParams = (Map<String, String>) videoProperties[0];
-        assertEquals(videoParams.get("sublanguageid"), LANG);
-        assertEquals(videoParams.get("query"), QUERY);
-        assertEquals(videoParams.get("season"), SEASON);
-        assertEquals(videoParams.size(), 3);
+        assertEquals(LANG, videoParams.get("sublanguageid"));
+        assertEquals(QUERY, videoParams.get("query"));
+        assertEquals(SEASON, videoParams.get("season"));
+        assertEquals(3, videoParams.size());
     }
 
     @Test
@@ -234,14 +234,14 @@ public class SearchOperationTest {
         Object[] params = objectUnderTest.getParams();
 
         // then
-        assertEquals(params[0], TOKEN);
+        assertEquals(TOKEN, params[0]);
         Object[] videoProperties = (Object[]) params[1];
         Map<String, String> videoParams = (Map<String, String>) videoProperties[0];
-        assertEquals(videoParams.get("sublanguageid"), LANG);
-        assertEquals(videoParams.get("query"), QUERY);
-        assertEquals(videoParams.get("season"), SEASON);
-        assertEquals(videoParams.get("episode"), EPISODE);
-        assertEquals(videoParams.size(), 4);
+        assertEquals(LANG, videoParams.get("sublanguageid"));
+        assertEquals(QUERY, videoParams.get("query"));
+        assertEquals(SEASON, videoParams.get("season"));
+        assertEquals(EPISODE, videoParams.get("episode"));
+        assertEquals(4, videoParams.size());
     }
 
 

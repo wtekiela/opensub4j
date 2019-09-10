@@ -15,6 +15,7 @@ apply plugin: 'java'
 apply plugin: 'license'
 apply plugin: 'maven'
 apply plugin: 'signing'
+apply plugin: 'jacoco'
 
 group = 'com.github.wtekiela'
 version = '0.2.3-SNAPSHOT'
@@ -73,7 +74,7 @@ test {
 	}
 }
 
-task integTest(type: Test, dependsOn: jar) {
+task integTest(type: Test, dependsOn: classes) {
 	group 'verification'
 	description 'Runs integration tests.'
 	testClassesDirs = sourceSets.integTest.output.classesDirs
@@ -93,6 +94,12 @@ task integTest(type: Test, dependsOn: jar) {
 }
 
 check.dependsOn integTest
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+	}
+}
 
 jar {
 	manifest {
@@ -127,6 +134,7 @@ sonarqube {
 	properties {
 		property "sonar.projectKey", "wtekiela_opensub4j"
 		properties["sonar.tests"] += sourceSets.integTest.allSource.srcDirs
+		properties["sonar.jacoco.reportPaths"] += integTest.jacoco.destinationFile
 	}
 }
 

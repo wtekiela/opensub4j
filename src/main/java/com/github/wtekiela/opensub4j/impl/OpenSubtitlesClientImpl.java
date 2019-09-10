@@ -106,11 +106,11 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     @Override
     public Response login(String user, String pass, String lang, String useragent) throws XmlRpcException {
         ensureNotLoggedIn();
-        LoginToken loginToken = new LogInOperation(user, pass, lang, useragent).execute(xmlRpcClient, responseParser);
-        if (ResponseStatus.OK.equals(loginToken.getStatus())) {
-            this.loginToken = loginToken;
+        LoginToken loginResponse = new LogInOperation(user, pass, lang, useragent).execute(xmlRpcClient, responseParser);
+        if (ResponseStatus.OK.equals(loginResponse.getStatus())) {
+            this.loginToken = loginResponse;
         }
-        return loginToken;
+        return loginResponse;
     }
 
     private void ensureNotLoggedIn() {

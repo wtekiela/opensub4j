@@ -13,6 +13,8 @@
 package com.github.wtekiela.opensub4j.impl;
 
 import com.github.wtekiela.opensub4j.response.OpenSubtitlesApiSpec;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -20,9 +22,11 @@ import java.util.*;
 
 class ResponseParser {
 
-    public static final String LIST_DATA_KEY = "data";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResponseParser.class);
 
-    public <T> List<T> bindList(Class<T> clazz, Map<String, Object[]> response) throws InstantiationException, IllegalAccessException {
+    private static final String LIST_DATA_KEY = "data";
+
+    <T> List<T> bindList(Class<T> clazz, Map<String, Object[]> response) throws InstantiationException, IllegalAccessException {
         Object[] rawData = response.get(LIST_DATA_KEY);
         List<T> list = new ArrayList<>(rawData.length);
         for (Object obj : rawData) {
@@ -31,7 +35,7 @@ class ResponseParser {
         return list;
     }
 
-    public <T> T bind(T instance, Map response) {
+    <T> T bind(T instance, Map response) {
         if (instance == null) {
             return null;
         }
@@ -77,7 +81,7 @@ class ResponseParser {
         try {
             set(target, value, instance, field);
         } catch (IllegalAccessException e) {
-            // @todo log warning
+            LOGGER.warn("Illegal access while binding field in response object", e) ;
         }
     }
 
@@ -118,6 +122,7 @@ class ResponseParser {
         try {
             return target.getMethod("fromString", String.class).invoke(null, value);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            LOGGER.warn("Exception while getting method fromString", e);
             return value;
         }
     }

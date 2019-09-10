@@ -32,8 +32,7 @@ class DownloadSubtitlesOperation extends ListOperation<SubtitleFile> {
     @Override
     Object[] getParams() {
         Object[] subtitleFileIDs = {subtitleFileID};
-        Object[] params = {loginToken, subtitleFileIDs};
-        return params;
+        return new Object[]{loginToken, subtitleFileIDs};
     }
 
     @Override

@@ -29,8 +29,7 @@ class NoopOperation extends AbstractOperation<Response> {
 
     @Override
     Object[] getParams() {
-        Object[] params = {loginToken};
-        return params;
+        return new Object[]{loginToken};
     }
 
     @Override

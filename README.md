@@ -2,6 +2,14 @@
 
 OpenSub4j is an open source Java library for opensubtites. It provides an object-oriented abstraction over XML-RPC opensubtitles.org API.
 
+## Badges
+
+[![Build Status](https://travis-ci.org/wtekiela/opensub4j.svg?branch=master)](https://travis-ci.org/wtekiela/opensub4j)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=wtekiela_opensub4j&metric=ncloc)](https://sonarcloud.io/dashboard?id=wtekiela_opensub4j)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=wtekiela_opensub4j&metric=coverage)](https://sonarcloud.io/dashboard?id=wtekiela_opensub4j)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=wtekiela_opensub4j&metric=bugs)](https://sonarcloud.io/dashboard?id=wtekiela_opensub4j)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=wtekiela_opensub4j&metric=code_smells)](https://sonarcloud.io/dashboard?id=wtekiela_opensub4j)
+
 ## Installation
 
 Simply add the dependency to gradle/maven to the latest release:

@@ -12,6 +12,8 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
+import java.util.Objects;
+
 /**
  * Class representing HTTP response status
  *
@@ -58,10 +60,13 @@ public class ResponseStatus {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ResponseStatus that = (ResponseStatus) o;
-
         return code == that.code;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code);
     }
 
     @Override

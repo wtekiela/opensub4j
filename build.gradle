@@ -21,12 +21,6 @@ version = '0.2.3-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
-sonarqube {
-	properties {
-		property "sonar.projectKey", "wtekiela_opensub4j"
-	}
-}
-
 license {
 	header rootProject.file('LICENSE')
 	ext.year = Calendar.getInstance().get(Calendar.YEAR)
@@ -127,6 +121,13 @@ task sourcesJar(type: Jar) {
 
 artifacts {
 	archives javadocJar, sourcesJar
+}
+
+sonarqube {
+	properties {
+		property "sonar.projectKey", "wtekiela_opensub4j"
+		properties["sonar.tests"] += sourceSets.integTest.allSource.srcDirs
+	}
 }
 
 signing {

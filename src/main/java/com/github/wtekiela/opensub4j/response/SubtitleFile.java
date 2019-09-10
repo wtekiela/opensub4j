@@ -52,12 +52,7 @@ public class SubtitleFile {
     }
 
     private Content getSubtitleFileContent(String charsetName) {
-        Content content = contentCache.get(charsetName);
-        if (content == null) {
-            content = new ContentBuilder(charsetName).build();
-            contentCache.put(charsetName, content);
-        }
-        return content;
+        return contentCache.computeIfAbsent(charsetName, cn -> new ContentBuilder(cn).build());
     }
 
     public String getContentAsString(String charsetName) {

@@ -1,21 +1,11 @@
-buildscript {
-	repositories {
-		jcenter()
-	}
-	dependencies {
-		classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:+'
-	}
-}
-
 plugins {
+	id "java"
+	id "maven"
+	id "signing"
+	id "jacoco"
 	id "org.sonarqube" version "2.7.1"
+	id "com.github.hierynomus.license" version "0.15.0"
 }
-
-apply plugin: 'java'
-apply plugin: 'license'
-apply plugin: 'maven'
-apply plugin: 'signing'
-apply plugin: 'jacoco'
 
 group = 'com.github.wtekiela'
 version = '0.2.3-SNAPSHOT'
@@ -23,10 +13,6 @@ version = '0.2.3-SNAPSHOT'
 sourceCompatibility = 1.8
 
 license {
-	header rootProject.file('LICENSE')
-	ext.year = Calendar.getInstance().get(Calendar.YEAR)
-	ext.name = 'Wojciech Tekiela'
-
 	include "**/*.java"
 	exclude "**/*Test.java"
 }

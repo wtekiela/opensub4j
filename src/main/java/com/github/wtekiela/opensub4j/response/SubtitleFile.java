@@ -12,6 +12,9 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -22,6 +25,8 @@ import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 public class SubtitleFile {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SubtitleFile.class);
 
     public static final int BUFFER_SIZE = 10240;
 
@@ -98,8 +103,7 @@ public class SubtitleFile {
                 byte[] rawContent = Base64.getDecoder().decode(encodedContent);
                 content = decompress(rawContent, BUFFER_SIZE, charsetName);
             } catch (IOException e) {
-                // @todo add logging
-                e.printStackTrace();
+                LOGGER.error("Error while decompressing content", e)    ;
             }
             return content;
         }

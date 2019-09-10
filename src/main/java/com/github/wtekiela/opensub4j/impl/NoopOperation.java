@@ -12,7 +12,9 @@
  */
 package com.github.wtekiela.opensub4j.impl;
 
-class NoopOperation extends AbstractOperation {
+import com.github.wtekiela.opensub4j.response.Response;
+
+class NoopOperation extends AbstractOperation<Response> {
 
     private String loginToken;
 
@@ -32,8 +34,8 @@ class NoopOperation extends AbstractOperation {
     }
 
     @Override
-    Object getResponseObject() {
-        return null;
+    Response getResponseObject() {
+        return new Response();
     }
 
 }

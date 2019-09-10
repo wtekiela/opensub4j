@@ -138,9 +138,9 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     }
 
     @Override
-    public void noop() throws XmlRpcException {
+    public Response noop() throws XmlRpcException {
         ensureLoggedIn();
-        new NoopOperation(loginToken.getToken()).execute(xmlRpcClient, responseParser);
+        return new NoopOperation(loginToken.getToken()).execute(xmlRpcClient, responseParser);
     }
 
     @Override

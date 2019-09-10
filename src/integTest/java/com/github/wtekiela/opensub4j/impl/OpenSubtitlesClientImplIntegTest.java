@@ -141,10 +141,10 @@ public class OpenSubtitlesClientImplIntegTest {
         login();
 
         // when
-        objectUnderTest.noop();
+        Response response = objectUnderTest.noop();
 
         // then
-        // does not fail
+        assertEquals(ResponseStatus.OK, response.getStatus());
     }
 
     @Test

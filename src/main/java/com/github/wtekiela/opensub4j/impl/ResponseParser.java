@@ -91,6 +91,7 @@ class ResponseParser {
         }
     }
 
+    @java.lang.SuppressWarnings("squid:S3776")
     private Object parse(Class target, String value) {
         if (Boolean.class == target || Boolean.TYPE == target) {
             return Boolean.parseBoolean(value);
@@ -121,6 +122,7 @@ class ResponseParser {
         }
     }
 
+    @java.lang.SuppressWarnings("squid:S3776")
     private void set(Class target, Object value, Object instance, Field field) throws IllegalAccessException {
         if (Boolean.TYPE == target) {
             field.setBoolean(instance, (Boolean) value);

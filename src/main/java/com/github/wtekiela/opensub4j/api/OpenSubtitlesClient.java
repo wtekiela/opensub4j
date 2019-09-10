@@ -87,7 +87,7 @@ public interface OpenSubtitlesClient {
      *
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
-    void noop() throws XmlRpcException;
+    Response noop() throws XmlRpcException;
 
     /**
      * Search for subtitle files matching your videos using a movie file. If {lang} is empty or contains the string

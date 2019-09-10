@@ -118,7 +118,7 @@ public class SubtitleInfo {
     }
 
     @Override
-    public String toString() {
+    public String   toString() {
         return new StringJoiner(", ", SubtitleInfo.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("subtitleFileId=" + subtitleFileId)

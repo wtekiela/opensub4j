@@ -85,6 +85,8 @@ public interface OpenSubtitlesClient {
      * OSDb server) to keep the connection alive while client application is still running. It can be also used to check
      * if given session is still active.
      *
+     * @return Response information
+     *
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
     Response noop() throws XmlRpcException;

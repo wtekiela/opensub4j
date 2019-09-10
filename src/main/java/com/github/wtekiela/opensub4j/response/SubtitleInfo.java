@@ -50,6 +50,7 @@ public class SubtitleInfo {
     public SubtitleInfo() {
     }
 
+    @SuppressWarnings("squid:S00107")
     public SubtitleInfo(int id, int subtitleFileId, String language, String fileName, String format, int downloadsNo,
                         String osLink, String downloadLink, String zipDownloadLink, String encoding) {
         this.id = id;

@@ -12,8 +12,6 @@
  */
 package com.github.wtekiela.opensub4j.xmlrpc.client;
 
-import org.apache.xmlrpc.XmlRpcException;
-
 import java.util.concurrent.Callable;
 
 class RetryableCallable implements Callable<Object> {

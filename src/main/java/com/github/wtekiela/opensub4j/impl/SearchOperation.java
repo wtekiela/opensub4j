@@ -29,6 +29,7 @@ class SearchOperation extends ListOperation<SubtitleInfo> {
     private final String season;
     private final String episode;
 
+    @SuppressWarnings("squid:S00107")
     public SearchOperation(String loginToken, String lang, String movieHash, String movieByteSize, String tag, String imdbid, String query, String season, String episode) {
         this.loginToken = loginToken;
         this.lang = lang;
@@ -71,8 +72,7 @@ class SearchOperation extends ListOperation<SubtitleInfo> {
         }
 
         Object[] videoParams = {videoProperties};
-        Object[] params = {loginToken, videoParams};
-        return params;
+        return new Object[]{loginToken, videoParams};
     }
 
     @Override

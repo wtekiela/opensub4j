@@ -14,6 +14,8 @@ package com.github.wtekiela.opensub4j.impl;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +23,15 @@ import java.util.Map;
 
 abstract class ListOperation<T> implements Operation<List<T>> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ListOperation.class);
+
     @Override
     public List<T> execute(XmlRpcClient client, ResponseParser parser) throws XmlRpcException {
         Object response = client.execute(getMethodName(), getParams());
         try {
             return parser.bindList(getResponseClass(), (Map) response);
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (ReflectiveOperationException e) {
+            LOGGER.warn("Error while binding a list", e);
             return new ArrayList<>();
         }
     }

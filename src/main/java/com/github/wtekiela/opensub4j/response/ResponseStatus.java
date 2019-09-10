@@ -38,7 +38,7 @@ public class ResponseStatus {
         if (parts.length != 2) {
             throw new IllegalArgumentException("Value must contain code and message separated by space!");
         }
-        int code = Integer.valueOf(parts[0]);
+        int code = Integer.parseInt(parts[0]);
         String message = parts[1];
         return new ResponseStatus(code, message);
     }

@@ -167,6 +167,7 @@ public interface OpenSubtitlesClient {
      *
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
+    @SuppressWarnings("squid:S00107")
     List<SubtitleInfo> searchSubtitles(String lang, String hash, String size, String imdbid,
                                        String query, String season, String episode, String tag)
             throws XmlRpcException;

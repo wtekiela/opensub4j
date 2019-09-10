@@ -12,6 +12,7 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
+import java.util.Objects;
 import java.util.StringJoiner;
 
 public class ServerInfo extends Response {
@@ -119,6 +120,34 @@ public class ServerInfo extends Response {
 
     public String getXmlRpcVersion() {
         return xmlRpcVersion;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ServerInfo that = (ServerInfo) o;
+        return loggedInUsersNo == that.loggedInUsersNo &&
+                onlineProgramUsersNo == that.onlineProgramUsersNo &&
+                onlineTotalUsersNo == that.onlineTotalUsersNo &&
+                moviesAKANo == that.moviesAKANo &&
+                moviesTotalNo == that.moviesTotalNo &&
+                subsDownloadsNo == that.subsDownloadsNo &&
+                subsFileNo == that.subsFileNo &&
+                subsLangsNo == that.subsLangsNo &&
+                usersMaxAllTime == that.usersMaxAllTime &&
+                usersRegistered == that.usersRegistered &&
+                Objects.equals(application, that.application) &&
+                Objects.equals(contact, that.contact) &&
+                Objects.equals(websiteURL, that.websiteURL) &&
+                Objects.equals(xmlRpcURL, that.xmlRpcURL) &&
+                Objects.equals(xmlRpcVersion, that.xmlRpcVersion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), loggedInUsersNo, onlineProgramUsersNo, onlineTotalUsersNo, application, contact, moviesAKANo, moviesTotalNo, subsDownloadsNo, subsFileNo, subsLangsNo, usersMaxAllTime, usersRegistered, websiteURL, xmlRpcURL, xmlRpcVersion);
     }
 
     @Override

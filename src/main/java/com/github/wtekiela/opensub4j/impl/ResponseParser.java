@@ -89,13 +89,14 @@ class ResponseParser {
         return target != String.class && source == String.class;
     }
 
+    @SuppressWarnings("squid:S3011")
     private void ensureFieldIsAccessible(Field field) {
         if (!field.isAccessible()) {
             field.setAccessible(true);
         }
     }
 
-    @java.lang.SuppressWarnings("squid:S3776")
+    @SuppressWarnings("squid:S3776")
     private Object parse(Class target, String value) {
         if (Boolean.class == target || Boolean.TYPE == target) {
             return Boolean.parseBoolean(value);
@@ -127,7 +128,7 @@ class ResponseParser {
         }
     }
 
-    @java.lang.SuppressWarnings("squid:S3776")
+    @SuppressWarnings({"squid:S3776", "squid:S3011"})
     private void set(Class target, Object value, Object instance, Field field) throws IllegalAccessException {
         if (Boolean.TYPE == target) {
             field.setBoolean(instance, (Boolean) value);

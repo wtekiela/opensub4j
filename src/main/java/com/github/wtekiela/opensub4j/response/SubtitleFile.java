@@ -82,16 +82,16 @@ public class SubtitleFile {
 
     public class Content {
 
-        private final String content;
+        private final String decodedContent;
         private final String charsetName;
 
         public Content(String charsetName, String content) {
             this.charsetName = charsetName;
-            this.content = content;
+            this.decodedContent = content;
         }
 
         public String getContent() {
-            return content;
+            return decodedContent;
         }
 
         public String getCharsetName() {

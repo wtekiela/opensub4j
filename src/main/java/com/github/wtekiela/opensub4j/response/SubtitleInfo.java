@@ -12,6 +12,9 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
+import java.util.Objects;
+import java.util.StringJoiner;
+
 public class SubtitleInfo {
 
     @OpenSubtitlesApiSpec(fieldName = "IDSubtitle")
@@ -102,18 +105,31 @@ public class SubtitleInfo {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SubtitleInfo that = (SubtitleInfo) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
     public String toString() {
-        return "SubtitleInfo{" +
-                "id=" + id +
-                ", subtitleFileId=" + subtitleFileId +
-                ", downloadsNo=" + downloadsNo +
-                ", language='" + language + '\'' +
-                ", fileName='" + fileName + '\'' +
-                ", format='" + format + '\'' +
-                ", osLink='" + osLink + '\'' +
-                ", downloadLink='" + downloadLink + '\'' +
-                ", zipDownloadLink='" + zipDownloadLink + '\'' +
-                ", encoding='" + encoding + '\'' +
-                '}';
+        return new StringJoiner(", ", SubtitleInfo.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("subtitleFileId=" + subtitleFileId)
+                .add("downloadsNo=" + downloadsNo)
+                .add("language='" + language + "'")
+                .add("fileName='" + fileName + "'")
+                .add("format='" + format + "'")
+                .add("osLink='" + osLink + "'")
+                .add("downloadLink='" + downloadLink + "'")
+                .add("zipDownloadLink='" + zipDownloadLink + "'")
+                .add("encoding='" + encoding + "'")
+                .toString();
     }
 }

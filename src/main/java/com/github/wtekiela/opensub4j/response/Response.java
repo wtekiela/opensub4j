@@ -12,6 +12,9 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
+import java.util.Objects;
+import java.util.StringJoiner;
+
 public class Response {
 
     @OpenSubtitlesApiSpec(fieldName = "status")
@@ -28,4 +31,25 @@ public class Response {
         return seconds;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Response response = (Response) o;
+        return Double.compare(response.seconds, seconds) == 0 &&
+                Objects.equals(status, response.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(status, seconds);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Response.class.getSimpleName() + "[", "]")
+                .add("status=" + status)
+                .add("seconds=" + seconds)
+                .toString();
+    }
 }

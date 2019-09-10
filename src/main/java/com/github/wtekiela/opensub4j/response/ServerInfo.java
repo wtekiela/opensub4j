@@ -12,6 +12,8 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
+import java.util.StringJoiner;
+
 public class ServerInfo extends Response {
 
     @OpenSubtitlesApiSpec(fieldName = "users_loggedin")
@@ -121,22 +123,22 @@ public class ServerInfo extends Response {
 
     @Override
     public String toString() {
-        return "ServerInfo{" +
-                "loggedInUsersNo=" + loggedInUsersNo +
-                ", onlineProgramUsersNo=" + onlineProgramUsersNo +
-                ", onlineTotalUsersNo=" + onlineTotalUsersNo +
-                ", application='" + application + '\'' +
-                ", contact='" + contact + '\'' +
-                ", moviesAKANo=" + moviesAKANo +
-                ", moviesTotalNo=" + moviesTotalNo +
-                ", subsDownloadsNo=" + subsDownloadsNo +
-                ", subsFileNo=" + subsFileNo +
-                ", subsLangsNo=" + subsLangsNo +
-                ", usersMaxAllTime=" + usersMaxAllTime +
-                ", usersRegistered=" + usersRegistered +
-                ", websiteURL='" + websiteURL + '\'' +
-                ", xmlRpcURL='" + xmlRpcURL + '\'' +
-                ", xmlRpcVersion=" + xmlRpcVersion +
-                '}';
+        return new StringJoiner(", ", ServerInfo.class.getSimpleName() + "[", "]")
+                .add("loggedInUsersNo=" + loggedInUsersNo)
+                .add("onlineProgramUsersNo=" + onlineProgramUsersNo)
+                .add("onlineTotalUsersNo=" + onlineTotalUsersNo)
+                .add("application='" + application + "'")
+                .add("contact='" + contact + "'")
+                .add("moviesAKANo=" + moviesAKANo)
+                .add("moviesTotalNo=" + moviesTotalNo)
+                .add("subsDownloadsNo=" + subsDownloadsNo)
+                .add("subsFileNo=" + subsFileNo)
+                .add("subsLangsNo=" + subsLangsNo)
+                .add("usersMaxAllTime=" + usersMaxAllTime)
+                .add("usersRegistered=" + usersRegistered)
+                .add("websiteURL='" + websiteURL + "'")
+                .add("xmlRpcURL='" + xmlRpcURL + "'")
+                .add("xmlRpcVersion='" + xmlRpcVersion + "'")
+                .toString();
     }
 }

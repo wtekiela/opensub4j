@@ -12,6 +12,9 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
+import java.util.Objects;
+import java.util.StringJoiner;
+
 public class LoginToken extends Response {
 
     @OpenSubtitlesApiSpec(fieldName = "token")
@@ -21,4 +24,23 @@ public class LoginToken extends Response {
         return token;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LoginToken that = (LoginToken) o;
+        return Objects.equals(token, that.token);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(token);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", LoginToken.class.getSimpleName() + "[", "]")
+                .add("token='" + token + "'")
+                .toString();
+    }
 }

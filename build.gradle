@@ -7,15 +7,25 @@ buildscript {
 	}
 }
 
-group = 'com.github.wtekiela'
-version = '0.2.3-SNAPSHOT'
+plugins {
+	id "org.sonarqube" version "2.7.1"
+}
 
 apply plugin: 'java'
 apply plugin: 'license'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
+group = 'com.github.wtekiela'
+version = '0.2.3-SNAPSHOT'
+
 sourceCompatibility = 1.8
+
+sonarqube {
+	properties {
+		property "sonar.projectKey", "wtekiela_opensub4j"
+	}
+}
 
 license {
 	header rootProject.file('LICENSE')

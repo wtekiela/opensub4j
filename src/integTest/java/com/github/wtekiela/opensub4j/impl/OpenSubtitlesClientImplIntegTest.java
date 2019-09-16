@@ -60,7 +60,7 @@ public class OpenSubtitlesClientImplIntegTest {
         OpenSubtitlesClient client = new OpenSubtitlesClientImpl(config, 1, 2);
 
         // when
-        assertThrows(XmlRpcException.class, () -> client.serverInfo());
+        assertThrows(XmlRpcException.class, client::serverInfo);
 
         // then
         // expects exception

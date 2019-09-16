@@ -37,7 +37,7 @@ public class SubtitleFile {
     @OpenSubtitlesApiSpec(fieldName = "data")
     private String encodedContent;
 
-    private Map<String, Content> contentCache = new ConcurrentHashMap<>();
+    private final Map<String, Content> contentCache = new ConcurrentHashMap<>();
 
     public int getId() {
         return id;
@@ -85,7 +85,7 @@ public class SubtitleFile {
         private final String decodedContent;
         private final String charsetName;
 
-        public Content(String charsetName, String content) {
+        Content(String charsetName, String content) {
             this.charsetName = charsetName;
             this.decodedContent = content;
         }
@@ -103,11 +103,11 @@ public class SubtitleFile {
 
         private final String charsetName;
 
-        public ContentBuilder(String charsetName) {
+        ContentBuilder(String charsetName) {
             this.charsetName = charsetName;
         }
 
-        public Content build() {
+        Content build() {
             return new Content(charsetName, decode(charsetName));
         }
 

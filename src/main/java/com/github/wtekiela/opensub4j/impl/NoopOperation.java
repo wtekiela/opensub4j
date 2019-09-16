@@ -16,7 +16,7 @@ import com.github.wtekiela.opensub4j.response.Response;
 
 class NoopOperation extends AbstractOperation<Response> {
 
-    private String loginToken;
+    private final String loginToken;
 
     public NoopOperation(String loginToken) {
         this.loginToken = loginToken;

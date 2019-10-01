@@ -30,13 +30,13 @@ class ResponseParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ResponseParser.class);
 
-    <T> ListResponse<T> bind(ListResponse<T> instance, Class<?> listResponseClass, Map response) {
+    <T> ListResponse<T> bind(ListResponse<T> instance, AbstractListOperation.ElementFactory<T> elementFactory, Map response) {
         if (instance == null) {
             return null;
         }
         Set<Field> declaredFields = getAllClassFields(instance.getClass());
         for (Field field : declaredFields) {
-            new FieldBindingTask<>(instance, listResponseClass, response, field).run();
+            new FieldBindingTask<>(instance, elementFactory, response, field).run();
         }
         return instance;
     }
@@ -70,7 +70,7 @@ class ResponseParser {
         private final Map response;
         private final Field field;
 
-        private Class<?> listClass;
+        private AbstractListOperation.ElementFactory<T> elementFactory;
 
         private Object value;
 
@@ -80,9 +80,9 @@ class ResponseParser {
             this.field = field;
         }
 
-        public FieldBindingTask(T instance, Class<?> listClass, Map response, Field field) {
+        public FieldBindingTask(T instance, AbstractListOperation.ElementFactory elementFactory, Map response, Field field) {
             this.instance = instance;
-            this.listClass = listClass;
+            this.elementFactory = elementFactory;
             this.response = response;
             this.field = field;
         }
@@ -102,7 +102,7 @@ class ResponseParser {
             Class<?> source = value.getClass();
             Class<?> target = field.getType();
 
-            if (List.class.equals(target) && listClass != null) {
+            if (List.class.equals(target) && elementFactory != null) {
                 executeListFieldBinding(source, target);
             } else {
                 executePrimitiveFieldBinding(source, target);
@@ -122,7 +122,7 @@ class ResponseParser {
                 List list = new ArrayList<>(rawData.length);
                 try {
                     for (Object obj : rawData) {
-                        list.add(ResponseParser.this.bind(listClass.newInstance(), (Map) obj));
+                        list.add(ResponseParser.this.bind(elementFactory.newInstance(), (Map) obj));
                     }
                     set(target, list);
                 } catch (ReflectiveOperationException e) {

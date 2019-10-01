@@ -36,8 +36,7 @@ class DownloadSubtitlesOperation extends AbstractListOperation<SubtitleFile> {
     }
 
     @Override
-    Class<SubtitleFile> getResponseClass() {
-        return SubtitleFile.class;
+    ElementFactory<SubtitleFile> getListElementFactory() {
+        return () -> new SubtitleFile();
     }
-
 }

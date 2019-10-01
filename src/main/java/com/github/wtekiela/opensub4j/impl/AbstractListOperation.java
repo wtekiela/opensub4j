@@ -23,12 +23,18 @@ abstract class AbstractListOperation<T> implements Operation<ListResponse<T>> {
     @Override
     public ListResponse<T> execute(XmlRpcClient client, ResponseParser parser) throws XmlRpcException {
         Object response = client.execute(getMethodName(), getParams());
-        return parser.bind(new ListResponse<>(), getResponseClass(), (Map) response);
+        return parser.bind(new ListResponse<>(), getListElementFactory(), (Map) response);
     }
 
     abstract String getMethodName();
 
     abstract Object[] getParams();
 
-    abstract Class<T> getResponseClass();
+    abstract ElementFactory getListElementFactory();
+
+    interface ElementFactory<T> {
+
+        T newInstance();
+
+    }
 }

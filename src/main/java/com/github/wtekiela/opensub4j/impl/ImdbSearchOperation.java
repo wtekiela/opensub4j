@@ -35,8 +35,8 @@ class ImdbSearchOperation extends AbstractListOperation<MovieInfo> {
     }
 
     @Override
-    Class<MovieInfo> getResponseClass() {
-        return MovieInfo.class;
+    ElementFactory<MovieInfo> getListElementFactory() {
+        return () -> new MovieInfo();
     }
 
 }

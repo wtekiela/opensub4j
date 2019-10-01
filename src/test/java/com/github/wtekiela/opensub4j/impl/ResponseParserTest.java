@@ -21,7 +21,7 @@ class ResponseParserTest {
         response.put("status", "206 Partial content; missing idsubtitlefile(s): -1");
 
         // when
-        ListResponse<SubtitleFile> result = objectUnderTest.bind(new ListResponse<>(), SubtitleFile.class, response);
+        ListResponse<SubtitleFile> result = objectUnderTest.bind(new ListResponse<>(), () -> new SubtitleFile(), response);
 
         // then
         Assertions.assertEquals(206, result.getStatus().getCode());

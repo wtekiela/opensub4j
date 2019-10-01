@@ -76,7 +76,7 @@ class SearchOperation extends AbstractListOperation<SubtitleInfo> {
     }
 
     @Override
-    Class<SubtitleInfo> getResponseClass() {
-        return SubtitleInfo.class;
+    ElementFactory<SubtitleInfo> getListElementFactory() {
+        return () -> new SubtitleInfo();
     }
 }

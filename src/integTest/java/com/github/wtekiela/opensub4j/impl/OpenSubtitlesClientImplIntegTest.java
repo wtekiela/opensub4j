@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

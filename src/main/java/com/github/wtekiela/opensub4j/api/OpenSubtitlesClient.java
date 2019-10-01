@@ -14,7 +14,6 @@ package com.github.wtekiela.opensub4j.api;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import com.github.wtekiela.opensub4j.response.*;
 import org.apache.xmlrpc.XmlRpcException;

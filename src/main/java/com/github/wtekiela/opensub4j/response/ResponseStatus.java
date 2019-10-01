@@ -43,6 +43,11 @@ public class ResponseStatus {
         return new ResponseStatus(code, message);
     }
 
+    public ResponseStatus(int code) {
+        this.code = code;
+        this.message = "";
+    }
+
     public ResponseStatus(int code, String message) {
         this.code = code;
         this.message = message;

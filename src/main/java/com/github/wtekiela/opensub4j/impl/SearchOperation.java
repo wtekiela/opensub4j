@@ -30,7 +30,7 @@ class SearchOperation extends AbstractListOperation<SubtitleInfo> {
     private final String episode;
 
     @SuppressWarnings("squid:S00107")
-    public SearchOperation(String loginToken, String lang, String movieHash, String movieByteSize, String tag, String imdbid, String query, String season, String episode) {
+    SearchOperation(String loginToken, String lang, String movieHash, String movieByteSize, String tag, String imdbid, String query, String season, String episode) {
         this.loginToken = loginToken;
         this.lang = lang;
         this.movieHash = movieHash;

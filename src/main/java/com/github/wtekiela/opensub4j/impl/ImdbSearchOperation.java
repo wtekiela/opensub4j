@@ -36,7 +36,7 @@ class ImdbSearchOperation extends AbstractListOperation<MovieInfo> {
 
     @Override
     ElementFactory<MovieInfo> getListElementFactory() {
-        return () -> new MovieInfo();
+        return MovieInfo::new;
     }
 
 }

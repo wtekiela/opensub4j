@@ -77,6 +77,6 @@ class SearchOperation extends AbstractListOperation<SubtitleInfo> {
 
     @Override
     ElementFactory<SubtitleInfo> getListElementFactory() {
-        return () -> new SubtitleInfo();
+        return SubtitleInfo::new;
     }
 }

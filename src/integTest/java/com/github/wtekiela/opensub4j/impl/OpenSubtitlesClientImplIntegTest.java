@@ -183,7 +183,7 @@ public class OpenSubtitlesClientImplIntegTest {
 
         // then
         assertTrue(subtitleFiles.getData().isEmpty());
-        assertTrue(subtitleFiles.getStatus().getCode() == 206);
+        assertTrue(subtitleFiles.getStatus().equals(ResponseStatus.PARTIAL_CONTENT));
     }
 
     @Test

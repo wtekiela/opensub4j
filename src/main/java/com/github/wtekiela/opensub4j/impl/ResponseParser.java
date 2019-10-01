@@ -26,8 +26,13 @@ class ResponseParser {
 
     private static final String LIST_DATA_KEY = "data";
 
-    <T> List<T> bindList(Class<T> clazz, Map<String, Object[]> response) throws ReflectiveOperationException {
-        Object[] rawData = response.get(LIST_DATA_KEY);
+    <T> List<T> bindList(Class<T> clazz, Map<String, Object> response) throws ReflectiveOperationException {
+        Object dataValue = response.get(LIST_DATA_KEY);
+        if (!(dataValue instanceof Object[])) {
+            return new ArrayList<>(0);
+        }
+
+        Object[] rawData = (Object[]) dataValue;
         List<T> list = new ArrayList<>(rawData.length);
         for (Object obj : rawData) {
             list.add(bind(clazz.getDeclaredConstructor().newInstance(), (Map) obj));

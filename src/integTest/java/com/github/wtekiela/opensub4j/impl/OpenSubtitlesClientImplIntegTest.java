@@ -175,6 +175,18 @@ public class OpenSubtitlesClientImplIntegTest {
     }
 
     @Test
+    void testDownloadSubtitlesForImproperId() throws XmlRpcException {
+        // given
+        login();
+
+        // when
+        List<SubtitleFile> subtitleFiles = objectUnderTest.downloadSubtitles(-1);
+
+        // then
+        assertTrue(subtitleFiles.isEmpty());
+    }
+
+    @Test
     void testSearchMoviesOnImdb() throws XmlRpcException {
         // given
         login();

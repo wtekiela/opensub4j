@@ -104,7 +104,7 @@ public interface OpenSubtitlesClient {
      * @throws java.io.IOException               If the file does not exist, is a directory rather than a regular file
      *                                           or other I/O error occurs
      */
-    List<SubtitleInfo> searchSubtitles(String lang, File file) throws IOException, XmlRpcException;
+    ListResponse<SubtitleInfo> searchSubtitles(String lang, File file) throws IOException, XmlRpcException;
 
     /**
      * Search for subtitle files by computed file hash and size of a video file. If {lang} is empty or contains the
@@ -118,7 +118,7 @@ public interface OpenSubtitlesClient {
      *
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
-    List<SubtitleInfo> searchSubtitles(String lang, String hash, String size) throws XmlRpcException;
+    ListResponse<SubtitleInfo> searchSubtitles(String lang, String hash, String size) throws XmlRpcException;
 
     /**
      * Search for subtitle files matching your videos using IMDB ids. If {lang} is empty or contains the string 'all' -
@@ -132,7 +132,7 @@ public interface OpenSubtitlesClient {
      *
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
-    List<SubtitleInfo> searchSubtitles(String lang, String imdbId) throws XmlRpcException;
+    ListResponse<SubtitleInfo> searchSubtitles(String lang, String imdbId) throws XmlRpcException;
 
     /**
      * Search for subtitle files using full text search.
@@ -146,7 +146,7 @@ public interface OpenSubtitlesClient {
      *
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
-    List<SubtitleInfo> searchSubtitles(String lang, String query, String season, String episode)
+    ListResponse<SubtitleInfo> searchSubtitles(String lang, String query, String season, String episode)
             throws XmlRpcException;
 
     /**
@@ -168,7 +168,7 @@ public interface OpenSubtitlesClient {
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
     @SuppressWarnings("squid:S00107")
-    List<SubtitleInfo> searchSubtitles(String lang, String hash, String size, String imdbid,
+    ListResponse<SubtitleInfo> searchSubtitles(String lang, String hash, String size, String imdbid,
                                        String query, String season, String episode, String tag)
             throws XmlRpcException;
 
@@ -181,7 +181,7 @@ public interface OpenSubtitlesClient {
      *
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
-    List<SubtitleFile> downloadSubtitles(int subtitleFileID) throws XmlRpcException;
+    ListResponse<SubtitleFile> downloadSubtitles(int subtitleFileID) throws XmlRpcException;
 
     /**
      * Searches for movies matching given movie title {query}. Returns list of movies data found on IMDb.com and in
@@ -193,6 +193,6 @@ public interface OpenSubtitlesClient {
      *
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
-    List<MovieInfo> searchMoviesOnImdb(String query) throws XmlRpcException;
+    ListResponse<MovieInfo> searchMoviesOnImdb(String query) throws XmlRpcException;
 
 }

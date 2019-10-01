@@ -12,28 +12,18 @@
  */
 package com.github.wtekiela.opensub4j.impl;
 
+import com.github.wtekiela.opensub4j.response.ListResponse;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-abstract class ListOperation<T> implements Operation<List<T>> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ListOperation.class);
+abstract class ListOperation<T> implements Operation<ListResponse<T>> {
 
     @Override
-    public List<T> execute(XmlRpcClient client, ResponseParser parser) throws XmlRpcException {
+    public ListResponse<T> execute(XmlRpcClient client, ResponseParser parser) throws XmlRpcException {
         Object response = client.execute(getMethodName(), getParams());
-        try {
-            return parser.bindList(getResponseClass(), (Map) response);
-        } catch (ReflectiveOperationException e) {
-            LOGGER.warn("Error while binding a list", e);
-            return new ArrayList<>();
-        }
+        return parser.bind(new ListResponse<>(), getResponseClass(), (Map) response);
     }
 
     abstract String getMethodName();

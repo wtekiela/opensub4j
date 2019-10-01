@@ -144,7 +144,7 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     }
 
     @Override
-    public List<SubtitleInfo> searchSubtitles(String lang, File file) throws IOException, XmlRpcException {
+    public ListResponse<SubtitleInfo> searchSubtitles(String lang, File file) throws IOException, XmlRpcException {
         ensureLoggedIn();
         String hash = fileHashCalculator.calculateHash(file);
         long size = file.length();
@@ -152,22 +152,22 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     }
 
     @Override
-    public List<SubtitleInfo> searchSubtitles(String lang, String hash, String movieByteSize) throws XmlRpcException {
+    public ListResponse<SubtitleInfo> searchSubtitles(String lang, String hash, String movieByteSize) throws XmlRpcException {
         return searchSubtitles(lang, hash, movieByteSize, null, null, null, null, null);
     }
 
     @Override
-    public List<SubtitleInfo> searchSubtitles(String lang, String imdbId) throws XmlRpcException {
+    public ListResponse<SubtitleInfo> searchSubtitles(String lang, String imdbId) throws XmlRpcException {
         return searchSubtitles(lang, null, null, imdbId, null, null, null, null);
     }
 
     @Override
-    public List<SubtitleInfo> searchSubtitles(String lang, String query, String season, String episode) throws XmlRpcException {
+    public ListResponse<SubtitleInfo> searchSubtitles(String lang, String query, String season, String episode) throws XmlRpcException {
         return searchSubtitles(lang, null, null, null, query, season, episode, null);
     }
 
     @Override
-    public List<SubtitleInfo> searchSubtitles(String lang, String movieHash, String movieByteSize,
+    public ListResponse<SubtitleInfo> searchSubtitles(String lang, String movieHash, String movieByteSize,
                                               String imdbid,
                                               String query, String season, String episode,
                                               String tag) throws XmlRpcException {
@@ -177,14 +177,14 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     }
 
     @Override
-    public List<SubtitleFile> downloadSubtitles(int subtitleFileID) throws XmlRpcException {
+    public ListResponse<SubtitleFile> downloadSubtitles(int subtitleFileID) throws XmlRpcException {
         ensureLoggedIn();
         return new DownloadSubtitlesOperation(loginToken.getToken(), subtitleFileID)
                 .execute(xmlRpcClient, responseParser);
     }
 
     @Override
-    public List<MovieInfo> searchMoviesOnImdb(String query) throws XmlRpcException {
+    public ListResponse<MovieInfo> searchMoviesOnImdb(String query) throws XmlRpcException {
         ensureLoggedIn();
         return new ImdbSearchOperation(loginToken.getToken(), query)
                 .execute(xmlRpcClient, responseParser);

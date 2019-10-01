@@ -153,11 +153,11 @@ public class OpenSubtitlesClientImplIntegTest {
         login();
 
         // when
-        List<SubtitleInfo> subtitleInfos = objectUnderTest.searchSubtitles(TEST_LANG_3, IMDB_ID_FORREST_GUMP);
+        ListResponse<SubtitleInfo> subtitleInfos = objectUnderTest.searchSubtitles(TEST_LANG_3, IMDB_ID_FORREST_GUMP);
 
         // then
-        assertFalse(subtitleInfos.isEmpty());
-        subtitleInfos.forEach(subtitle -> assertEquals("English", subtitle.getLanguage()));
+        assertFalse(subtitleInfos.getData().isEmpty());
+        subtitleInfos.getData().forEach(subtitle -> assertEquals("English", subtitle.getLanguage()));
     }
 
     @Test
@@ -166,11 +166,11 @@ public class OpenSubtitlesClientImplIntegTest {
         login();
 
         // when
-        List<SubtitleFile> subtitleFiles = objectUnderTest.downloadSubtitles(TEST_SUBTITLE_FILE_ID);
+        ListResponse<SubtitleFile> subtitleFiles = objectUnderTest.downloadSubtitles(TEST_SUBTITLE_FILE_ID);
 
         // then
-        assertEquals(1, subtitleFiles.size());
-        SubtitleFile file = subtitleFiles.get(0);
+        assertEquals(1, subtitleFiles.getData().size());
+        SubtitleFile file = subtitleFiles.getData().get(0);
         assertEquals(TEST_SUBTITLE_FILE_ID, file.getId());
     }
 
@@ -180,10 +180,11 @@ public class OpenSubtitlesClientImplIntegTest {
         login();
 
         // when
-        List<SubtitleFile> subtitleFiles = objectUnderTest.downloadSubtitles(-1);
+        ListResponse<SubtitleFile> subtitleFiles = objectUnderTest.downloadSubtitles(-1);
 
         // then
-        assertTrue(subtitleFiles.isEmpty());
+        assertTrue(subtitleFiles.getData().isEmpty());
+        assertTrue(subtitleFiles.getStatus().getCode() == 206);
     }
 
     @Test
@@ -192,9 +193,9 @@ public class OpenSubtitlesClientImplIntegTest {
         login();
 
         // when
-        List<MovieInfo> movies = objectUnderTest.searchMoviesOnImdb("Forrest Gump");
+        ListResponse<MovieInfo> movies = objectUnderTest.searchMoviesOnImdb("Forrest Gump");
 
         // then
-        assertFalse(movies.isEmpty());
+        assertFalse(movies.getData().isEmpty());
     }
 }

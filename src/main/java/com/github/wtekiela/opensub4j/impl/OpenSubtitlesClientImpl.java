@@ -98,12 +98,12 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     }
 
     @Override
-    public Response login(String lang, String useragent) throws XmlRpcException {
+    public synchronized Response login(String lang, String useragent) throws XmlRpcException {
         return login("", "", lang, useragent);
     }
 
     @Override
-    public Response login(String user, String pass, String lang, String useragent) throws XmlRpcException {
+    public synchronized Response login(String user, String pass, String lang, String useragent) throws XmlRpcException {
         ensureNotLoggedIn();
         LoginToken loginResponse = new LogInOperation(user, pass, lang, useragent).execute(xmlRpcClient, responseParser);
         if (ResponseStatus.OK.equals(loginResponse.getStatus())) {
@@ -119,7 +119,7 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     }
 
     @Override
-    public void logout() throws XmlRpcException {
+    public synchronized void logout() throws XmlRpcException {
         ensureLoggedIn();
         new LogOutOperation(loginToken.getToken()).execute(xmlRpcClient, responseParser);
         loginToken = null;

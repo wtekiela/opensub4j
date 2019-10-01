@@ -14,12 +14,12 @@ package com.github.wtekiela.opensub4j.impl;
 
 import com.github.wtekiela.opensub4j.response.SubtitleFile;
 
-class DownloadSubtitlesOperation extends ListOperation<SubtitleFile> {
+class DownloadSubtitlesOperation extends AbstractListOperation<SubtitleFile> {
 
     private final String loginToken;
     private final int subtitleFileID;
 
-    public DownloadSubtitlesOperation(String loginToken, int subtitleFileID) {
+    DownloadSubtitlesOperation(String loginToken, int subtitleFileID) {
         this.loginToken = loginToken;
         this.subtitleFileID = subtitleFileID;
     }

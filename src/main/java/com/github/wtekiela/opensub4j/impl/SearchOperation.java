@@ -17,7 +17,7 @@ import com.github.wtekiela.opensub4j.response.SubtitleInfo;
 import java.util.HashMap;
 import java.util.Map;
 
-class SearchOperation extends ListOperation<SubtitleInfo> {
+class SearchOperation extends AbstractListOperation<SubtitleInfo> {
 
     private final String loginToken;
     private final String lang;

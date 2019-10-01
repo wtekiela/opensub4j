@@ -16,7 +16,7 @@ class LogOutOperation extends AbstractOperation {
 
     private final String loginToken;
 
-    public LogOutOperation(String loginToken) {
+    LogOutOperation(String loginToken) {
         this.loginToken = loginToken;
     }
 

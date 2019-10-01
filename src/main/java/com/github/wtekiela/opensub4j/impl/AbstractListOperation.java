@@ -18,7 +18,7 @@ import org.apache.xmlrpc.client.XmlRpcClient;
 
 import java.util.Map;
 
-abstract class ListOperation<T> implements Operation<ListResponse<T>> {
+abstract class AbstractListOperation<T> implements Operation<ListResponse<T>> {
 
     @Override
     public ListResponse<T> execute(XmlRpcClient client, ResponseParser parser) throws XmlRpcException {

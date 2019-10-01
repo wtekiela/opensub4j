@@ -21,7 +21,7 @@ class LogInOperation extends AbstractOperation<LoginToken> {
     private final String lang;
     private final String useragent;
 
-    public LogInOperation(String user, String pass, String lang, String useragent) {
+    LogInOperation(String user, String pass, String lang, String useragent) {
         this.user = user;
         this.pass = pass;
         this.lang = lang;

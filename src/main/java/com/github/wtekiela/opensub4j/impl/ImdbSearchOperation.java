@@ -14,12 +14,12 @@ package com.github.wtekiela.opensub4j.impl;
 
 import com.github.wtekiela.opensub4j.response.MovieInfo;
 
-class ImdbSearchOperation extends ListOperation<MovieInfo> {
+class ImdbSearchOperation extends AbstractListOperation<MovieInfo> {
 
     private final String loginToken;
     private final String query;
 
-    public ImdbSearchOperation(String loginToken, String query) {
+    ImdbSearchOperation(String loginToken, String query) {
         this.loginToken = loginToken;
         this.query = query;
     }

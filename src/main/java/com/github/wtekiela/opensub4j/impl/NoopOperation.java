@@ -18,7 +18,7 @@ class NoopOperation extends AbstractOperation<Response> {
 
     private final String loginToken;
 
-    public NoopOperation(String loginToken) {
+    NoopOperation(String loginToken) {
         this.loginToken = loginToken;
     }
 

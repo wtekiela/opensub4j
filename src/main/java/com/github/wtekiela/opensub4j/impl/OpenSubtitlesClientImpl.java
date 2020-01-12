@@ -47,6 +47,9 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     public OpenSubtitlesClientImpl(URL serverUrl) {
         XmlRpcClientConfigImpl xmlRpcClientConfig = new XmlRpcClientConfigImpl();
         xmlRpcClientConfig.setServerURL(serverUrl);
+        xmlRpcClientConfig.setEnabledForExtensions(true);
+        xmlRpcClientConfig.setGzipCompressing(true);
+        xmlRpcClientConfig.setGzipRequesting(true);
 
         this.xmlRpcClient = new RetryableXmlRpcClient(xmlRpcClientConfig);
         this.responseParser = new ResponseParser();

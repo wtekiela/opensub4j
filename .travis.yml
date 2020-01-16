@@ -7,6 +7,6 @@ addons:
 git:
   depth: false
 install:
-  - travis_retry ./gradlew clean assemble -x signArchives
+  - travis_retry ./gradlew clean assemble -x signArchives --info
 script:
-  - travis_retry ./gradlew check sonarqube
+  - travis_retry ./gradlew check sonarqube --info

@@ -3,7 +3,7 @@ plugins {
 	id "maven"
 	id "signing"
 	id "jacoco"
-	id "org.sonarqube" version "2.7.1"
+	id "org.sonarqube" version "2.8"
 	id "com.github.hierynomus.license" version "0.15.0"
 }
 
@@ -37,14 +37,12 @@ configurations {
 }
 
 dependencies {
-
 	compile 'org.slf4j:slf4j-api:1.7.+'
 	compile 'org.apache.xmlrpc:xmlrpc-client:3.1.+'
 
 	testCompile 'org.junit.jupiter:junit-jupiter:5.5.+'
 
 	testRuntime 'org.slf4j:slf4j-simple:1.7.+'
-
 }
 
 test {
@@ -60,12 +58,21 @@ test {
 	}
 }
 
+test.finalizedBy jacocoTestReport
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		html.enabled true
+	}
+}
+
 task integTest(type: Test, dependsOn: classes) {
 	group 'verification'
 	description 'Runs integration tests.'
 	testClassesDirs = sourceSets.integTest.output.classesDirs
 	classpath = sourceSets.integTest.runtimeClasspath
-	systemProperties['jar.path'] = jar.archivePath
+	systemProperties['jar.path'] = jar.archiveFile.get().asFile.path
 
 	useJUnitPlatform()
 
@@ -81,11 +88,44 @@ task integTest(type: Test, dependsOn: classes) {
 
 check.dependsOn integTest
 
-jacocoTestReport {
+task jacocoIntegTestReport(type: JacocoReport, dependsOn: integTest) {
+	group 'verification'
+	description 'Generates code coverage report for the integTest task.'
+	executionData integTest
+	sourceSets sourceSets.main
 	reports {
-		xml.enabled true
+		xml {
+			enabled = true
+			destination = file("build/reports/jacoco/integTest/jacocoIntegTestReport.xml")
+		}
+		html {
+			enabled true
+			destination = file("build/reports/jacoco/integTest/html")
+		}
 	}
 }
+
+integTest.finalizedBy jacocoIntegTestReport
+
+task jacocoReport(type: JacocoReport) {
+	group 'verification'
+	description 'Generates code coverage report for all test tasks.'
+	executionData test
+	executionData integTest
+	sourceSets sourceSets.main
+	reports {
+		xml {
+			enabled = true
+			destination = file("build/reports/jacoco/all/jacocoReport.xml")
+		}
+		html {
+			enabled true
+			destination = file("build/reports/jacoco/all/html")
+		}
+	}
+}
+
+check.finalizedBy jacocoReport
 
 jar {
 	manifest {
@@ -102,13 +142,13 @@ jar {
 
 task javadocJar(type: Jar) {
 	group 'build'
-	classifier = 'javadoc'
+	archiveClassifier = 'javadoc'
 	from javadoc
 }
 
 task sourcesJar(type: Jar) {
 	group 'build'
-	classifier = 'sources'
+	archiveClassifier = 'sources'
 	from sourceSets.main.allSource
 }
 
@@ -119,8 +159,10 @@ artifacts {
 sonarqube {
 	properties {
 		property "sonar.projectKey", "wtekiela_opensub4j"
+		property "sonar.organization", "wtekiela"
+
 		properties["sonar.tests"] += sourceSets.integTest.allSource.srcDirs
-		properties["sonar.jacoco.reportPaths"] += integTest.jacoco.destinationFile
+		properties["sonar.junit.reportPaths"] += integTest.reports.junitXml.destination
 	}
 }
 

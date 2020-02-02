@@ -38,7 +38,9 @@ configurations {
 
 dependencies {
 	compile 'org.slf4j:slf4j-api:1.7.+'
-	compile 'org.apache.xmlrpc:xmlrpc-client:3.1.+'
+	compile ('org.apache.xmlrpc:xmlrpc-client:3.1.+') {
+		exclude group: 'junit', module: 'junit'
+	}
 
 	testCompile 'org.junit.jupiter:junit-jupiter:5.5.+'
 

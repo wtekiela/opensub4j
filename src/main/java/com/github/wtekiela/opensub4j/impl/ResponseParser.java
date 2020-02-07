@@ -30,6 +30,18 @@ class ResponseParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ResponseParser.class);
 
+    private static Set<Field> getAllClassFields(Class type) {
+        Set<Field> fields = new HashSet<>();
+        Class currentType = type;
+
+        do {
+            fields.addAll(Arrays.asList(currentType.getDeclaredFields()));
+            currentType = currentType.getSuperclass();
+        } while (currentType != null);
+
+        return fields;
+    }
+
     <T> ListResponse<T> bind(ListResponse<T> instance, AbstractListOperation.ElementFactory<T> elementFactory, Map response) {
         if (instance == null) {
             return null;
@@ -50,18 +62,6 @@ class ResponseParser {
             new FieldBindingTask<>(instance, response, field).run();
         }
         return instance;
-    }
-
-    private static Set<Field> getAllClassFields(Class type) {
-        Set<Field> fields = new HashSet<>();
-        Class currentType = type;
-
-        do {
-            fields.addAll(Arrays.asList(currentType.getDeclaredFields()));
-            currentType = currentType.getSuperclass();
-        } while (currentType != null);
-
-        return fields;
     }
 
     private class FieldBindingTask<T> implements Runnable {

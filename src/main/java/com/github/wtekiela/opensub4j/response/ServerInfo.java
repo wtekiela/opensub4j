@@ -123,6 +123,11 @@ public class ServerInfo extends Response {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), loggedInUsersNo, onlineProgramUsersNo, onlineTotalUsersNo, application, contact, moviesAKANo, moviesTotalNo, subsDownloadsNo, subsFileNo, subsLangsNo, usersMaxAllTime, usersRegistered, websiteURL, xmlRpcURL, xmlRpcVersion);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -143,11 +148,6 @@ public class ServerInfo extends Response {
                 Objects.equals(websiteURL, that.websiteURL) &&
                 Objects.equals(xmlRpcURL, that.xmlRpcURL) &&
                 Objects.equals(xmlRpcVersion, that.xmlRpcVersion);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), loggedInUsersNo, onlineProgramUsersNo, onlineTotalUsersNo, application, contact, moviesAKANo, moviesTotalNo, subsDownloadsNo, subsFileNo, subsLangsNo, usersMaxAllTime, usersRegistered, websiteURL, xmlRpcURL, xmlRpcVersion);
     }
 
     @Override

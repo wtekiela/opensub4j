@@ -48,8 +48,8 @@ public class RetryableXmlRpcClient extends XmlRpcClient {
     /**
      * Decorator for {@link XmlRpcClient} that introduces a retry mechanism.
      *
-     * @param maxAttempts        maximum attempts
-     * @param intervalMillis     interval between attempts (in ms)
+     * @param maxAttempts    maximum attempts
+     * @param intervalMillis interval between attempts (in ms)
      */
     public RetryableXmlRpcClient(int maxAttempts, int intervalMillis) {
         super();

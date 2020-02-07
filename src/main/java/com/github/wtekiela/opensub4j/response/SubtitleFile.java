@@ -19,25 +19,23 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.Base64;
+import java.util.Map;
+import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.GZIPInputStream;
 
 public class SubtitleFile {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SubtitleFile.class);
-
     public static final int BUFFER_SIZE = 10240;
-
     public static final String DEFAULT_CHARSET = Charset.defaultCharset().name();
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(SubtitleFile.class);
+    private final Map<String, Content> contentCache = new ConcurrentHashMap<>();
     @OpenSubtitlesApiSpec(fieldName = "idsubtitlefile")
     private int id;
-
     @OpenSubtitlesApiSpec(fieldName = "data")
     private String encodedContent;
-
-    private final Map<String, Content> contentCache = new ConcurrentHashMap<>();
 
     public int getId() {
         return id;
@@ -61,16 +59,16 @@ public class SubtitleFile {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SubtitleFile that = (SubtitleFile) o;
         return id == that.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 
     @Override

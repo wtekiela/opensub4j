@@ -12,19 +12,25 @@
  */
 package com.github.wtekiela.opensub4j.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
+import com.github.wtekiela.opensub4j.api.FileHashCalculator;
 import com.github.wtekiela.opensub4j.api.OpenSubtitlesClient;
-import com.github.wtekiela.opensub4j.response.*;
+import com.github.wtekiela.opensub4j.response.ListResponse;
+import com.github.wtekiela.opensub4j.response.LoginToken;
+import com.github.wtekiela.opensub4j.response.MovieInfo;
+import com.github.wtekiela.opensub4j.response.Response;
+import com.github.wtekiela.opensub4j.response.ResponseStatus;
+import com.github.wtekiela.opensub4j.response.ServerInfo;
+import com.github.wtekiela.opensub4j.response.SubtitleFile;
+import com.github.wtekiela.opensub4j.response.SubtitleInfo;
 import com.github.wtekiela.opensub4j.xmlrpc.client.RetryableXmlRpcClient;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
-
-import com.github.wtekiela.opensub4j.api.FileHashCalculator;
 import org.apache.xmlrpc.client.XmlRpcClientConfig;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
 
@@ -51,9 +57,9 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     /**
      * Client for opensubtitles.org xml-rpc API
      *
-     * @param serverUrl API URL
+     * @param serverUrl   API URL
      * @param maxAttempts maximum number of retries for each request before throwing an exception
-     * @param interval interval between retries
+     * @param interval    interval between retries
      */
     public OpenSubtitlesClientImpl(URL serverUrl, int maxAttempts, int interval) {
         XmlRpcClientConfigImpl xmlRpcClientConfig = new XmlRpcClientConfigImpl();
@@ -77,8 +83,8 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
      * Client for opensubtitles.org xml-rpc API
      *
      * @param xmlRpcClientConfig configuration for {@link XmlRpcClient}
-     * @param maxAttempts maximum number of retries for each request before throwing an exception
-     * @param interval interval between retries
+     * @param maxAttempts        maximum number of retries for each request before throwing an exception
+     * @param interval           interval between retries
      */
     public OpenSubtitlesClientImpl(XmlRpcClientConfig xmlRpcClientConfig, int maxAttempts, int interval) {
         this(new RetryableXmlRpcClient(xmlRpcClientConfig, maxAttempts, interval), new ResponseParser(), new OpenSubtitlesFileHashCalculator());
@@ -112,23 +118,11 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
         return loginResponse;
     }
 
-    private void ensureNotLoggedIn() {
-        if (loginToken != null) {
-            throw new IllegalStateException("Already logged in! Please log out first.");
-        }
-    }
-
     @Override
     public synchronized void logout() throws XmlRpcException {
         ensureLoggedIn();
         new LogOutOperation(loginToken.getToken()).execute(xmlRpcClient, responseParser);
         loginToken = null;
-    }
-
-    private void ensureLoggedIn() {
-        if (loginToken == null) {
-            throw new IllegalStateException("Not logged in!");
-        }
     }
 
     @Override
@@ -167,9 +161,9 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
 
     @Override
     public ListResponse<SubtitleInfo> searchSubtitles(String lang, String movieHash, String movieByteSize,
-                                              String imdbid,
-                                              String query, String season, String episode,
-                                              String tag) throws XmlRpcException {
+                                                      String imdbid,
+                                                      String query, String season, String episode,
+                                                      String tag) throws XmlRpcException {
         ensureLoggedIn();
         return new SearchOperation(loginToken.getToken(), lang, movieHash, movieByteSize, tag, imdbid, query, season, episode)
                 .execute(xmlRpcClient, responseParser);
@@ -187,6 +181,18 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
         ensureLoggedIn();
         return new ImdbSearchOperation(loginToken.getToken(), query)
                 .execute(xmlRpcClient, responseParser);
+    }
+
+    private void ensureNotLoggedIn() {
+        if (loginToken != null) {
+            throw new IllegalStateException("Already logged in! Please log out first.");
+        }
+    }
+
+    private void ensureLoggedIn() {
+        if (loginToken == null) {
+            throw new IllegalStateException("Not logged in!");
+        }
     }
 
 }

@@ -106,6 +106,11 @@ public class SubtitleInfo {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -114,12 +119,7 @@ public class SubtitleInfo {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public String   toString() {
+    public String toString() {
         return new StringJoiner(", ", SubtitleInfo.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("subtitleFileId=" + subtitleFileId)

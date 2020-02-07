@@ -32,17 +32,17 @@ public class Response {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(status, seconds);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Response response = (Response) o;
         return Double.compare(response.seconds, seconds) == 0 &&
                 Objects.equals(status, response.status);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(status, seconds);
     }
 
     @Override

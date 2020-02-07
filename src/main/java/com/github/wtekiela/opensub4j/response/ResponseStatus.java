@@ -50,10 +50,21 @@ public class ResponseStatus {
     private final int code;
     private final String message;
 
+    public ResponseStatus(int code) {
+        this.code = code;
+        this.message = "";
+    }
+
+    public ResponseStatus(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
     /**
      * Needed for ResponseParser
      *
      * @param value concatenated value of http code and message separated by space
+     *
      * @return ResponseStatus created instance
      */
     public static ResponseStatus fromString(String value) {
@@ -66,16 +77,6 @@ public class ResponseStatus {
         return new ResponseStatus(code, message);
     }
 
-    public ResponseStatus(int code) {
-        this.code = code;
-        this.message = "";
-    }
-
-    public ResponseStatus(int code, String message) {
-        this.code = code;
-        this.message = message;
-    }
-
     public int getCode() {
         return code;
     }
@@ -85,16 +86,16 @@ public class ResponseStatus {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(code);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ResponseStatus that = (ResponseStatus) o;
         return code == that.code;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(code);
     }
 
     @Override

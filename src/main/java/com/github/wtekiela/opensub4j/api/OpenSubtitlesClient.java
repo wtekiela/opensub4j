@@ -12,11 +12,16 @@
  */
 package com.github.wtekiela.opensub4j.api;
 
+import com.github.wtekiela.opensub4j.response.ListResponse;
+import com.github.wtekiela.opensub4j.response.MovieInfo;
+import com.github.wtekiela.opensub4j.response.Response;
+import com.github.wtekiela.opensub4j.response.ServerInfo;
+import com.github.wtekiela.opensub4j.response.SubtitleFile;
+import com.github.wtekiela.opensub4j.response.SubtitleInfo;
+import org.apache.xmlrpc.XmlRpcException;
+
 import java.io.File;
 import java.io.IOException;
-
-import com.github.wtekiela.opensub4j.response.*;
-import org.apache.xmlrpc.XmlRpcException;
 
 /**
  * opensubtitles.org XML-RPC API client
@@ -39,8 +44,9 @@ public interface OpenSubtitlesClient {
      * @param lang      ISO639 2 letter language code
      * @param useragent UserAgent registered with OpenSubtitlesClient
      *
-     * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      * @return response information with status and time
+     *
+     * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
     Response login(String lang, String useragent) throws XmlRpcException;
 
@@ -59,8 +65,9 @@ public interface OpenSubtitlesClient {
      * @param lang      ISO639 2 letter language code
      * @param useragent UserAgent registered with OpenSubtitlesClient
      *
-     * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      * @return response information with status and time
+     *
+     * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
     Response login(String user, String pass, String lang, String useragent) throws XmlRpcException;
 
@@ -168,7 +175,7 @@ public interface OpenSubtitlesClient {
      */
     @SuppressWarnings("squid:S00107")
     ListResponse<SubtitleInfo> searchSubtitles(String lang, String hash, String size, String imdbid,
-                                       String query, String season, String episode, String tag)
+                                               String query, String season, String episode, String tag)
             throws XmlRpcException;
 
     /**

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SearchOperationTest {
+class SearchOperationTest {
 
     private static final String TOKEN = "token";
     private static final String LANG = "en";
@@ -19,7 +19,7 @@ public class SearchOperationTest {
     private static final String EPISODE = "episode";
 
     @Test
-    public void testEmpty() {
+    void testEmpty() {
 
         // given
         String movieHash = "";
@@ -46,7 +46,7 @@ public class SearchOperationTest {
     }
 
     @Test
-    public void testEmptyIfOnlyMovieHashPassed() {
+    void testEmptyIfOnlyMovieHashPassed() {
 
         // given
         String movieHash = HASH;
@@ -73,7 +73,7 @@ public class SearchOperationTest {
     }
 
     @Test
-    public void testMovieHashAndBytes() {
+    void testMovieHashAndBytes() {
 
         // given
         String movieHash = HASH;
@@ -102,7 +102,7 @@ public class SearchOperationTest {
     }
 
     @Test
-    public void testTag() {
+    void testTag() {
 
         // given
         String movieHash = "";
@@ -130,7 +130,7 @@ public class SearchOperationTest {
     }
 
     @Test
-    public void testImdbID() {
+    void testImdbID() {
 
         // given
         String movieHash = "";
@@ -158,7 +158,7 @@ public class SearchOperationTest {
     }
 
     @Test
-    public void testQuery() {
+    void testQuery() {
 
         // given
         String movieHash = "";
@@ -186,7 +186,7 @@ public class SearchOperationTest {
     }
 
     @Test
-    public void testQueryWithSeason() {
+    void testQueryWithSeason() {
 
         // given
         String movieHash = "";
@@ -215,7 +215,7 @@ public class SearchOperationTest {
     }
 
     @Test
-    public void testQueryWithSeasonAndEpisode() {
+    void testQueryWithSeasonAndEpisode() {
 
         // given
         String movieHash = "";

@@ -7,9 +7,9 @@ import java.util.concurrent.Callable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class RetryableCallableTest {
+class RetryableCallableTest {
 
-    public static final int TEST_INTERVAL_MILLIS = 2;
+    private static final int TEST_INTERVAL_MILLIS = 2;
 
     @Test
     void testCallOKIfExceptionsLessThenMaxAttempts() throws Exception {
@@ -41,11 +41,11 @@ public class RetryableCallableTest {
 
     private static class TestCallable implements Callable<Object> {
 
-        public static final Object SUCCESS = new Object();
+        private static final Object SUCCESS = new Object();
 
         private int exceptionsToThrow;
 
-        public TestCallable(int exceptionsToThrow) {
+        TestCallable(int exceptionsToThrow) {
             this.exceptionsToThrow = exceptionsToThrow;
         }
 

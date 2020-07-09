@@ -13,7 +13,7 @@ import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class OpenSubtitlesClientImplIntegTest {
+class OpenSubtitlesClientImplIntegTest {
 
     private static final String TEST_USER_AGENT = "TemporaryUserAgent";
 
@@ -35,7 +35,7 @@ public class OpenSubtitlesClientImplIntegTest {
 
     private OpenSubtitlesClientImpl objectUnderTest;
 
-    public OpenSubtitlesClientImplIntegTest() throws MalformedURLException {
+    OpenSubtitlesClientImplIntegTest() throws MalformedURLException {
         testServerUrl = new URL("https", "api.opensubtitles.org", 443, "/xml-rpc");
     }
 
@@ -104,8 +104,7 @@ public class OpenSubtitlesClientImplIntegTest {
         if (password == null || password.isEmpty()) {
             password = DEFAULT_PASSWORD;
         }
-        Response response = objectUnderTest.login(username, password, TEST_LANG_2, TEST_USER_AGENT);
-        return response;
+        return objectUnderTest.login(username, password, TEST_LANG_2, TEST_USER_AGENT);
     }
 
     @Test
@@ -126,7 +125,7 @@ public class OpenSubtitlesClientImplIntegTest {
         login();
 
         // when
-        assertThrows(IllegalStateException.class, () -> login());
+        assertThrows(IllegalStateException.class, this::login);
 
         // then
         // IllegalStateException
@@ -193,7 +192,7 @@ public class OpenSubtitlesClientImplIntegTest {
 
         // then
         assertTrue(subtitleFiles.getData().isEmpty());
-        assertTrue(subtitleFiles.getStatus().equals(ResponseStatus.PARTIAL_CONTENT));
+        assertEquals(ResponseStatus.PARTIAL_CONTENT, subtitleFiles.getStatus());
     }
 
     @Test

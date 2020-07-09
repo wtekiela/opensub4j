@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class OpenSubtitlesFileHashCalculatorTest {
+class OpenSubtitlesFileHashCalculatorTest {
 
     @Test
-    public void testReferenceFie() throws Exception {
+    void testReferenceFie() throws Exception {
         // given:
         FileHashCalculator calc = new OpenSubtitlesFileHashCalculator();
         // when:

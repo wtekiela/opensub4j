@@ -30,7 +30,7 @@ abstract class AbstractListOperation<T> implements Operation<ListResponse<T>> {
 
     abstract Object[] getParams();
 
-    abstract ElementFactory getListElementFactory();
+    abstract ElementFactory<T> getListElementFactory();
 
     interface ElementFactory<T> {
 

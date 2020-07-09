@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class OpenSubtitlesClientImplTest {
+class OpenSubtitlesClientImplTest {
 
     private OpenSubtitlesClientImpl objectUnderTest;
 

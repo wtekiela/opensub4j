@@ -12,7 +12,7 @@
  */
 package com.github.wtekiela.opensub4j.impl;
 
-class LogOutOperation extends AbstractOperation {
+class LogOutOperation extends AbstractOperation<Object> {
 
     private final String loginToken;
 

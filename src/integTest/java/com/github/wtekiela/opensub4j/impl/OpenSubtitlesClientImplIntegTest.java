@@ -126,7 +126,7 @@ public class OpenSubtitlesClientImplIntegTest {
         login();
 
         // when
-        assertThrows(IllegalStateException.class, () -> objectUnderTest.login(TEST_LANG_2, TEST_USER_AGENT));
+        assertThrows(IllegalStateException.class, () -> login());
 
         // then
         // IllegalStateException

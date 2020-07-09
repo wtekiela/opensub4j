@@ -39,18 +39,6 @@ public interface OpenSubtitlesClient {
     ServerInfo serverInfo() throws XmlRpcException;
 
     /**
-     * Login as anonymous user. Logging in is required before talking to the OSDb server.
-     *
-     * @param lang      ISO639 2 letter language code
-     * @param useragent UserAgent registered with OpenSubtitlesClient
-     *
-     * @return response information with status and time
-     *
-     * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
-     */
-    Response login(String lang, String useragent) throws XmlRpcException;
-
-    /**
      * Login given user, set interface language and initiate session. Logging in is required before talking to the OSDb
      * server.
      *

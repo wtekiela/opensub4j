@@ -104,11 +104,6 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     }
 
     @Override
-    public synchronized Response login(String lang, String useragent) throws XmlRpcException {
-        return login("", "", lang, useragent);
-    }
-
-    @Override
     public synchronized Response login(String user, String pass, String lang, String useragent) throws XmlRpcException {
         ensureNotLoggedIn();
         LoginToken loginResponse = new LogInOperation(user, pass, lang, useragent).execute(xmlRpcClient, responseParser);

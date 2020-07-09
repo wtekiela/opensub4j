@@ -16,6 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class OpenSubtitlesClientImplIntegTest {
 
     private static final String TEST_USER_AGENT = "TemporaryUserAgent";
+
+    private static final String DEFAULT_USERNAME = "";
+    private static final String DEFAULT_PASSWORD = "";
+
     private static final String TEST_LANG_2 = "en";
     private static final String TEST_LANG_3 = "eng";
 
@@ -26,10 +30,10 @@ public class OpenSubtitlesClientImplIntegTest {
     // http://www.opensubtitles.org/en/subtitles/3429018/sid-hjd1kIEN-LzDwLbgka2ZkDKFscf/forrest-gump-en
     private static final int TEST_SUBTITLE_FILE_ID = 1952039423;
 
+
     private URL testServerUrl;
 
     private OpenSubtitlesClientImpl objectUnderTest;
-    private boolean loggedIn;
 
     public OpenSubtitlesClientImplIntegTest() throws MalformedURLException {
         testServerUrl = new URL("https", "api.opensubtitles.org", 443, "/xml-rpc");
@@ -42,8 +46,7 @@ public class OpenSubtitlesClientImplIntegTest {
 
     @AfterEach
     private void teardown() throws XmlRpcException {
-        if (loggedIn) {
-            loggedIn = false;
+        if (objectUnderTest.isLoggedIn()) {
             objectUnderTest.logout();
         }
     }
@@ -93,8 +96,15 @@ public class OpenSubtitlesClientImplIntegTest {
     }
 
     private Response login() throws XmlRpcException {
-        Response response = objectUnderTest.login(TEST_LANG_2, TEST_USER_AGENT);
-        loggedIn = true;
+        String username = System.getenv("OS_USER");
+        if (username == null || username.isEmpty()) {
+            username = DEFAULT_USERNAME;
+        }
+        String password = System.getenv("OS_PASS");
+        if (password == null || password.isEmpty()) {
+            password = DEFAULT_PASSWORD;
+        }
+        Response response = objectUnderTest.login(username, password, TEST_LANG_2, TEST_USER_AGENT);
         return response;
     }
 
@@ -125,7 +135,7 @@ public class OpenSubtitlesClientImplIntegTest {
     @Test
     void testLogout() throws XmlRpcException {
         // given
-        objectUnderTest.login(TEST_LANG_2, TEST_USER_AGENT);
+        login();
 
         // when
         objectUnderTest.logout();

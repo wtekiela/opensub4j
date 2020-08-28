@@ -38,8 +38,12 @@ public class MovieInfo {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         MovieInfo movieInfo = (MovieInfo) o;
         return id == movieInfo.id;
     }
@@ -47,8 +51,8 @@ public class MovieInfo {
     @Override
     public String toString() {
         return new StringJoiner(", ", MovieInfo.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
-                .add("title='" + title + "'")
-                .toString();
+            .add("id=" + id)
+            .add("title='" + title + "'")
+            .toString();
     }
 }

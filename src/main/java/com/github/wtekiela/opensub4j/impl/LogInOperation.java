@@ -35,7 +35,7 @@ class LogInOperation extends AbstractOperation<LoginToken> {
 
     @Override
     Object[] getParams() {
-        return new Object[]{user, pass, lang, useragent};
+        return new Object[] {user, pass, lang, useragent};
     }
 
     @Override

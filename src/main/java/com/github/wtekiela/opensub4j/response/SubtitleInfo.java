@@ -112,8 +112,12 @@ public class SubtitleInfo {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         SubtitleInfo that = (SubtitleInfo) o;
         return id == that.id;
     }
@@ -121,16 +125,16 @@ public class SubtitleInfo {
     @Override
     public String toString() {
         return new StringJoiner(", ", SubtitleInfo.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
-                .add("subtitleFileId=" + subtitleFileId)
-                .add("downloadsNo=" + downloadsNo)
-                .add("language='" + language + "'")
-                .add("fileName='" + fileName + "'")
-                .add("format='" + format + "'")
-                .add("osLink='" + osLink + "'")
-                .add("downloadLink='" + downloadLink + "'")
-                .add("zipDownloadLink='" + zipDownloadLink + "'")
-                .add("encoding='" + encoding + "'")
-                .toString();
+            .add("id=" + id)
+            .add("subtitleFileId=" + subtitleFileId)
+            .add("downloadsNo=" + downloadsNo)
+            .add("language='" + language + "'")
+            .add("fileName='" + fileName + "'")
+            .add("format='" + format + "'")
+            .add("osLink='" + osLink + "'")
+            .add("downloadLink='" + downloadLink + "'")
+            .add("zipDownloadLink='" + zipDownloadLink + "'")
+            .add("encoding='" + encoding + "'")
+            .toString();
     }
 }

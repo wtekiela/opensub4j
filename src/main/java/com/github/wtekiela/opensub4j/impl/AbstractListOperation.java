@@ -13,10 +13,9 @@
 package com.github.wtekiela.opensub4j.impl;
 
 import com.github.wtekiela.opensub4j.response.ListResponse;
+import java.util.Map;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
-
-import java.util.Map;
 
 abstract class AbstractListOperation<T> implements Operation<ListResponse<T>> {
 

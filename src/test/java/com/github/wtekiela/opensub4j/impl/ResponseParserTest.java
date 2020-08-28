@@ -2,11 +2,10 @@ package com.github.wtekiela.opensub4j.impl;
 
 import com.github.wtekiela.opensub4j.response.ListResponse;
 import com.github.wtekiela.opensub4j.response.SubtitleFile;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 class ResponseParserTest {
 
@@ -21,7 +20,8 @@ class ResponseParserTest {
         response.put("status", "206 Partial content; missing idsubtitlefile(s): -1");
 
         // when
-        ListResponse<SubtitleFile> result = objectUnderTest.bind(new ListResponse<>(), () -> new SubtitleFile(), response);
+        ListResponse<SubtitleFile> result =
+            objectUnderTest.bind(new ListResponse<>(), () -> new SubtitleFile(), response);
 
         // then
         Assertions.assertEquals(206, result.getStatus().getCode());

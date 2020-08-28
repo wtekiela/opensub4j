@@ -31,7 +31,7 @@ class ImdbSearchOperation extends AbstractListOperation<MovieInfo> {
 
     @Override
     Object[] getParams() {
-        return new Object[]{loginToken, query};
+        return new Object[] {loginToken, query};
     }
 
     @Override

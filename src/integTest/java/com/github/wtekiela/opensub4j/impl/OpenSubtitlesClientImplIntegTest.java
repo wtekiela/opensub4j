@@ -1,17 +1,26 @@
 package com.github.wtekiela.opensub4j.impl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.github.wtekiela.opensub4j.api.OpenSubtitlesClient;
-import com.github.wtekiela.opensub4j.response.*;
+import com.github.wtekiela.opensub4j.response.ListResponse;
+import com.github.wtekiela.opensub4j.response.MovieInfo;
+import com.github.wtekiela.opensub4j.response.Response;
+import com.github.wtekiela.opensub4j.response.ResponseStatus;
+import com.github.wtekiela.opensub4j.response.ServerInfo;
+import com.github.wtekiela.opensub4j.response.SubtitleFile;
+import com.github.wtekiela.opensub4j.response.SubtitleInfo;
+import java.net.MalformedURLException;
+import java.net.URL;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class OpenSubtitlesClientImplIntegTest {
 
@@ -57,7 +66,7 @@ class OpenSubtitlesClientImplIntegTest {
         XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
         config.setServerURL(testServerUrl);
         config.setConnectionTimeout(1);
-        config.setReplyTimeout(1    );
+        config.setReplyTimeout(1);
 
         OpenSubtitlesClient client = new OpenSubtitlesClientImpl(config, 1, 2);
 
@@ -112,7 +121,8 @@ class OpenSubtitlesClientImplIntegTest {
         // given
 
         // when
-        Response response = objectUnderTest.login("myID", "andPassword", "en", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0");
+        Response response = objectUnderTest.login("myID", "andPassword", "en",
+            "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0");
 
         // then
         assertFalse(objectUnderTest.isLoggedIn());

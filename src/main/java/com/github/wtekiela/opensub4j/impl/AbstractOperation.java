@@ -12,10 +12,9 @@
  */
 package com.github.wtekiela.opensub4j.impl;
 
+import java.util.Map;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
-
-import java.util.Map;
 
 abstract class AbstractOperation<T> implements Operation<T> {
 

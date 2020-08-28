@@ -124,50 +124,59 @@ public class ServerInfo extends Response {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), loggedInUsersNo, onlineProgramUsersNo, onlineTotalUsersNo, application, contact, moviesAKANo, moviesTotalNo, subsDownloadsNo, subsFileNo, subsLangsNo, usersMaxAllTime, usersRegistered, websiteURL, xmlRpcURL, xmlRpcVersion);
+        return Objects
+            .hash(super.hashCode(), loggedInUsersNo, onlineProgramUsersNo, onlineTotalUsersNo, application, contact,
+                moviesAKANo, moviesTotalNo, subsDownloadsNo, subsFileNo, subsLangsNo, usersMaxAllTime, usersRegistered,
+                websiteURL, xmlRpcURL, xmlRpcVersion);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         ServerInfo that = (ServerInfo) o;
         return loggedInUsersNo == that.loggedInUsersNo &&
-                onlineProgramUsersNo == that.onlineProgramUsersNo &&
-                onlineTotalUsersNo == that.onlineTotalUsersNo &&
-                moviesAKANo == that.moviesAKANo &&
-                moviesTotalNo == that.moviesTotalNo &&
-                subsDownloadsNo == that.subsDownloadsNo &&
-                subsFileNo == that.subsFileNo &&
-                subsLangsNo == that.subsLangsNo &&
-                usersMaxAllTime == that.usersMaxAllTime &&
-                usersRegistered == that.usersRegistered &&
-                Objects.equals(application, that.application) &&
-                Objects.equals(contact, that.contact) &&
-                Objects.equals(websiteURL, that.websiteURL) &&
-                Objects.equals(xmlRpcURL, that.xmlRpcURL) &&
-                Objects.equals(xmlRpcVersion, that.xmlRpcVersion);
+            onlineProgramUsersNo == that.onlineProgramUsersNo &&
+            onlineTotalUsersNo == that.onlineTotalUsersNo &&
+            moviesAKANo == that.moviesAKANo &&
+            moviesTotalNo == that.moviesTotalNo &&
+            subsDownloadsNo == that.subsDownloadsNo &&
+            subsFileNo == that.subsFileNo &&
+            subsLangsNo == that.subsLangsNo &&
+            usersMaxAllTime == that.usersMaxAllTime &&
+            usersRegistered == that.usersRegistered &&
+            Objects.equals(application, that.application) &&
+            Objects.equals(contact, that.contact) &&
+            Objects.equals(websiteURL, that.websiteURL) &&
+            Objects.equals(xmlRpcURL, that.xmlRpcURL) &&
+            Objects.equals(xmlRpcVersion, that.xmlRpcVersion);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", ServerInfo.class.getSimpleName() + "[", "]")
-                .add("loggedInUsersNo=" + loggedInUsersNo)
-                .add("onlineProgramUsersNo=" + onlineProgramUsersNo)
-                .add("onlineTotalUsersNo=" + onlineTotalUsersNo)
-                .add("application='" + application + "'")
-                .add("contact='" + contact + "'")
-                .add("moviesAKANo=" + moviesAKANo)
-                .add("moviesTotalNo=" + moviesTotalNo)
-                .add("subsDownloadsNo=" + subsDownloadsNo)
-                .add("subsFileNo=" + subsFileNo)
-                .add("subsLangsNo=" + subsLangsNo)
-                .add("usersMaxAllTime=" + usersMaxAllTime)
-                .add("usersRegistered=" + usersRegistered)
-                .add("websiteURL='" + websiteURL + "'")
-                .add("xmlRpcURL='" + xmlRpcURL + "'")
-                .add("xmlRpcVersion='" + xmlRpcVersion + "'")
-                .toString();
+            .add("loggedInUsersNo=" + loggedInUsersNo)
+            .add("onlineProgramUsersNo=" + onlineProgramUsersNo)
+            .add("onlineTotalUsersNo=" + onlineTotalUsersNo)
+            .add("application='" + application + "'")
+            .add("contact='" + contact + "'")
+            .add("moviesAKANo=" + moviesAKANo)
+            .add("moviesTotalNo=" + moviesTotalNo)
+            .add("subsDownloadsNo=" + subsDownloadsNo)
+            .add("subsFileNo=" + subsFileNo)
+            .add("subsLangsNo=" + subsLangsNo)
+            .add("usersMaxAllTime=" + usersMaxAllTime)
+            .add("usersRegistered=" + usersRegistered)
+            .add("websiteURL='" + websiteURL + "'")
+            .add("xmlRpcURL='" + xmlRpcURL + "'")
+            .add("xmlRpcVersion='" + xmlRpcVersion + "'")
+            .toString();
     }
 }

@@ -14,9 +14,6 @@ package com.github.wtekiela.opensub4j.impl;
 
 import com.github.wtekiela.opensub4j.response.ListResponse;
 import com.github.wtekiela.opensub4j.response.OpenSubtitlesApiSpec;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -25,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class ResponseParser {
 
@@ -42,7 +41,8 @@ class ResponseParser {
         return fields;
     }
 
-    <T> ListResponse<T> bind(ListResponse<T> instance, AbstractListOperation.ElementFactory<T> elementFactory, Map response) {
+    <T> ListResponse<T> bind(ListResponse<T> instance, AbstractListOperation.ElementFactory<T> elementFactory,
+                             Map response) {
         if (instance == null) {
             return null;
         }
@@ -80,7 +80,8 @@ class ResponseParser {
             this.field = field;
         }
 
-        public FieldBindingTask(T instance, AbstractListOperation.ElementFactory elementFactory, Map response, Field field) {
+        public FieldBindingTask(T instance, AbstractListOperation.ElementFactory elementFactory, Map response,
+                                Field field) {
             this.instance = instance;
             this.elementFactory = elementFactory;
             this.response = response;

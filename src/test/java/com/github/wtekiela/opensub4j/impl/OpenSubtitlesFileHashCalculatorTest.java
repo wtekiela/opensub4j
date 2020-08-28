@@ -1,11 +1,10 @@
 package com.github.wtekiela.opensub4j.impl;
 
-import java.io.File;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.github.wtekiela.opensub4j.api.FileHashCalculator;
+import java.io.File;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OpenSubtitlesFileHashCalculatorTest {
 

@@ -12,9 +12,6 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,6 +22,8 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.GZIPInputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SubtitleFile {
 
@@ -65,8 +64,12 @@ public class SubtitleFile {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         SubtitleFile that = (SubtitleFile) o;
         return id == that.id;
     }
@@ -74,8 +77,8 @@ public class SubtitleFile {
     @Override
     public String toString() {
         return new StringJoiner(", ", SubtitleFile.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
-                .toString();
+            .add("id=" + id)
+            .toString();
     }
 
     public class Content {

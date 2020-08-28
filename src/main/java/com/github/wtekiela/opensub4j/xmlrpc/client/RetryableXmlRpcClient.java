@@ -12,13 +12,12 @@
  */
 package com.github.wtekiela.opensub4j.xmlrpc.client;
 
+import java.util.Arrays;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
 
 public class RetryableXmlRpcClient extends XmlRpcClient {
 
@@ -83,15 +82,15 @@ public class RetryableXmlRpcClient extends XmlRpcClient {
     public Object execute(final String method, final Object[] params) throws XmlRpcException {
         try {
             RetryableCallable retryableCallable = new RetryableCallable(
-                    maxAttempts,
-                    intervalMillis,
-                    () -> {
-                        String paramsAsString = Arrays.deepToString(params);
-                        LOGGER.debug("Calling method: {}, with params: {}", method, paramsAsString);
-                        Object response = RetryableXmlRpcClient.super.execute(method, params);
-                        LOGGER.debug("Response: {}", response);
-                        return response;
-                    }
+                maxAttempts,
+                intervalMillis,
+                () -> {
+                    String paramsAsString = Arrays.deepToString(params);
+                    LOGGER.debug("Calling method: {}, with params: {}", method, paramsAsString);
+                    Object response = RetryableXmlRpcClient.super.execute(method, params);
+                    LOGGER.debug("Response: {}", response);
+                    return response;
+                }
             );
             return retryableCallable.call();
         } catch (Exception e) {

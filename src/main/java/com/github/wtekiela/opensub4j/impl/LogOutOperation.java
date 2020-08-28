@@ -27,7 +27,7 @@ class LogOutOperation extends AbstractOperation<Object> {
 
     @Override
     Object[] getParams() {
-        return new Object[]{loginToken};
+        return new Object[] {loginToken};
     }
 
     @Override

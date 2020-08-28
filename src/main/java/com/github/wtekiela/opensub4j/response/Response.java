@@ -38,18 +38,22 @@ public class Response {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Response response = (Response) o;
         return Double.compare(response.seconds, seconds) == 0 &&
-                Objects.equals(status, response.status);
+            Objects.equals(status, response.status);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", Response.class.getSimpleName() + "[", "]")
-                .add("status=" + status)
-                .add("seconds=" + seconds)
-                .toString();
+            .add("status=" + status)
+            .add("seconds=" + seconds)
+            .toString();
     }
 }

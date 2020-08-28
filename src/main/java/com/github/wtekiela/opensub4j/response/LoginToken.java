@@ -31,8 +31,12 @@ public class LoginToken extends Response {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         LoginToken that = (LoginToken) o;
         return Objects.equals(token, that.token);
     }
@@ -40,7 +44,7 @@ public class LoginToken extends Response {
     @Override
     public String toString() {
         return new StringJoiner(", ", LoginToken.class.getSimpleName() + "[", "]")
-                .add("token='" + token + "'")
-                .toString();
+            .add("token='" + token + "'")
+            .toString();
     }
 }

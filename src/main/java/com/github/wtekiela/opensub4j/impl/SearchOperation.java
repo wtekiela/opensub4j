@@ -13,7 +13,6 @@
 package com.github.wtekiela.opensub4j.impl;
 
 import com.github.wtekiela.opensub4j.response.SubtitleInfo;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +29,8 @@ class SearchOperation extends AbstractListOperation<SubtitleInfo> {
     private final String episode;
 
     @SuppressWarnings("squid:S00107")
-    SearchOperation(String loginToken, String lang, String movieHash, String movieByteSize, String tag, String imdbid, String query, String season, String episode) {
+    SearchOperation(String loginToken, String lang, String movieHash, String movieByteSize, String tag, String imdbid,
+                    String query, String season, String episode) {
         this.loginToken = loginToken;
         this.lang = lang;
         this.movieHash = movieHash;
@@ -72,7 +72,7 @@ class SearchOperation extends AbstractListOperation<SubtitleInfo> {
         }
 
         Object[] videoParams = {videoProperties};
-        return new Object[]{loginToken, videoParams};
+        return new Object[] {loginToken, videoParams};
     }
 
     @Override

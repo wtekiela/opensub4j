@@ -18,10 +18,9 @@ import com.github.wtekiela.opensub4j.response.Response;
 import com.github.wtekiela.opensub4j.response.ServerInfo;
 import com.github.wtekiela.opensub4j.response.SubtitleFile;
 import com.github.wtekiela.opensub4j.response.SubtitleInfo;
-import org.apache.xmlrpc.XmlRpcException;
-
 import java.io.File;
 import java.io.IOException;
+import org.apache.xmlrpc.XmlRpcException;
 
 /**
  * opensubtitles.org XML-RPC API client
@@ -141,7 +140,7 @@ public interface OpenSubtitlesClient {
      * @throws org.apache.xmlrpc.XmlRpcException When exception occurs during XML-RPC call
      */
     ListResponse<SubtitleInfo> searchSubtitles(String lang, String query, String season, String episode)
-            throws XmlRpcException;
+        throws XmlRpcException;
 
     /**
      * Search for subtitle files. If you define movie hash and size, then the rest of the parameters are ignored. If you
@@ -164,7 +163,7 @@ public interface OpenSubtitlesClient {
     @SuppressWarnings("squid:S00107")
     ListResponse<SubtitleInfo> searchSubtitles(String lang, String hash, String size, String imdbid,
                                                String query, String season, String episode, String tag)
-            throws XmlRpcException;
+        throws XmlRpcException;
 
     /**
      * Download given subtitle file

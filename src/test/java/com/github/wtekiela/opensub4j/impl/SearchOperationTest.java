@@ -1,10 +1,9 @@
 package com.github.wtekiela.opensub4j.impl;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 class SearchOperationTest {
 
@@ -31,7 +30,7 @@ class SearchOperationTest {
         String episode = "";
 
         SearchOperation objectUnderTest = new SearchOperation(
-                TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
+            TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
         );
 
         // when
@@ -58,7 +57,7 @@ class SearchOperationTest {
         String episode = "";
 
         SearchOperation objectUnderTest = new SearchOperation(
-                TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
+            TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
         );
 
         // when
@@ -85,7 +84,7 @@ class SearchOperationTest {
         String episode = "";
 
         SearchOperation objectUnderTest = new SearchOperation(
-                TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
+            TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
         );
 
         // when
@@ -114,7 +113,7 @@ class SearchOperationTest {
         String episode = "";
 
         SearchOperation objectUnderTest = new SearchOperation(
-                TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
+            TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
         );
 
         // when
@@ -142,7 +141,7 @@ class SearchOperationTest {
         String episode = "";
 
         SearchOperation objectUnderTest = new SearchOperation(
-                TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
+            TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
         );
 
         // when
@@ -170,7 +169,7 @@ class SearchOperationTest {
         String episode = "";
 
         SearchOperation objectUnderTest = new SearchOperation(
-                TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
+            TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
         );
 
         // when
@@ -198,7 +197,7 @@ class SearchOperationTest {
         String episode = "";
 
         SearchOperation objectUnderTest = new SearchOperation(
-                TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
+            TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
         );
 
         // when
@@ -227,7 +226,7 @@ class SearchOperationTest {
         String episode = EPISODE;
 
         SearchOperation objectUnderTest = new SearchOperation(
-                TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
+            TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
         );
 
         // when

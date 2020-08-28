@@ -32,7 +32,7 @@ class DownloadSubtitlesOperation extends AbstractListOperation<SubtitleFile> {
     @Override
     Object[] getParams() {
         Object[] subtitleFileIDs = {subtitleFileID};
-        return new Object[]{loginToken, subtitleFileIDs};
+        return new Object[] {loginToken, subtitleFileIDs};
     }
 
     @Override

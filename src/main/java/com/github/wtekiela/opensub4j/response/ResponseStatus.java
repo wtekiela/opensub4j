@@ -28,10 +28,14 @@ public class ResponseStatus {
     public static final ResponseStatus MOVED = new ResponseStatus(301, "Moved (host)");
     // 4xx
     public static final ResponseStatus UNAUTHORIZED = new ResponseStatus(401, "Unauthorized");
-    public static final ResponseStatus SUBTITLE_INVALID_FORMAT = new ResponseStatus(402, "Subtitles has invalid format");
-    public static final ResponseStatus SUBTITLE_HASH_NOT_SAME = new ResponseStatus(403, "SubHashes (content and sent subhash) are not same!");
-    public static final ResponseStatus SUBTITLE_INVALID_LANGUAGE = new ResponseStatus(404, "Subtitles has invalid language!");
-    public static final ResponseStatus NOT_ALL_MANDATORY_PARAMS_SPECIFIED = new ResponseStatus(405, "Not all mandatory parameters was specified");
+    public static final ResponseStatus SUBTITLE_INVALID_FORMAT =
+        new ResponseStatus(402, "Subtitles has invalid format");
+    public static final ResponseStatus SUBTITLE_HASH_NOT_SAME =
+        new ResponseStatus(403, "SubHashes (content and sent subhash) are not same!");
+    public static final ResponseStatus SUBTITLE_INVALID_LANGUAGE =
+        new ResponseStatus(404, "Subtitles has invalid language!");
+    public static final ResponseStatus NOT_ALL_MANDATORY_PARAMS_SPECIFIED =
+        new ResponseStatus(405, "Not all mandatory parameters was specified");
     public static final ResponseStatus NO_SESSION = new ResponseStatus(406, "No session");
     public static final ResponseStatus DOWNLOAD_LIMIT_REACHED = new ResponseStatus(407, "Download limit reached");
     public static final ResponseStatus INVALID_PARAMETERS = new ResponseStatus(408, "Invalid parameters");
@@ -42,7 +46,8 @@ public class ResponseStatus {
     public static final ResponseStatus INVALID_IMDB_ID = new ResponseStatus(413, "Invalid ImdbID");
     public static final ResponseStatus UNKNOWN_USER_AGENT = new ResponseStatus(414, "Unknown User Agent");
     public static final ResponseStatus DISABLED_USER_AGENT = new ResponseStatus(415, "Disabled user agent");
-    public static final ResponseStatus INTERNAL_SUBTITLE_VALIDATION_FAILED = new ResponseStatus(416, "Internal subtitle validation failed");
+    public static final ResponseStatus INTERNAL_SUBTITLE_VALIDATION_FAILED =
+        new ResponseStatus(416, "Internal subtitle validation failed");
     // 5XX
     public static final ResponseStatus SERVICE_UNAVAILABLE = new ResponseStatus(503, "Service Unavailable");
     public static final ResponseStatus MAINTENANCE = new ResponseStatus(506, "Server under maintenance");
@@ -92,8 +97,12 @@ public class ResponseStatus {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ResponseStatus that = (ResponseStatus) o;
         return code == that.code;
     }

@@ -16,11 +16,11 @@ Simply add the dependency to gradle/maven to the latest release:
 
 ```
 dependencies {
-    compile 'com.github.wtekiela:opensub4j:0.2.4'
+    compile 'com.github.wtekiela:opensub4j:0.3.0'
 }
 ```
 
-## Usage (version 0.2.X)
+## Usage (version 0.3.X)
 
 ### Creating the client
 
@@ -56,8 +56,8 @@ ServerInfo serverInfo = osClient.serverInfo();
 Response response = osClient.login("username", "password", "en", "TemporaryUserAgent");
 
 // checking login status
-response.getStatus();
-osClient.isLoggedIn();
+assert response.getStatus() == ResponseStatus.OK;
+assert osClient.isLoggedIn() == true;
 
 // logging out
 osClient.logout();
@@ -67,36 +67,71 @@ osClient.logout();
 
 ```
 // searching for subtitles matching a file
-List<SubtitleInfo> subtitles = osClient.searchSubtitles("eng", new File("/path/to/file.mkv"));
+ListResponse<SubtitleInfo> response = osClient.searchSubtitles("eng", new File("/path/to/file.mkv"));
+List<SubtitleInfo> subtitles = response.getData();
 
 // searching by imdb id
-List<SubtitleInfo> subtitles = osClient.searchSubtitles("eng", "movie IMDB id");
+ListResponse<SubtitleInfo> response = osClient.searchSubtitles("eng", "movie IMDB id");
+List<SubtitleInfo> subtitles = response.getData();
 
 // searching by string query + season/episode
-List<SubtitleInfo> subtitles = osClient.searchSubtitles("eng", "Friends", "1", "1");
+ListResponse<SubtitleInfo> response = osClient.searchSubtitles("eng", "Friends", "1", "1");
+List<SubtitleInfo> subtitles = response.getData();
 ```
 
 ### Downloading subtitles
 
 ```
-List<SubtitleFile> subtitleFiles = osClient.downloadSubtitles(subtitleInfo.getId());
+ListResponse<SubtitleFile> response = osClient.downloadSubtitles(subtitleInfo.getId());
+List<SubtitleFile> subtitleFiles = response.getData();
+```
+
+## Error handling
+
+Each method interfacing with XML-RPC api returns a response that carries HTTP status and duration of the call.
+
+```
+Response response = osClient.serverInfo();
+double duration = response.getSeconds();
+ResponseStatus status = response.getStatus();
+int httpCode = status.getCode();
+String message = status.getMessage();
+```
+
+Defined `ResponseStatus` contants:
+```
+    // 2xx
+    public static final ResponseStatus OK = new ResponseStatus(200, "OK");
+    public static final ResponseStatus PARTIAL_CONTENT = new ResponseStatus(206, "Partial content");
+    // 3xx
+    public static final ResponseStatus MOVED = new ResponseStatus(301, "Moved (host)");
+    // 4xx
+    public static final ResponseStatus UNAUTHORIZED = new ResponseStatus(401, "Unauthorized");
+    public static final ResponseStatus SUBTITLE_INVALID_FORMAT = new ResponseStatus(402, "Subtitles has invalid format");
+    public static final ResponseStatus SUBTITLE_HASH_NOT_SAME = new ResponseStatus(403, "SubHashes (content and sent subhash) are not same!");
+    public static final ResponseStatus SUBTITLE_INVALID_LANGUAGE = new ResponseStatus(404, "Subtitles has invalid language!");
+    public static final ResponseStatus NOT_ALL_MANDATORY_PARAMS_SPECIFIED = new ResponseStatus(405, "Not all mandatory parameters was specified");
+    public static final ResponseStatus NO_SESSION = new ResponseStatus(406, "No session");
+    public static final ResponseStatus DOWNLOAD_LIMIT_REACHED = new ResponseStatus(407, "Download limit reached");
+    public static final ResponseStatus INVALID_PARAMETERS = new ResponseStatus(408, "Invalid parameters");
+    public static final ResponseStatus METHOD_NOT_FOUND = new ResponseStatus(409, "Method not found");
+    public static final ResponseStatus OTHER_UNKNOWN_ERROR = new ResponseStatus(410, "Other or unknown error");
+    public static final ResponseStatus INVALID_USER_AGENT = new ResponseStatus(411, "Empty or invalid useragent");
+    public static final ResponseStatus S_INVALID_FORMAT = new ResponseStatus(412, "%s has invalid format (reason)");
+    public static final ResponseStatus INVALID_IMDB_ID = new ResponseStatus(413, "Invalid ImdbID");
+    public static final ResponseStatus UNKNOWN_USER_AGENT = new ResponseStatus(414, "Unknown User Agent");
+    public static final ResponseStatus DISABLED_USER_AGENT = new ResponseStatus(415, "Disabled user agent");
+    public static final ResponseStatus INTERNAL_SUBTITLE_VALIDATION_FAILED = new ResponseStatus(416, "Internal subtitle validation failed");
+    // 5XX
+    public static final ResponseStatus SERVICE_UNAVAILABLE = new ResponseStatus(503, "Service Unavailable");
+    public static final ResponseStatus MAINTENANCE = new ResponseStatus(506, "Server under maintenance");
 ```
 
 ## Logging
 
-Library uses slf4j logging facade, it can be bound to any logger implementation that has bindings to slf4j. 
+Library uses slf4j logging facade, so you can use any logging implementation that slf4j supports. For more information please refer to [slf4j documentation](http://www.slf4j.org/manual.html).
 
-For simple logging:
-```
-runtime 'org.slf4j:slf4j-simple:1.7.+'
-``` 
-
-For binding with log4j:
-```
-runtime 'org.slf4j:slf4j-log4j12:1.7.+'
-```
-
-For more information please refer to slf4j documentation.
+![](http://www.slf4j.org/images/concrete-bindings.png)
 
 ## Building from sources
 
@@ -104,5 +139,3 @@ To build the library from sources, you just need to invoke:
 ```
 ./gradlew assemble
 ```
-
-Note: Java JDK 8 is required.

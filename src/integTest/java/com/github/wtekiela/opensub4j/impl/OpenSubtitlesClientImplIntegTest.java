@@ -78,6 +78,22 @@ class OpenSubtitlesClientImplIntegTest {
     }
 
     @Test
+    void testImproperXmlRpcClientConfigSendingMalformedRequests() throws XmlRpcException {
+        // given
+        XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+        config.setServerURL(testServerUrl);
+        config.setGzipCompressing(true);
+
+        objectUnderTest = new OpenSubtitlesClientImpl(config);
+
+        // when
+        Response response = objectUnderTest.serverInfo();
+
+        // then
+        assertEquals(response.getStatus(), ResponseStatus.PARSE_ERROR);
+    }
+
+    @Test
     void testServerInfo() throws XmlRpcException {
         // given
 

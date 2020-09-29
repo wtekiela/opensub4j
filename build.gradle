@@ -34,6 +34,7 @@ configurations {
 	integTestCompile.extendsFrom testCompile
 	integTestImplementation.extendsFrom testImplementation
 	integTestRuntime.extendsFrom testRuntime
+	integTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
 dependencies {

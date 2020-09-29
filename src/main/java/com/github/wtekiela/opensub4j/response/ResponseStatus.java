@@ -51,6 +51,8 @@ public class ResponseStatus {
     // 5XX
     public static final ResponseStatus SERVICE_UNAVAILABLE = new ResponseStatus(503, "Service Unavailable");
     public static final ResponseStatus MAINTENANCE = new ResponseStatus(506, "Server under maintenance");
+    // others
+    public static final ResponseStatus PARSE_ERROR = new ResponseStatus(0, "parse error. not well formed");
 
     private final int code;
     private final String message;
@@ -73,6 +75,9 @@ public class ResponseStatus {
      * @return ResponseStatus created instance
      */
     public static ResponseStatus fromString(String value) {
+        if (value.equals("parse error. not well formed")) {
+            return PARSE_ERROR;
+        }
         String[] parts = value.split(" ", 2);
         if (parts.length != 2) {
             throw new IllegalArgumentException("Value must contain code and message separated by space!");

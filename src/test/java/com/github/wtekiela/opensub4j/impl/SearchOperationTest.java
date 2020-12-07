@@ -242,6 +242,65 @@ class SearchOperationTest {
         assertEquals(EPISODE, videoParams.get("episode"));
         assertEquals(4, videoParams.size());
     }
+    
+    @Test
+    void testImdbIdWithSeason() {
+
+        // given
+        String movieHash = "";
+        String movieByteSize = "";
+        String tag = "";
+        String imdbid = IMDBID;
+        String query = "";
+        String season = SEASON;
+        String episode = "";
+
+        SearchOperation objectUnderTest = new SearchOperation(
+            TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
+        );
+
+        // when
+        Object[] params = objectUnderTest.getParams();
+
+        // then
+        assertEquals(TOKEN, params[0]);
+        Object[] videoProperties = (Object[]) params[1];
+        Map<String, String> videoParams = (Map<String, String>) videoProperties[0];
+        assertEquals(LANG, videoParams.get("sublanguageid"));
+        assertEquals(IMDBID, videoParams.get("imdbid"));
+        assertEquals(SEASON, videoParams.get("season"));
+        assertEquals(3, videoParams.size());
+    }
+
+    @Test
+    void testImdbIdWithSeasonAndEpisode() {
+
+        // given
+        String movieHash = "";
+        String movieByteSize = "";
+        String tag = "";
+        String imdbid = IMDBID;
+        String query = "";
+        String season = SEASON;
+        String episode = EPISODE;
+
+        SearchOperation objectUnderTest = new SearchOperation(
+            TOKEN, LANG, movieHash, movieByteSize, tag, imdbid, query, season, episode
+        );
+
+        // when
+        Object[] params = objectUnderTest.getParams();
+
+        // then
+        assertEquals(TOKEN, params[0]);
+        Object[] videoProperties = (Object[]) params[1];
+        Map<String, String> videoParams = (Map<String, String>) videoProperties[0];
+        assertEquals(LANG, videoParams.get("sublanguageid"));
+        assertEquals(IMDBID, videoParams.get("imdbid"));
+        assertEquals(SEASON, videoParams.get("season"));
+        assertEquals(EPISODE, videoParams.get("episode"));
+        assertEquals(4, videoParams.size());
+    }
 
 
 }

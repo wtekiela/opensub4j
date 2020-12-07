@@ -61,6 +61,13 @@ class SearchOperation extends AbstractListOperation<SubtitleInfo> {
             videoProperties.put("tag", tag);
         } else if (imdbid != null && !imdbid.isEmpty()) {
             videoProperties.put("imdbid", imdbid);
+            //if imdb id is for a series
+            if (season != null && !season.isEmpty()) {
+                videoProperties.put("season", season);
+            }
+            if (episode != null && !episode.isEmpty()) {
+                videoProperties.put("episode", episode);
+            }
         } else if (query != null && !query.isEmpty()) {
             videoProperties.put("query", query);
             if (season != null && !season.isEmpty()) {

@@ -46,6 +46,15 @@ public class SubtitleInfo {
 
     @OpenSubtitlesApiSpec(fieldName = "SubEncoding")
     private String encoding;
+    
+    @OpenSubtitlesApiSpec(fieldName = "IDMovieImdb")
+    private String imdbId;
+    
+    @OpenSubtitlesApiSpec(fieldName = "SubSize")
+    private int subtitleSize;
+    
+    @OpenSubtitlesApiSpec(fieldName = "SubRating")
+    private double subtitleRating;
 
     public SubtitleInfo() {
     }
@@ -103,6 +112,18 @@ public class SubtitleInfo {
 
     public String getEncoding() {
         return encoding;
+    }
+    
+    public String getImdbId() {
+    	return imdbId;
+    }
+    
+    public int getSubtitleSize() {
+    	return subtitleSize;
+    }
+    
+    public double getSubtitleRating() {
+    	return subtitleRating;
     }
 
     @Override

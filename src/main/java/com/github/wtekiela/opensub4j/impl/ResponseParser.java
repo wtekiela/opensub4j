@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,7 +104,7 @@ class ResponseParser {
             Class<?> source = value.getClass();
             Class<?> target = field.getType();
 
-            if (List.class.equals(target) && elementFactory != null) {
+            if (Optional.class.equals(target) && elementFactory != null) {
                 executeListFieldBinding(source, target);
             } else {
                 executePrimitiveFieldBinding(source, target);
@@ -111,23 +112,23 @@ class ResponseParser {
         }
 
         private void executeListFieldBinding(Class<?> source, Class<?> target) {
-            if (needsStringConversion(target, source)) {
-                // needed for responses other than 200 OK that have empty string in "data"
-                try {
-                    set(target, new ArrayList<>());
-                } catch (IllegalAccessException e) {
-                    LOGGER.warn("Illegal access while binding field in response object", e);
-                }
-            } else {
+            if (source == Object[].class) {
                 Object[] rawData = (Object[]) value;
                 List list = new ArrayList<>(rawData.length);
                 try {
                     for (Object obj : rawData) {
                         list.add(ResponseParser.this.bind(elementFactory.newInstance(), (Map) obj));
                     }
-                    set(target, list);
+                    set(target, Optional.of(list));
                 } catch (ReflectiveOperationException e) {
                     LOGGER.warn("Error while binding field in response object", e);
+                }
+            } else {
+                // needed for responses other than 200 OK that have empty string in "data"
+                try {
+                    set(target, Optional.empty());
+                } catch (IllegalAccessException e) {
+                    LOGGER.warn("Illegal access while binding field in response object", e);
                 }
             }
         }

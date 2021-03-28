@@ -190,8 +190,8 @@ class OpenSubtitlesClientImplIntegTest {
         ListResponse<SubtitleInfo> subtitleInfos = objectUnderTest.searchSubtitles(TEST_LANG_3, IMDB_ID_FORREST_GUMP);
 
         // then
-        assertFalse(subtitleInfos.getData().isEmpty());
-        subtitleInfos.getData().forEach(subtitle -> assertEquals("English", subtitle.getLanguage()));
+        assertTrue(subtitleInfos.getData().isPresent());
+        subtitleInfos.getData().get().forEach(subtitle -> assertEquals("English", subtitle.getLanguage()));
     }
 
     @Test
@@ -203,8 +203,9 @@ class OpenSubtitlesClientImplIntegTest {
         ListResponse<SubtitleFile> subtitleFiles = objectUnderTest.downloadSubtitles(TEST_SUBTITLE_FILE_ID);
 
         // then
-        assertEquals(1, subtitleFiles.getData().size());
-        SubtitleFile file = subtitleFiles.getData().get(0);
+        assertTrue(subtitleFiles.getData().isPresent());
+        assertEquals(1, subtitleFiles.getData().get().size());
+        SubtitleFile file = subtitleFiles.getData().get().get(0);
         assertEquals(TEST_SUBTITLE_FILE_ID, file.getId());
     }
 
@@ -217,7 +218,7 @@ class OpenSubtitlesClientImplIntegTest {
         ListResponse<SubtitleFile> subtitleFiles = objectUnderTest.downloadSubtitles(-1);
 
         // then
-        assertTrue(subtitleFiles.getData().isEmpty());
+        assertFalse(subtitleFiles.getData().isPresent());
         assertEquals(ResponseStatus.PARTIAL_CONTENT, subtitleFiles.getStatus());
     }
 
@@ -230,6 +231,6 @@ class OpenSubtitlesClientImplIntegTest {
         ListResponse<MovieInfo> movies = objectUnderTest.searchMoviesOnImdb("Forrest Gump");
 
         // then
-        assertFalse(movies.getData().isEmpty());
+        assertTrue(movies.getData().isPresent());
     }
 }

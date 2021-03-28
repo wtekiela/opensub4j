@@ -7,6 +7,7 @@ OpenSub4j is an open source Java library for opensubtites. It provides an object
 | Branch |    |
 |--------|----|
 | master | [![Build Status](https://travis-ci.org/wtekiela/opensub4j.svg?branch=master)](https://travis-ci.org/wtekiela/opensub4j) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=wtekiela_opensub4j&metric=ncloc)](https://sonarcloud.io/dashboard?id=wtekiela_opensub4j) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=wtekiela_opensub4j&metric=coverage)](https://sonarcloud.io/dashboard?id=wtekiela_opensub4j) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=wtekiela_opensub4j&metric=bugs)](https://sonarcloud.io/dashboard?id=wtekiela_opensub4j) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=wtekiela_opensub4j&metric=code_smells)](https://sonarcloud.io/dashboard?id=wtekiela_opensub4j) |
+| 0.4    | [![Build Status](https://travis-ci.org/wtekiela/opensub4j.svg?branch=0.4)](https://travis-ci.org/wtekiela/opensub4j) |
 | 0.3    | [![Build Status](https://travis-ci.org/wtekiela/opensub4j.svg?branch=0.3)](https://travis-ci.org/wtekiela/opensub4j) |
 | 0.2    | [![Build Status](https://travis-ci.org/wtekiela/opensub4j.svg?branch=0.2)](https://travis-ci.org/wtekiela/opensub4j) |
 | 0.1    | [![Build Status](https://travis-ci.org/wtekiela/opensub4j.svg?branch=0.1)](https://travis-ci.org/wtekiela/opensub4j) |
@@ -17,11 +18,11 @@ Simply add the dependency to gradle/maven to the latest release:
 
 ```
 dependencies {
-    compile 'com.github.wtekiela:opensub4j:0.3.2'
+    compile 'com.github.wtekiela:opensub4j:0.4.0'
 }
 ```
 
-## Usage (version 0.3.X)
+## Usage (version 0.4.X)
 
 ### Creating the client
 
@@ -54,11 +55,14 @@ ServerInfo serverInfo = osClient.serverInfo();
 
 ```
 // logging in
-Response response = osClient.login("username", "password", "en", "TemporaryUserAgent");
+LoginResponse response = osClient.login("username", "password", "en", "TemporaryUserAgent");
 
 // checking login status
 assert response.getStatus() == ResponseStatus.OK;
 assert osClient.isLoggedIn() == true;
+
+// user information
+UserInfo userInfo = response.getUserInfo();
 
 // logging out
 osClient.logout();

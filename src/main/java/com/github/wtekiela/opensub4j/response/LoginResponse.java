@@ -24,6 +24,13 @@ public class LoginResponse extends Response {
         return token;
     }
 
+    @OpenSubtitlesApiSpec(fieldName = "data")
+    private UserInfo userInfo;
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(token);

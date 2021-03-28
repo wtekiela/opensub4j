@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.github.wtekiela.opensub4j.api.OpenSubtitlesClient;
 import com.github.wtekiela.opensub4j.response.ListResponse;
+import com.github.wtekiela.opensub4j.response.LoginResponse;
 import com.github.wtekiela.opensub4j.response.MovieInfo;
 import com.github.wtekiela.opensub4j.response.Response;
 import com.github.wtekiela.opensub4j.response.ResponseStatus;
@@ -113,14 +114,14 @@ class OpenSubtitlesClientImplIntegTest {
         // given
 
         // when
-        Response response = login();
+        LoginResponse response = login();
 
         // then
         assertTrue(objectUnderTest.isLoggedIn());
         assertEquals(ResponseStatus.OK, response.getStatus());
     }
 
-    private Response login() throws XmlRpcException {
+    private LoginResponse login() throws XmlRpcException {
         String username = System.getenv("OS_USER");
         if (username == null || username.isEmpty()) {
             username = DEFAULT_USERNAME;

@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 class ResponseParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ResponseParser.class);
+    private static final String ILLEGAL_ACCESS_MSG = "Illegal access while binding field in response object";
 
     private static Set<Field> getAllClassFields(Class type) {
         Set<Field> fields = new HashSet<>();
@@ -134,7 +135,7 @@ class ResponseParser {
             } else if (ResponseStatus.class.equals(target)) {
                 executeResponseStatusBinding(target, (String) value);
             } else {
-                executeNestedFieldBinding(source, target);
+                executeNestedFieldBinding(target);
             }
         }
 
@@ -145,7 +146,7 @@ class ResponseParser {
             try {
                 set(target, value);
             } catch (IllegalAccessException e) {
-                LOGGER.warn("Illegal access while binding field in response object", e);
+                LOGGER.warn(ILLEGAL_ACCESS_MSG, e);
             }
         }
 
@@ -166,29 +167,29 @@ class ResponseParser {
                 try {
                     set(target, Optional.empty());
                 } catch (IllegalAccessException e) {
-                    LOGGER.warn("Illegal access while binding field in response object", e);
+                    LOGGER.warn(ILLEGAL_ACCESS_MSG, e);
                 }
             }
         }
 
-        private void executeResponseStatusBinding(Class target, String value) {
+        private void executeResponseStatusBinding(Class<?> target, String value) {
             try {
                 Object responseStatus = target.getMethod("fromString", String.class).invoke(null, value);
                 set(target, responseStatus);
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                LOGGER.warn("Exception while parinsg ResponseStatus from String", e);
+                LOGGER.warn("Exception while binding ResponseStatus from String", e);
             }
         }
 
-        private void executeNestedFieldBinding(Class<?> source, Class<?> target) {
+        private void executeNestedFieldBinding(Class<?> target) {
             try {
-                Object instance = target.newInstance();
-                ResponseParser.this.bind(instance, (Map) value);
-                set(target, instance);
+                Object nestedInstance = target.getDeclaredConstructor().newInstance();
+                ResponseParser.this.bind(nestedInstance, (Map) value);
+                set(target, nestedInstance);
             } catch (InstantiationException e) {
                 LOGGER.warn("Could not instantiate nested class while binding field in response object", e);
-            } catch (IllegalAccessException e) {
-                LOGGER.warn("Illegal access while binding field in response object", e);
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                LOGGER.warn("Exception while binding nested object", e);
             }
         }
 
@@ -204,7 +205,7 @@ class ResponseParser {
         }
 
         @SuppressWarnings("squid:S3776")
-        private Object parse(Class target, String value) {
+        private Object parse(Class<?> target, String value) {
             if (Boolean.class == target || Boolean.TYPE == target) {
                 return Boolean.parseBoolean(value);
             } else if (Byte.class == target || Byte.TYPE == target) {
@@ -227,7 +228,7 @@ class ResponseParser {
         }
 
         @SuppressWarnings({"squid:S3776", "squid:S3011"})
-        private void set(Class target, Object value) throws IllegalAccessException {
+        private void set(Class<?> target, Object value) throws IllegalAccessException {
             if (Boolean.TYPE == target) {
                 Integer castedVal = (Integer) value;
                 field.setBoolean(instance, castedVal == 1);

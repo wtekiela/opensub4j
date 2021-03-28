@@ -1,6 +1,7 @@
 package com.github.wtekiela.opensub4j.impl;
 
 import com.github.wtekiela.opensub4j.response.ListResponse;
+import com.github.wtekiela.opensub4j.response.LoginResponse;
 import com.github.wtekiela.opensub4j.response.SubtitleFile;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,5 +75,27 @@ class ResponseParserTest {
         Assertions.assertTrue(result.getData().isPresent());
         SubtitleFile subtitleFile = result.getData().get().get(0);
         Assertions.assertEquals(TEST_SUBTITE_FILE_ID, subtitleFile.getId());
+    }
+
+    @Test
+    void testBindNestedData() {
+        // given
+        Map<String, Object> entry = new HashMap<>();
+        entry.put("UserRank", "sub leecher");
+        entry.put("UserNickName", "wteq");
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("seconds", 0.005d);
+        response.put("data", entry);
+        response.put("status", "200 OK");
+
+        // when
+        LoginResponse result =
+            objectUnderTest.bind(new LoginResponse(), response);
+
+        // then
+        Assertions.assertEquals(200, result.getStatus().getCode());
+        Assertions.assertEquals("wteq", result.getUserInfo().getUserNickName());
+        Assertions.assertEquals("sub leecher", result.getUserInfo().getUserRank());
     }
 }

@@ -91,7 +91,7 @@ class OpenSubtitlesClientImplIntegTest {
         Response response = objectUnderTest.serverInfo();
 
         // then
-        assertEquals(response.getStatus(), ResponseStatus.PARSE_ERROR);
+        assertEquals(ResponseStatus.PARSE_ERROR, response.getStatus());
     }
 
     @Test

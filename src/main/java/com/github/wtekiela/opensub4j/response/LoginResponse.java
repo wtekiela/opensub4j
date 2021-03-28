@@ -52,6 +52,7 @@ public class LoginResponse extends Response {
     public String toString() {
         return new StringJoiner(", ", LoginResponse.class.getSimpleName() + "[", "]")
             .add("token='" + token + "'")
+            .add("userInfo=" + userInfo)
             .toString();
     }
 }

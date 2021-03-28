@@ -12,6 +12,9 @@
  */
 package com.github.wtekiela.opensub4j.response;
 
+import java.util.Objects;
+import java.util.StringJoiner;
+
 public class UserInfo {
 
     @OpenSubtitlesApiSpec(fieldName = "UserRank")
@@ -68,5 +71,44 @@ public class UserInfo {
 
     public String getUserId() {
         return userId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        UserInfo userInfo = (UserInfo) o;
+        return uploadCount == userInfo.uploadCount && downloadCount == userInfo.downloadCount &&
+            isVip == userInfo.isVip &&
+            Objects.equals(userRank, userInfo.userRank) &&
+            Objects.equals(userNickName, userInfo.userNickName) &&
+            Objects.equals(userWebLanguage, userInfo.userWebLanguage) &&
+            Objects.equals(userPreferedLanguages, userInfo.userPreferedLanguages) &&
+            Objects.equals(userId, userInfo.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects
+            .hash(userRank, userNickName, uploadCount, downloadCount, isVip, userWebLanguage, userPreferedLanguages,
+                userId);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", UserInfo.class.getSimpleName() + "[", "]")
+            .add("userRank='" + userRank + "'")
+            .add("userNickName='" + userNickName + "'")
+            .add("uploadCount=" + uploadCount)
+            .add("downloadCount=" + downloadCount)
+            .add("isVip=" + isVip)
+            .add("userWebLanguage='" + userWebLanguage + "'")
+            .add("userPreferedLanguages='" + userPreferedLanguages + "'")
+            .add("userId='" + userId + "'")
+            .toString();
     }
 }

@@ -33,9 +33,9 @@ class ResponseParser {
     private static final Logger LOGGER = LoggerFactory.getLogger(ResponseParser.class);
     private static final String ILLEGAL_ACCESS_MSG = "Illegal access while binding field in response object";
 
-    private static Set<Field> getAllClassFields(Class type) {
+    private static Set<Field> getAllClassFields(Class<?> type) {
         Set<Field> fields = new HashSet<>();
-        Class currentType = type;
+        Class<?> currentType = type;
 
         do {
             fields.addAll(Arrays.asList(currentType.getDeclaredFields()));
@@ -66,18 +66,18 @@ class ResponseParser {
     }
 
     <T> ListResponse<T> bind(ListResponse<T> instance, AbstractListOperation.ElementFactory<T> elementFactory,
-                             Map response) {
+                             Map<?, ?> response) {
         if (instance == null) {
             return null;
         }
         Set<Field> declaredFields = getAllClassFields(instance.getClass());
         for (Field field : declaredFields) {
-            new FieldBindingTask<>(instance, elementFactory, response, field).run();
+            new FieldBindingTask<ListResponse<T>, T>(instance, elementFactory, response, field).run();
         }
         return instance;
     }
 
-    <T> T bind(T instance, Map response) {
+    <T> T bind(T instance, Map<?, ?> response) {
         if (instance == null) {
             return null;
         }
@@ -88,24 +88,24 @@ class ResponseParser {
         return instance;
     }
 
-    private class FieldBindingTask<T> implements Runnable {
+    private class FieldBindingTask<T, V> implements Runnable {
 
         private final T instance;
         private final Field field;
 
-        private final Map response;
+        private final Map<?, ?> response;
 
-        private AbstractListOperation.ElementFactory<T> elementFactory;
+        private AbstractListOperation.ElementFactory<V> elementFactory;
 
         private Object value;
 
-        public FieldBindingTask(T instance, Map response, Field field) {
+        public FieldBindingTask(T instance, Map<?, ?> response, Field field) {
             this.instance = instance;
             this.response = response;
             this.field = field;
         }
 
-        public FieldBindingTask(T instance, AbstractListOperation.ElementFactory elementFactory, Map response,
+        public FieldBindingTask(T instance, AbstractListOperation.ElementFactory<V> elementFactory, Map<?, ?> response,
                                 Field field) {
             this.instance = instance;
             this.elementFactory = elementFactory;
@@ -153,10 +153,10 @@ class ResponseParser {
         private void executeListFieldBinding(Class<?> source, Class<?> target) {
             if (source == Object[].class) {
                 Object[] rawData = (Object[]) value;
-                List list = new ArrayList<>(rawData.length);
+                List<V> list = new ArrayList<>(rawData.length);
                 try {
                     for (Object obj : rawData) {
-                        list.add(ResponseParser.this.bind(elementFactory.newInstance(), (Map) obj));
+                        list.add(ResponseParser.this.bind(elementFactory.newInstance(), (Map<?, ?>) obj));
                     }
                     set(target, Optional.of(list));
                 } catch (ReflectiveOperationException e) {

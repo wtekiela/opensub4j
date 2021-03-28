@@ -15,7 +15,7 @@ package com.github.wtekiela.opensub4j.impl;
 import com.github.wtekiela.opensub4j.api.FileHashCalculator;
 import com.github.wtekiela.opensub4j.api.OpenSubtitlesClient;
 import com.github.wtekiela.opensub4j.response.ListResponse;
-import com.github.wtekiela.opensub4j.response.LoginToken;
+import com.github.wtekiela.opensub4j.response.LoginResponse;
 import com.github.wtekiela.opensub4j.response.MovieInfo;
 import com.github.wtekiela.opensub4j.response.Response;
 import com.github.wtekiela.opensub4j.response.ResponseStatus;
@@ -37,7 +37,7 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     private final ResponseParser responseParser;
     private final FileHashCalculator fileHashCalculator;
 
-    private LoginToken loginToken;
+    private LoginResponse loginResponse;
 
     /**
      * Client for opensubtitles.org xml-rpc API
@@ -111,10 +111,10 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     @Override
     public synchronized Response login(String user, String pass, String lang, String useragent) throws XmlRpcException {
         ensureNotLoggedIn();
-        LoginToken loginResponse =
+        LoginResponse loginResponse =
             new LogInOperation(user, pass, lang, useragent).execute(xmlRpcClient, responseParser);
         if (ResponseStatus.OK.equals(loginResponse.getStatus())) {
-            this.loginToken = loginResponse;
+            this.loginResponse = loginResponse;
         }
         return loginResponse;
     }
@@ -122,19 +122,19 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     @Override
     public synchronized void logout() throws XmlRpcException {
         ensureLoggedIn();
-        new LogOutOperation(loginToken.getToken()).execute(xmlRpcClient, responseParser);
-        loginToken = null;
+        new LogOutOperation(loginResponse.getToken()).execute(xmlRpcClient, responseParser);
+        loginResponse = null;
     }
 
     @Override
     public boolean isLoggedIn() {
-        return loginToken != null;
+        return loginResponse != null;
     }
 
     @Override
     public Response noop() throws XmlRpcException {
         ensureLoggedIn();
-        return new NoopOperation(loginToken.getToken()).execute(xmlRpcClient, responseParser);
+        return new NoopOperation(loginResponse.getToken()).execute(xmlRpcClient, responseParser);
     }
 
     @Override
@@ -168,7 +168,7 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
                                                       String query, String season, String episode,
                                                       String tag) throws XmlRpcException {
         ensureLoggedIn();
-        return new SearchOperation(loginToken.getToken(), lang, movieHash, movieByteSize, tag, imdbid, query, season,
+        return new SearchOperation(loginResponse.getToken(), lang, movieHash, movieByteSize, tag, imdbid, query, season,
             episode)
             .execute(xmlRpcClient, responseParser);
     }
@@ -176,25 +176,25 @@ public class OpenSubtitlesClientImpl implements OpenSubtitlesClient {
     @Override
     public ListResponse<SubtitleFile> downloadSubtitles(int subtitleFileID) throws XmlRpcException {
         ensureLoggedIn();
-        return new DownloadSubtitlesOperation(loginToken.getToken(), subtitleFileID)
+        return new DownloadSubtitlesOperation(loginResponse.getToken(), subtitleFileID)
             .execute(xmlRpcClient, responseParser);
     }
 
     @Override
     public ListResponse<MovieInfo> searchMoviesOnImdb(String query) throws XmlRpcException {
         ensureLoggedIn();
-        return new ImdbSearchOperation(loginToken.getToken(), query)
+        return new ImdbSearchOperation(loginResponse.getToken(), query)
             .execute(xmlRpcClient, responseParser);
     }
 
     private void ensureNotLoggedIn() {
-        if (loginToken != null) {
+        if (loginResponse != null) {
             throw new IllegalStateException("Already logged in! Please log out first.");
         }
     }
 
     private void ensureLoggedIn() {
-        if (loginToken == null) {
+        if (loginResponse == null) {
             throw new IllegalStateException("Not logged in!");
         }
     }

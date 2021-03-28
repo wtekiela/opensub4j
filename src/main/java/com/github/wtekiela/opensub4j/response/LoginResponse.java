@@ -15,7 +15,7 @@ package com.github.wtekiela.opensub4j.response;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class LoginToken extends Response {
+public class LoginResponse extends Response {
 
     @OpenSubtitlesApiSpec(fieldName = "token")
     private String token;
@@ -37,13 +37,13 @@ public class LoginToken extends Response {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        LoginToken that = (LoginToken) o;
+        LoginResponse that = (LoginResponse) o;
         return Objects.equals(token, that.token);
     }
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", LoginToken.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", LoginResponse.class.getSimpleName() + "[", "]")
             .add("token='" + token + "'")
             .toString();
     }

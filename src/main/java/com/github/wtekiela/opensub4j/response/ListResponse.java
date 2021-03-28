@@ -14,13 +14,14 @@ package com.github.wtekiela.opensub4j.response;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class ListResponse<T> extends Response {
 
     @OpenSubtitlesApiSpec(fieldName = "data")
-    private List<T> data;
+    private Optional<List<T>> data;
 
-    public List<T> getData() {
+    public Optional<List<T>> getData() {
         return data;
     }
 

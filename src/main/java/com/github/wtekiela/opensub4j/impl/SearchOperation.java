@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.github.wtekiela.opensub4j.impl;
 
 import com.github.wtekiela.opensub4j.response.SubtitleInfo;
@@ -48,42 +49,57 @@ class SearchOperation extends AbstractListOperation<SubtitleInfo> {
     }
 
     @Override
+    ElementFactory<SubtitleInfo> getListElementFactory() {
+        return SubtitleInfo::new;
+    }
+
+    @Override
     Object[] getParams() {
         Map<String, String> videoProperties = new HashMap<>();
         videoProperties.put("sublanguageid", lang);
 
-        if (movieHash != null && !movieHash.isEmpty() && movieByteSize != null && !movieByteSize.isEmpty()) {
+        if (shouldSearchByMovieHash()) {
             videoProperties.put("moviehash", movieHash);
             videoProperties.put("moviebytesize", movieByteSize);
-        } else if (tag != null && !tag.isEmpty()) {
+        } else if (shouldSearchByTag()) {
             // Tag is index of movie filename or subtitle file fieldName, or release fieldName -
             // currently we index more than 40.000.000 of tags.
             videoProperties.put("tag", tag);
-        } else if (imdbid != null && !imdbid.isEmpty()) {
+        } else if (shouldSearchByImdbId()) {
             videoProperties.put("imdbid", imdbid);
             //if imdb id is for a series
-            if (season != null && !season.isEmpty()) {
-                videoProperties.put("season", season);
-            }
-            if (episode != null && !episode.isEmpty()) {
-                videoProperties.put("episode", episode);
-            }
-        } else if (query != null && !query.isEmpty()) {
+            addSeasonAndEpisodeInfo(videoProperties);
+        } else if (shouldSearchByQuery()) {
             videoProperties.put("query", query);
-            if (season != null && !season.isEmpty()) {
-                videoProperties.put("season", season);
-            }
-            if (episode != null && !episode.isEmpty()) {
-                videoProperties.put("episode", episode);
-            }
+            addSeasonAndEpisodeInfo(videoProperties);
         }
 
         Object[] videoParams = {videoProperties};
         return new Object[] {loginToken, videoParams};
     }
 
-    @Override
-    ElementFactory<SubtitleInfo> getListElementFactory() {
-        return SubtitleInfo::new;
+    private void addSeasonAndEpisodeInfo(Map<String, String> videoProperties) {
+        if (season != null && !season.isEmpty()) {
+            videoProperties.put("season", season);
+        }
+        if (episode != null && !episode.isEmpty()) {
+            videoProperties.put("episode", episode);
+        }
+    }
+
+    private boolean shouldSearchByQuery() {
+        return query != null && !query.isEmpty();
+    }
+
+    private boolean shouldSearchByImdbId() {
+        return imdbid != null && !imdbid.isEmpty();
+    }
+
+    private boolean shouldSearchByTag() {
+        return tag != null && !tag.isEmpty();
+    }
+
+    private boolean shouldSearchByMovieHash() {
+        return movieHash != null && !movieHash.isEmpty() && movieByteSize != null && !movieByteSize.isEmpty();
     }
 }

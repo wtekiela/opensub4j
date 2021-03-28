@@ -12,9 +12,9 @@
  */
 package com.github.wtekiela.opensub4j.impl;
 
-import com.github.wtekiela.opensub4j.response.LoginToken;
+import com.github.wtekiela.opensub4j.response.LoginResponse;
 
-class LogInOperation extends AbstractOperation<LoginToken> {
+class LogInOperation extends AbstractOperation<LoginResponse> {
 
     private final String user;
     private final String pass;
@@ -39,8 +39,8 @@ class LogInOperation extends AbstractOperation<LoginToken> {
     }
 
     @Override
-    LoginToken getResponseObject() {
-        return new LoginToken();
+    LoginResponse getResponseObject() {
+        return new LoginResponse();
     }
 
 }

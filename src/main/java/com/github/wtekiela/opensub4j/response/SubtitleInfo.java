@@ -50,6 +50,9 @@ public class SubtitleInfo {
     @OpenSubtitlesApiSpec(fieldName = "IDMovieImdb")
     private String imdbId;
     
+    @OpenSubtitlesApiSpec(fieldName = "SeriesIMDBParent")
+    private String seriesImdbId;
+    
     @OpenSubtitlesApiSpec(fieldName = "SubSize")
     private int subtitleSize;
     
@@ -118,6 +121,10 @@ public class SubtitleInfo {
     	return imdbId;
     }
     
+    public String getSeriesImdbId() {
+    	return seriesImdbId;
+    }
+    
     public int getSubtitleSize() {
     	return subtitleSize;
     }
@@ -151,6 +158,8 @@ public class SubtitleInfo {
             .add("downloadsNo=" + downloadsNo)
             .add("language='" + language + "'")
             .add("fileName='" + fileName + "'")
+            .add("imdbId='" + imdbId + "'")
+            .add("seriesImdbId='" + seriesImdbId + "'")
             .add("format='" + format + "'")
             .add("osLink='" + osLink + "'")
             .add("downloadLink='" + downloadLink + "'")

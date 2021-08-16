@@ -5,7 +5,7 @@ addons:
     token:
       secure: HIyfkrDQQwHRgvFLeCzrnPmnJny05RXNtUYZtm6/48TYkeRju/fMMzQE0mY0vOVyJVRsssyQHS+f/vJX/RF3pSHAlbUTQ3Pl90/Q/TfZdWzGnPZh28avoa+HGBATV0tiKdvYgtDI67ywarEZZdfTXrzT/zEkc3g7sz1vd8MfM/s=
 git:
-  depth: false
+  depth: 3
 install:
 - travis_retry ./gradlew clean assemble -x signArchives --info
 script:

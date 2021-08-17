@@ -7,10 +7,14 @@ addons:
 git:
   depth: false
 install:
-- travis_retry ./gradlew clean assemble -x signArchives --info
+- ./gradlew clean assemble -x signArchives --info
 script:
-- travis_retry ./gradlew check sonarqube --info
+- ./gradlew check sonarqube --info
 env:
   global:
   - secure: IgPA92ioawuSMTZ4DPvghZRaATl4ZW/oeJinqqlDxcJ9wnaKlJjb50mrKrWXs+JMI74Z//En7dwDTPDu69D4IUKiQfHJ70kCv3DVDX/TCnGoEhkOgVSVicpVJtHxTyuXKOPK3ASZwynA989jPku4b3T2uO4VYMuioD1sWMrWJBA=
   - secure: Kg6mpdrNhhQUjIQnTGVagVT8MMG6lvIeGL0ZKQE+gUvOqCz5EI//aPo48RnhZptSQPKHDJXEmtX4eDM61btyrhuF2YKsk9oH5LDhtOP95LQHsjZmspzoRZSOEq6nMBIEsQjmAkK9g3kLFn8bcRmrKhgVvZhcrVQI6VZarPe46Gs=
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/

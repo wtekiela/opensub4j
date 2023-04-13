@@ -12,7 +12,7 @@ Simply add the dependency to gradle/maven to the latest release:
 
 ```
 dependencies {
-    compile 'com.github.wtekiela:opensub4j:0.4.1'
+    compile 'com.github.wtekiela:opensub4j:0.4.2'
 }
 ```
 

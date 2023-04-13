@@ -18,12 +18,12 @@ import java.util.StringJoiner;
 public class MovieInfo {
 
     @OpenSubtitlesApiSpec(fieldName = "id")
-    private int id;
+    private long id;
 
     @OpenSubtitlesApiSpec(fieldName = "title")
     private String title;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

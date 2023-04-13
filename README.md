@@ -2,15 +2,11 @@
 
 OpenSub4j is an open source Java library for opensubtites. It provides an object-oriented abstraction over XML-RPC opensubtitles.org API.
 
-## Badges
+## DEPRECATION NOTICE
 
-| Branch |    |
-|--------|----|
-| master | [![Build Status](https://travis-ci.org/wtekiela/opensub4j.svg?branch=master)](https://travis-ci.org/wtekiela/opensub4j) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=wtekiela_opensub4j&metric=ncloc)](https://sonarcloud.io/dashboard?id=wtekiela_opensub4j) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=wtekiela_opensub4j&metric=coverage)](https://sonarcloud.io/dashboard?id=wtekiela_opensub4j) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=wtekiela_opensub4j&metric=bugs)](https://sonarcloud.io/dashboard?id=wtekiela_opensub4j) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=wtekiela_opensub4j&metric=code_smells)](https://sonarcloud.io/dashboard?id=wtekiela_opensub4j) |
-| 0.4    | [![Build Status](https://travis-ci.org/wtekiela/opensub4j.svg?branch=0.4)](https://travis-ci.org/wtekiela/opensub4j) |
-| 0.3    | [![Build Status](https://travis-ci.org/wtekiela/opensub4j.svg?branch=0.3)](https://travis-ci.org/wtekiela/opensub4j) |
-| 0.2    | [![Build Status](https://travis-ci.org/wtekiela/opensub4j.svg?branch=0.2)](https://travis-ci.org/wtekiela/opensub4j) |
-| 0.1    | [![Build Status](https://travis-ci.org/wtekiela/opensub4j.svg?branch=0.1)](https://travis-ci.org/wtekiela/opensub4j) |
+***THIS REPOSITORY IS DEPRECATED NO LONGER MAINTAINED***
+
+Please note that any XML-RPC API running on OpenSubtitles.org is deprecated. It is planned to be turned off by the end of 2023. Please use new, stable ready-to-use [OpenSubtitles.com REST API](https://www.opensubtitles.com/docs/api/html/index.htm) instead.
 
 ## Installation
 
@@ -135,8 +131,6 @@ Defined `ResponseStatus` contants:
 ## Logging
 
 Library uses slf4j logging facade, so you can use any logging implementation that slf4j supports. For more information please refer to [slf4j documentation](http://www.slf4j.org/manual.html).
-
-![](http://www.slf4j.org/images/concrete-bindings.png)
 
 ## Building from sources
 
